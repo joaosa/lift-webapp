@@ -1,0 +1,53 @@
+<classpath>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/scala" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/java" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/classes" path="src/main/resources" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/scala" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/java" kind="src"></classpathentry>
+  <classpathentry output=".target/scala-2.9.1/test-classes" path="src/test/resources" kind="src"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/commons-fileupload/commons-fileupload/jars/commons-fileupload-1.2.2.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/joda-time/joda-time/jars/joda-time-1.6.2.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/nu.validator.htmlparser/htmlparser/jars/htmlparser-1.2.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/javax.mail/mail/jars/mail-1.4.4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/com.thoughtworks.paranamer/paranamer/jars/paranamer-2.3.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.scala-lang/scalap/jars/scalap-2.9.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="org.scala-ide.sdt.launching.SCALA_COMPILER_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-mapper_2.9.1/jars/lift-mapper_2.9.1-2.4-M4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-db_2.9.1/jars/lift-db_2.9.1-2.4-M4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-proto_2.9.1/jars/lift-proto_2.9.1-2.4-M4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/com.h2database/h2/jars/h2-1.2.147.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.apache.derby/derby/jars/derby-10.7.1.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-wizard_2.9.1/jars/lift-wizard_2.9.1-2.4-M4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-widgets_2.9.1/jars/lift-widgets_2.9.1-2.4-M4.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/cc.co.scala-reactive/reactive-web_2.9.1/jars/reactive-web_2.9.1-0.2-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/cc.co.scala-reactive/reactive-core_2.9.1/jars/reactive-core_2.9.1-0.2-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.scalatest/scalatest_2.9.0/jars/scalatest_2.9.0-1.6.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-testkit_2.9.1/jars/lift-testkit_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/commons-httpclient/commons-httpclient/jars/commons-httpclient-3.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-util_2.9.1/jars/lift-util_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-actor_2.9.1/jars/lift-actor_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-common_2.9.1/jars/lift-common_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-json_2.9.1/jars/lift-json_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.liftweb/lift-webkit_2.9.1/jars/lift-webkit_2.9.1-2.4-SNAPSHOT.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-0.9.26.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-0.9.26.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/jfree/jfreechart/jars/jfreechart-1.0.13.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/jfree/jcommon/jars/jcommon-1.0.16.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.databinder/dispatch-nio_2.9.1/jars/dispatch-nio_2.9.1-0.8.5.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.databinder/dispatch-core_2.9.1/jars/dispatch-core_2.9.1-0.8.5.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/net.databinder/dispatch-futures_2.9.1/jars/dispatch-futures_2.9.1-0.8.5.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.apache.httpcomponents/httpasyncclient/jars/httpasyncclient-4.0-alpha1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.apache.httpcomponents/httpcore-nio/jars/httpcore-nio-4.1.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/junit/junit/jars/junit-4.8.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/org.scala-tools.testing/specs_2.9.1/jars/specs_2.9.1-1.6.9.jar" kind="lib"></classpathentry>
+  <classpathentry path="/Users/jjadonotenter/.ivy2/cache/javax.servlet/servlet-api/jars/servlet-api-2.5.jar" kind="lib"></classpathentry>
+  <classpathentry path="org.scala-ide.sdt.launching.SCALA_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path=".target/scala-2.9.1/classes" kind="output"></classpathentry>
+</classpath>

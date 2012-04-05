@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a51fa632-b837-4226-9803-b31648907d90" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.history" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.settings/org.eclipse.core.resources.prefs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.settings/org.scala-ide.sdt.core.prefs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lift_proto.db.h2.db" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/project/target/config-classes/$094112d2c27c18a37701$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/project/target/config-classes/$094112d2c27c18a37701$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/project/target/config-classes/$094112d2c27c18a37701.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$0338e56a8eb6babdef71$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$0338e56a8eb6babdef71$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$0338e56a8eb6babdef71.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$072ce9aa265a7c286f8d$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$072ce9aa265a7c286f8d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$072ce9aa265a7c286f8d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$08ceb31c499683b74032$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$08ceb31c499683b74032$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$08ceb31c499683b74032.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$1378505f7b70f74c64dc$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$1378505f7b70f74c64dc$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$1378505f7b70f74c64dc.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$146b62955c81cb43c2e9$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$146b62955c81cb43c2e9$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$146b62955c81cb43c2e9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$184113c8f6554efe2918$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$184113c8f6554efe2918$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$184113c8f6554efe2918.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$32ebb41e3765a65ba358$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$32ebb41e3765a65ba358$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$32ebb41e3765a65ba358.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$348520b78c973c8029f1$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$348520b78c973c8029f1$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$348520b78c973c8029f1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$51b4fb154236a7a20ab3$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$51b4fb154236a7a20ab3$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$51b4fb154236a7a20ab3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5553d8c5703de9f649ef$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5553d8c5703de9f649ef$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5553d8c5703de9f649ef.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5aa408bf3182a113655e$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5aa408bf3182a113655e$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5aa408bf3182a113655e.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5c3a5ba80378bcd143df$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5c3a5ba80378bcd143df$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5c3a5ba80378bcd143df.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5ef14b4288d76c612344$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5ef14b4288d76c612344$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$5ef14b4288d76c612344.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$642cbeba04c335ee61b8$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$642cbeba04c335ee61b8$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$642cbeba04c335ee61b8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$651aff5888d4eb4e5645$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$651aff5888d4eb4e5645$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$651aff5888d4eb4e5645.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6a7bc79413a94bd65863$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6a7bc79413a94bd65863$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6a7bc79413a94bd65863.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6ad6c7eb86742308ea01$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6ad6c7eb86742308ea01$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$6ad6c7eb86742308ea01.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$74ee03298ed667d93b13$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$74ee03298ed667d93b13.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$75f7ed7f98349af5788d$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$75f7ed7f98349af5788d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$75f7ed7f98349af5788d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$7c002a203e27a13f2542$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$7c002a203e27a13f2542$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$7c002a203e27a13f2542.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$7f77e33b714d39d203ad$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$7f77e33b714d39d203ad.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$84ff2a82edfbcc2a7dd8$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$84ff2a82edfbcc2a7dd8$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$84ff2a82edfbcc2a7dd8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8645431d5dc2d5dd725b$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8645431d5dc2d5dd725b.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$894b74ee4dcf9427769a$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$894b74ee4dcf9427769a$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$894b74ee4dcf9427769a.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8a46bbcb992d999e62d9$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8a46bbcb992d999e62d9$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8a46bbcb992d999e62d9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8f1305ea439e523f0e2c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8f1305ea439e523f0e2c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$8f1305ea439e523f0e2c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$a1330eb2231fb6ee62cc$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$a1330eb2231fb6ee62cc$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$a1330eb2231fb6ee62cc.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b04ca2d153c939634414$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b04ca2d153c939634414$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b04ca2d153c939634414.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b511810224cd15604b29$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b511810224cd15604b29$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b511810224cd15604b29.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b783c2bceea4777b15ea$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b783c2bceea4777b15ea$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b783c2bceea4777b15ea.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b9417cbdead93d7e268d$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b9417cbdead93d7e268d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$b9417cbdead93d7e268d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c0d534ae0b4f59d72683$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c0d534ae0b4f59d72683$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c0d534ae0b4f59d72683.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c6530256c0cfd5a7a072$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c6530256c0cfd5a7a072$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c6530256c0cfd5a7a072.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c8d899349d3a94fedd5a$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c8d899349d3a94fedd5a$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c8d899349d3a94fedd5a.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c958e8a495b3d18a2911$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c958e8a495b3d18a2911$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$c958e8a495b3d18a2911.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$cb64af7538eee35589db$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$cb64af7538eee35589db.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$d672c0a768c5f5f7dae4$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$d672c0a768c5f5f7dae4$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$d672c0a768c5f5f7dae4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$dc9ee32ace999fc7e4c1$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$dc9ee32ace999fc7e4c1$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$dc9ee32ace999fc7e4c1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$df149aa267b79a0f58c4$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$df149aa267b79a0f58c4$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$df149aa267b79a0f58c4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e1844fbb0b3d0a112b62$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e1844fbb0b3d0a112b62$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e1844fbb0b3d0a112b62.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e88dedd05661d2b0ae38$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e88dedd05661d2b0ae38$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e88dedd05661d2b0ae38.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e9e39953e7767c2946df$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e9e39953e7767c2946df$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$e9e39953e7767c2946df.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$ebffddecb9327a4083e3$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$ebffddecb9327a4083e3$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$ebffddecb9327a4083e3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f08c718bf4b1b36a636f$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f08c718bf4b1b36a636f$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f08c718bf4b1b36a636f.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f7295e1ca0ae2b1f73bc$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f7295e1ca0ae2b1f73bc$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f7295e1ca0ae2b1f73bc.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f8bf068494927d040673$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f8bf068494927d040673$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$f8bf068494927d040673.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fb8f6ab1f29d0c06d250$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fb8f6ab1f29d0c06d250$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fb8f6ab1f29d0c06d250.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fc2a268eedd2a035be14$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fc2a268eedd2a035be14$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fc2a268eedd2a035be14.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fd11102edf8dc840dbbb$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fd11102edf8dc840dbbb$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fd11102edf8dc840dbbb.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fffc43694e2390c3968c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/config-classes/$fffc43694e2390c3968c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/scala-2.9.1/sbt-0.11.2/cache/compile/copy-resources" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/scala-2.9.1/sbt-0.11.2/cache/update/inputs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/scala-2.9.1/sbt-0.11.2/cache/update/output" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/$global/compilers/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/$global/ivy-configuration/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/$global/ivy-sbt/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/$global/project-descriptors/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/$global/update/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/compile/$global/$global/data" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/compile/compile-inputs/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/compile/compile/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/compile/copy-resources/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/project/target/streams/compile/defined-sbt-plugins/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0019814f9a1726d1a79c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0019814f9a1726d1a79c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0019814f9a1726d1a79c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$02f87fde492519d57d0e$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$02f87fde492519d57d0e.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$07f69b0954839a5ed02f$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$07f69b0954839a5ed02f$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$07f69b0954839a5ed02f.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$08647d3fe8d9233c7878$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$08647d3fe8d9233c7878$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$08647d3fe8d9233c7878.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0d4caa0bf9bfb468e200$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0d4caa0bf9bfb468e200$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$0d4caa0bf9bfb468e200.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1049d3336bb81b35a3e2$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1049d3336bb81b35a3e2$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1049d3336bb81b35a3e2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$14f28a932b08c02aaf06$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$14f28a932b08c02aaf06$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$14f28a932b08c02aaf06.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1615f4d12499d4c95c89$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1615f4d12499d4c95c89$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$1615f4d12499d4c95c89.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$18b67a1fdd291f1f0553$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$18b67a1fdd291f1f0553$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$18b67a1fdd291f1f0553.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$206da8d3f9266be95f50$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$206da8d3f9266be95f50$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$206da8d3f9266be95f50.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$29299327e6a0d7eacd16$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$29299327e6a0d7eacd16$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$29299327e6a0d7eacd16.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$34ffd88218ee6193a2d7$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$34ffd88218ee6193a2d7$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$34ffd88218ee6193a2d7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3a8c5880a0a2838491d1$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3a8c5880a0a2838491d1$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3a8c5880a0a2838491d1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3eb0f3d9791e9e1ebb90$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3eb0f3d9791e9e1ebb90$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$3eb0f3d9791e9e1ebb90.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$4ae92d0f6ce20b7a23b1$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$4ae92d0f6ce20b7a23b1$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$4ae92d0f6ce20b7a23b1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5174a0d2180ff6801ce8$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5174a0d2180ff6801ce8$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5174a0d2180ff6801ce8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5196365ed1ac754066b6$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5196365ed1ac754066b6$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5196365ed1ac754066b6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$544a90db6d3455d1431b$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$544a90db6d3455d1431b$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$544a90db6d3455d1431b.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$57892685ea8180127cab$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$57892685ea8180127cab$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$57892685ea8180127cab.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$59c78b8d2dc0001c8531$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$59c78b8d2dc0001c8531$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$59c78b8d2dc0001c8531.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5e0541a577339d81401c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5e0541a577339d81401c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$5e0541a577339d81401c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$609ae324c78beafcddec$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$609ae324c78beafcddec$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$609ae324c78beafcddec.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$620642eedcfa470265d4$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$620642eedcfa470265d4$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$620642eedcfa470265d4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$66ada6f4779069958aca$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$66ada6f4779069958aca$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$66ada6f4779069958aca.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$6976d80b59b49543e5ed$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$6976d80b59b49543e5ed$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$6976d80b59b49543e5ed.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$70a8f40fbe92addfa283$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$70a8f40fbe92addfa283$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$70a8f40fbe92addfa283.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$87009c89050fd671da3b$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$87009c89050fd671da3b$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$87009c89050fd671da3b.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8774eca6cc5a146c9847$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8774eca6cc5a146c9847$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8774eca6cc5a146c9847.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$89f66ad397b859fe195c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$89f66ad397b859fe195c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$89f66ad397b859fe195c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8ddbe08bebb0f4aadd84$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8ddbe08bebb0f4aadd84$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$8ddbe08bebb0f4aadd84.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$9ae41849448bac89b634$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$9ae41849448bac89b634$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$9ae41849448bac89b634.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a0d30a418ec7b9f5cc79$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a0d30a418ec7b9f5cc79$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a0d30a418ec7b9f5cc79.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a1abd38e84bc59da2493$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a1abd38e84bc59da2493$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a1abd38e84bc59da2493.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a4790b5f30c6e3daf259$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a4790b5f30c6e3daf259$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a4790b5f30c6e3daf259.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a890ba657ef07f1cdc36$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a890ba657ef07f1cdc36$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a890ba657ef07f1cdc36.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a894746fdd7d1fbb4f8d$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a894746fdd7d1fbb4f8d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$a894746fdd7d1fbb4f8d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b0a057fc3f618c25358d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b0a057fc3f618c25358d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b374abe49d206aef6a9d$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b374abe49d206aef6a9d$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b374abe49d206aef6a9d.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b60be1f9ca6c2d1ee153$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b60be1f9ca6c2d1ee153$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$b60be1f9ca6c2d1ee153.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c6aae659d2a8771edf5f$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c6aae659d2a8771edf5f$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c6aae659d2a8771edf5f.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c8b2c6017f3f6987a8d6$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c8b2c6017f3f6987a8d6$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$c8b2c6017f3f6987a8d6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$cab19905b41f5ae46930$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$cab19905b41f5ae46930$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$cab19905b41f5ae46930.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d170246b6af7d8e45f85$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d170246b6af7d8e45f85$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d170246b6af7d8e45f85.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d676808a8ccfe2226e8a$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d676808a8ccfe2226e8a$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d676808a8ccfe2226e8a.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d8bafc91cab7deed30a4$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d8bafc91cab7deed30a4$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$d8bafc91cab7deed30a4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$dbc46629bccf20377a41$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$dbc46629bccf20377a41$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$dbc46629bccf20377a41.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$e78c33af8c44522ae63c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$e78c33af8c44522ae63c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$e78c33af8c44522ae63c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f3ec694f8442683201ee$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f3ec694f8442683201ee$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f3ec694f8442683201ee.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f4395d1f86e570754346$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f4395d1f86e570754346$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f4395d1f86e570754346.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f6157cf58c0472fafc4c$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f6157cf58c0472fafc4c$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f6157cf58c0472fafc4c.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f96a7e30bd4969d8a2be$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f96a7e30bd4969d8a2be$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f96a7e30bd4969d8a2be.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f980d41f16f647fefe91$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f980d41f16f647fefe91$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$f980d41f16f647fefe91.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$fe16cf17cabad01fd4a1$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$fe16cf17cabad01fd4a1$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$fe16cf17cabad01fd4a1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$ff0a3d57beb60d502c06$$anonfun$$sbtdef$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$ff0a3d57beb60d502c06$.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/config-classes/$ff0a3d57beb60d502c06.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/scala-2.9.1/sbt-0.11.2/cache/compile/copy-resources" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/scala-2.9.1/sbt-0.11.2/cache/update/inputs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/scala-2.9.1/sbt-0.11.2/cache/update/output" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/$global/compilers/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/$global/ivy-configuration/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/$global/ivy-sbt/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/$global/project-descriptors/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/$global/update/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/compile/$global/$global/data" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/compile/compile-inputs/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/compile/compile/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/compile/copy-resources/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/target/streams/compile/defined-sbt-plugins/$global/out" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/images/ajax-loader.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.classpath" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/IdeaProject.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/highlighting.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/cc_co_scala_reactive_reactive_core_2_9_1_0_2_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/cc_co_scala_reactive_reactive_web_2_9_1_0_2_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/ch_qos_logback_logback_classic_0_9_26.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/ch_qos_logback_logback_core_0_9_26.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/com_h2database_h2_1_2_147.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/com_thoughtworks_paranamer_paranamer_2_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_codec_commons_codec_1_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_codec_commons_codec_1_6.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_fileupload_commons_fileupload_1_2_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_httpclient_commons_httpclient_3_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_logging_commons_logging_1_1_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/javax_activation_activation_1_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail_mail_1_4_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/javax_servlet_servlet_api_2_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jfree_jcommon_1_0_16.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jfree_jfreechart_1_0_13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/joda_time_joda_time_1_6_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/junit_junit_4_8.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_databinder_dispatch_core_2_9_1_0_8_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_databinder_dispatch_futures_2_9_1_0_8_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_databinder_dispatch_nio_2_9_1_0_8_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_actor_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_common_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_db_2_9_1_2_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_db_2_9_1_2_4_M5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_db_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_json_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_mapper_2_9_1_2_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_mapper_2_9_1_2_4_M5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_mapper_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_proto_2_9_1_2_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_proto_2_9_1_2_4_M5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_proto_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_testkit_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_util_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_webkit_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_widgets_2_9_1_2_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_widgets_2_9_1_2_4_M5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_widgets_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_wizard_2_9_1_2_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_wizard_2_9_1_2_4_M5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/net_liftweb_lift_wizard_2_9_1_2_5_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/nu_validator_htmlparser_htmlparser_1_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_derby_derby_10_7_1_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_httpcomponents_httpasyncclient_4_0_alpha1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_httpcomponents_httpclient_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_httpcomponents_httpcore_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_httpcomponents_httpcore_nio_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_scala_lang_scala_compiler_2_9_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_scala_lang_scala_library_2_9_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_scala_lang_scalap_2_9_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_scala_tools_testing_specs_2_9_1_1_6_9.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_slf4j_slf4j_api_1_6_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/scala_2_9_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/projectCodeStyle.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea_modules/default-d51a62.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea_modules/project.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.project" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.target/scala-2.9.1/classes/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.target/scala-2.9.1/classes/code/comet/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.target/scala-2.9.1/classes/code/view/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.target/scala-2.9.1/classes/props/default.props" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.target/scala-2.9.1/test-classes/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build.sbt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/plugins.sbt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/props/default.props" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/toserve/flot/jquery.flot.text.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/comet/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/helper/Domain.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/helper/Field.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/helper/Transform.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/lib/DependencyFactory.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Data.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Device.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Message.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Notification.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Point.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/Subscription.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/model/User.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/CRUDifiable.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/Message.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/Notifiable.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/Plottable.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/Service.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/service/Viewable.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/snippet/Login.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/snippet/Notifier.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/snippet/Plotter.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/snippet/Time.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/code/view/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/admins/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/data/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/devices/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/login.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/messages/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/notifications/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/notify.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/static/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/templates-hidden/default.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/templates-hidden/wizard-all.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/users/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/resources/.keep" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/LiftConsole.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/code/AppTest.scala" />
+    </list>
+    <ignored path="HMSP.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="HMSP" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Viewable.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Viewable.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="6" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".name" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/.name">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Service.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Service.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="15" selection-start="402" selection-end="402" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Plottable.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Plottable.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="197" column="32" selection-start="5525" selection-end="5525" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="LINE_SEPARATORS_CONVERSION" value="ASK" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/scala/code/snippet/Time.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/snippet/Notifier.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/snippet/Login.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/snippet/Plotter.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/service/Message.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/model/User.scala" />
+        <option value="$PROJECT_DIR$/sbt" />
+        <option value="$PROJECT_DIR$/src/main/webapp/templates-hidden/default.html" />
+        <option value="$USER_HOME$/.ivy2/cache/net.liftweb/lift-util_2.9.1/srcs/lift-util_2.9.1-2.5-SNAPSHOT-sources.jar!/net/liftweb/util/Safe.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/bootstrap/liftweb/Boot.scala" />
+        <option value="$PROJECT_DIR$/build.sbt" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/service/CRUDifiable.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/service/Service.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/service/Plottable.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/code/service/Viewable.scala" />
+        <option value="$PROJECT_DIR$/.idea/.name" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="keepSourceFolders" value="false" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="109" />
+    <option name="y" value="110" />
+    <option name="width" value="948" />
+    <option name="height" value="642" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lift-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lift-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lift-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lift-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="SBT.BeforeRunTask" enabled="false" runInCurrentModule="false" />
+      </method>
+    </configuration>
+    <list size="0" />
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <configuration useDefault="true">$USER_HOME$/.subversion_IDEA</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a51fa632-b837-4226-9803-b31648907d90" name="Default" comment="" />
+      <created>1332330736614</created>
+      <updated>1332330736614</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="109" y="110" width="948" height="642" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32821497" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.6711281" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2488889" sideWeight="0.67178506" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288719" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mapper_2.9.1/srcs/lift-mapper_2.9.1-2.4-sources.jar!/net/liftweb/mapper/package.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="19" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.628483">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mapper_2.9.1/srcs/lift-mapper_2.9.1-2.4-sources.jar!/net/liftweb/mapper/Mapper.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="27" selection-start="1162" selection-end="1162" vertical-scroll-proportion="0.29032257" />
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mapper_2.9.1/srcs/lift-mapper_2.9.1-2.5-SNAPSHOT-sources.jar!/net/liftweb/mapper/Mapper.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="297" column="6" selection-start="8369" selection-end="8369" vertical-scroll-proportion="12.82258" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/User.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="30" selection-start="1796" selection-end="1796" vertical-scroll-proportion="0.27863777" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/snippet/Plotter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="30" selection-start="1602" selection-end="1602" vertical-scroll-proportion="0.7580645" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/model/Message.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="65" selection-start="1033" selection-end="1033" vertical-scroll-proportion="1.625387" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/CRUDifiable.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="6" selection-start="489" selection-end="489" vertical-scroll-proportion="0.33225808" />
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-proto_2.9.1/srcs/lift-proto_2.9.1-2.5-SNAPSHOT-sources.jar!/net/liftweb/proto/Crudify.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="6" selection-start="1120" selection-end="1120" vertical-scroll-proportion="-0.006451613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/net.liftweb/lift-mapper_2.9.1/srcs/lift-mapper_2.9.1-2.5-SNAPSHOT-sources.jar!/net/liftweb/mapper/MetaMapper.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="183" column="24" selection-start="6049" selection-end="6056" vertical-scroll-proportion="0.33225808">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lift-webapp.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/IdeaProject.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/ant.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Viewable.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="6" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Service.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="15" selection-start="402" selection-end="402" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/code/service/Plottable.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="197" column="32" selection-start="5525" selection-end="5525" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/.name">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Scala</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Scala|default-d51a62</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>org.scala-lang_scala-library_2.9.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
