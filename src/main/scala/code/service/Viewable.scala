@@ -1,47 +1,43 @@
 package code.service
 
-import net.liftweb.util.FieldError
-import net.liftweb.mapper.KeyedMapper
 import code.helper.ForeignKeyField
-import scala.xml.{ Elem, Null, TopScope }
-import net.liftweb.json.{ Xml, Extraction }
+import net.liftweb.common.Full
+import net.liftweb.util.FieldError
+import net.liftweb.mapper.{Mapper, KeyedMapper}
 
-case class View(name: String, pairs: List[(String, String)]) extends Convertable {
-  def toXml = Elem(null, name, Null, TopScope,
-    Xml.toXml(Extraction.decompose(pairs.toMap)).toList: _*)
+case class View(name: String, items: List[(String, String)])
+
+trait Viewable[T] {
+  def toView(t: T): View
+  def list(t: List[T]): List[View] = t.map(toView)
 }
 
-case class GroupView(items: List[View]) extends Convertable {
-  def toXml = <list>{ items.map(_.toXml) }</list>
-}
+object Viewable {
 
-case class ErrorView(items: List[FieldError]) extends Convertable {
-  def toXml = <errors>{ items.map(_.msg) }</errors>
-}
-
-trait Viewable {
-  def FKView(fk: ForeignKeyField[_, _]): List[(String, String)] = {
-    fk.foreign match {
-      case km: KeyedMapper[_, _] => km.pairs.map {
-        case (k, v) => (fk.name + k.capitalize, v)
-      }
-      case _ => Nil
+  // TODO recursion
+  implicit object Single extends Viewable[Mapper[_]] {
+    def toView(item: Mapper[_]): View = {
+      val fields = item.allFields.map {
+        case f: ForeignKeyField[_, _] => FKView(f)
+        case f => (f.name, f.asHtml.toString()) :: Nil
+      }.toList.flatten
+      View(item.dbName.toLowerCase, fields)
     }
+
+    def FKView(fk: ForeignKeyField[_, _]): List[(String, String)] = {
+      fk.foreign match {
+        case Full(km: KeyedMapper[_, _]) => km.allFields.map {
+          case f => (fk.name + "." + f.name, f.asHtml.toString()) :: Nil
+        }.toList.flatten
+        case _ => Nil
+      }
+    }
+
   }
 
-  implicit def toView(item: KeyedMapper[_, _]): View = {
-    val fields = item.allFields.map {
-      case f: ForeignKeyField[_, _] => FKView(f)
-      case f => (f.name, f.asHtml.toString()) :: Nil
-    }.toList.flatten
-    View(item.dbName.toLowerCase, fields)
+  implicit object Error extends Viewable[FieldError] {
+    def toView(item: FieldError) = View("error", (item.field.toString, item.msg.toString()) :: Nil)
+
   }
 
-  implicit def toGroupView(items: List[KeyedMapper[_, _]]): GroupView = {
-    GroupView(items.map(toView))
-  }
-
-  implicit def toErrorView(items: List[FieldError]): ErrorView = {
-    ErrorView(items)
-  }
 }

@@ -1,8 +1,8 @@
 package code.service
 
-import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.common.{Empty, Box, Full}
 import code.helper._
+import net.liftweb.mapper.{Mapper, KeyedMapper, KeyedMetaMapper}
 
 // TODO TypeClassify
 /*object CRUD {
@@ -27,7 +27,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
 
   def setup[OwnerType <: KeyedMapper[_, OwnerType]]
   (b: Box[KeyedMapper[_, OwnerType]],
-   extractor: (Any, String) => Box[String], data: Any): Box[KeyedMapper[_, _]] = {
+   extractor: (Any, String) => Box[String], data: Any): Box[Mapper[_]] = {
     for {
       item <- b
       values <- Full(expose map {
@@ -49,23 +49,23 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     }
   }
 
-  def list: Box[List[KeyedMapper[_, _]]] = Full(findAll())
+  def list: Box[List[Mapper[_]]] = Full(findAll())
 
-  def create(extractor: (Any, String) => Box[String], data: Any): Box[KeyedMapper[_, _]] = {
+  def create(extractor: (Any, String) => Box[String], data: Any): Box[Mapper[_]] = {
     setup(Full(create), extractor, data)
   }
 
-  def read(id: String): Box[KeyedMapper[_, _]] =
+  def read(id: String): Box[Mapper[_]] =
     for {
       item <- find(id)
     } yield item
 
   def update(id: String, extractor: (Any, String) => Box[String],
-             data: Any): Box[KeyedMapper[_, _]] = {
+             data: Any): Box[Mapper[_]] = {
     setup(find(id), extractor, data)
   }
 
-  def delete(id: String): Box[KeyedMapper[_, _]] = {
+  def delete(id: String): Box[Mapper[_]] = {
     for {
       item <- find(id)
     } yield {

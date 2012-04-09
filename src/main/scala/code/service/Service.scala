@@ -1,45 +1,20 @@
 package code.service
 
-import scala.xml.NodeSeq
-import net.liftweb.http.rest.{ RestHelper, JsonSelect, XmlSelect }
-import net.liftweb.json.{ JString, JValue }
-import net.liftweb.mapper.{ KeyedMapper, KeyedMetaMapper }
-import net.liftweb.common.{BoxedBoxOrRaw, Box, Empty, Full}
+import net.liftweb.json.{JString, JValue}
+import net.liftweb.common.{Box, Empty, Full}
+import net.liftweb.util.FieldError
+import net.liftweb.mapper.{Mapper, KeyedMapper, KeyedMetaMapper}
+import xml.NodeSeq
+import net.liftweb.http.rest.{JsonXmlSelect, RestHelper, JsonSelect, XmlSelect}
+import net.liftweb.http.{LiftResponse, Req}
 
 trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
   with CRUDifiable[ServiceType]
   with Plottable[Long, ServiceType] {
   self: ServiceType with KeyedMetaMapper[_, ServiceType] =>
 
-  implicit def content(m: Message): String = m.toString()
-
   private def basePath: List[String] = "webservices" :: Nil
   private def servicePath: List[String] = basePath ::: _dbTableNameLC :: Nil
-
-  /*protected def imageResponse_?(in: Req): Boolean = {
-    val accept = in.headers("accept")
-    accept.find(_.toLowerCase.indexOf("application/image") >= 0).isDefined ||
-      ((in.path.suffix equalsIgnoreCase "image") &&
-        (accept.isEmpty ||
-          accept.find(_.toLowerCase.indexOf("") >= 0).isDefined)) ||
-          suplimentalImageResponse_?(in)
-  }
-
-  protected def suplimentalImageResponse_?(in: Req): Boolean = false
-
-  protected trait ImageTest {
-    def testResponse_?(r: Req): Boolean = imageResponse_?(r)
-  }
-
-  protected lazy val ImageReq = new TestReq with ImageTest
-  protected lazy val ImageGet = new TestGet with ImageTest
-  protected lazy val ImageDelete = new TestDelete with ImageTest
-  protected lazy val ImagePost = new TestPost with ImageTest
-  protected lazy val ImagePut = new TestPut with ImageTest
-
-  protected trait ImageBody {
-    def body(r: Req): Box[String] = r.
-  }*/
 
   def extract(data: Any, field: String): Box[String] = {
     data match {
@@ -49,60 +24,78 @@ trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
     }
   }
 
-  implicit def cvt: JxCvtPF[Convertable] = {
-    case (JsonSelect, c, _) => c.toJson
-    case (XmlSelect, c, _) => c.toXml
+  import Viewable._
+  import Convertable._
+
+  def doRead(item: Mapper[_], c: View => LiftResponse)(implicit m: Viewable[Mapper[_]]) = {
+    c(m.toView(item))
   }
 
-  def doSubmit(item: KeyedMapper[_, _]): Convertable = {
+  def doSave(item: Mapper[_], c: View => LiftResponse, cl: List[View] => LiftResponse)(implicit m: Viewable[Mapper[_]],
+                                lfe: Viewable[FieldError]): LiftResponse = {
     item.validate match {
       case Nil =>
         item.save()
-        item
-      case xs => xs
+        c(m.toView(item))
+      case xs =>
+        cl(lfe.list(xs))
     }
   }
 
-  serveJx[Convertable] {
-    servicePath prefixJx {
-      // list
-      case Nil Get _ => list
-
-      // create
-      case Nil XmlPut xml -> _ =>
-        for (item <- create(extract, xml)) yield doSubmit(item)
-      case Nil JsonPut json -> _ =>
-        for (item <- create(extract, json)) yield doSubmit(item)
-
+  serve {
+    servicePath prefix {
       // read
-      case id :: Nil Get _ =>
-        for (item <- read(id)) yield item
+      case id :: Nil XmlGet _ =>
+        for (item <- read(id)) yield doRead(item, implicitly[Convertable[View]].toXmlResp)
+      case id :: Nil JsonGet _ =>
+        for (item <- read(id)) yield doRead(item, implicitly[Convertable[View]].toJsonResp)
     }
   }
 
-  serveJx[Convertable] {
-    servicePath prefixJx {
-      // update
-      case id :: Nil XmlPost xml -> _ =>
-        for (item <- update(id, extract, xml)) yield doSubmit(item)
-      case id :: Nil JsonPost json -> _ =>
-        for (item <- update(id, extract, json)) yield doSubmit(item)
+  serve {
+    servicePath prefix {
+      // list
+      case Nil XmlGet _ =>
+        for (items <- list) yield implicitly[Convertable[List[View]]].toXmlResp(implicitly[Viewable[Mapper[_]]].list(items))
+      case Nil JsonGet _ =>
+        for (items <- list) yield implicitly[Convertable[List[View]]].toJsonResp(implicitly[Viewable[Mapper[_]]].list(items))
 
       // delete
-      case id :: Nil Delete _ =>
-        for (item <- delete(id)) yield item
+      case id :: Nil XmlDelete _ =>
+        for (item <- delete(id)) yield implicitly[Convertable[View]].toXmlResp(implicitly[Viewable[Mapper[_]]].toView(item))
+      case id :: Nil JsonDelete _ =>
+        for (item <- delete(id)) yield implicitly[Convertable[View]].toJsonResp(implicitly[Viewable[Mapper[_]]].toView(item))
+    }
+  }
+
+  serve {
+    servicePath prefix {
+      // create
+      case Nil XmlPut xml -> _ =>
+        for (item <- create(extract, xml)) yield doSave(item, implicitly[Convertable[View]].toXmlResp, implicitly[Convertable[List[View]]].toXmlResp)
+      case Nil JsonPut json -> _ =>
+        for (item <- create(extract, json)) yield doSave(item, implicitly[Convertable[View]].toJsonResp, implicitly[Convertable[List[View]]].toJsonResp)
+
+      // update
+      case id :: Nil XmlPost xml -> _ =>
+        for (item <- update(id, extract, xml)) yield doSave(item, implicitly[Convertable[View]].toXmlResp, implicitly[Convertable[List[View]]].toXmlResp)
+      case id :: Nil JsonPost json -> _ =>
+        for (item <- update(id, extract, json)) yield doSave(item, implicitly[Convertable[View]].toJsonResp, implicitly[Convertable[List[View]]].toJsonResp)
     }
   }
 
   // Plot
-  serveJx[Convertable] {
-    servicePath prefixJx {
-      case "plot" :: plotKind :: ind :: dep :: Nil Get _ => plot(plotKind, (ind, dep), Empty)
+  serve {
+    servicePath prefix {
+      case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
+        implicitly[Convertable[Chart]].toXmlResp(plot(plotKind, (ind, dep), Empty))
+      case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
+        implicitly[Convertable[Chart]].toJsonResp(plot(plotKind, (ind, dep), Empty))
     }
   }
 
   // Notify
-  serveJx[Convertable] {
+  serveJxa {
     servicePath prefixJx {
       case "notify" :: who :: what :: Nil Post _ =>
         for (answer <- (Notify !< Notification(what, who)).get(500L)) yield Reply(answer.toString)
