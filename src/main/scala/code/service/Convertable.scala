@@ -57,7 +57,7 @@ object Convertable {
 
 class Error(param: String) {
 
-  override def toString = "Error %s" format param
+  override def toString = "Error: %s" format param
 }
 
 case object Missing extends Error("Parameter Missing.")

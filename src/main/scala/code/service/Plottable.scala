@@ -23,7 +23,7 @@ FlotLinesOptions,
 FlotGridOptions,
 FlotAxisOptions
 }
-import net.liftweb.mapper.{Mapper, KeyedMapper, KeyedMetaMapper}
+import net.liftweb.mapper.{BaseMapper, KeyedMapper, KeyedMetaMapper}
 
 case class Series(label: String, data: Set[(Double, Double)])
 
@@ -195,8 +195,8 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   def plot(plotKind: String, axis: (String, String), range: Box[(String, String)]): Chart = {
     import Viewable._
     plotKind match {
-      case "group" => GroupPlot(findAll().map(implicitly[Viewable[Mapper[_]]].toView(_)), axis._1, axis._2, range)
-      case "time" => TimePlot(findAll().map(implicitly[Viewable[Mapper[_]]].toView(_)), axis._1, axis._2, range)
+      case "group" => GroupPlot(findAll().map(implicitly[Viewable[BaseMapper]].toView(_)), axis._1, axis._2, range)
+      case "time" => TimePlot(findAll().map(implicitly[Viewable[BaseMapper]].toView(_)), axis._1, axis._2, range)
       case "sine" => SinePlot((View("SinePlot Wave",
         List((10.0.toString, sin(10.0).toString))) :: Nil), axis._1, axis._2, range)
       /*case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
@@ -216,20 +216,21 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   def plotTemplate(): NodeSeq = pageWrapper(_plotTemplate)
 
   def _plotTemplate = {
-    <script type="text/javascript" src="/classpath/flot/jquery.flot.text.js"></script>
-      <h2>Plot
-        {_dbTableNameLC}
-      </h2>
-      <lift:Plotter plot={_dbTableNameLC}>
-        <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
-        <label for="ind">Independent axis:</label> <input type="text" id="ind"/>
-        <label for="dep">Dependent axis:</label> <input type="text" id="dep"/>
-          <br/>
-        <label for="start">Range start:</label> <input type="text" id="start"/>
-        <label for="end">Range end:</label> <input type="text" id="end"/>
-        <button id="trigger">Plot</button>
-        <div id="placeholder" style="width: 600px; height: 400px;"></div>
-        <span id="results"></span>
-      </lift:Plotter>
+    <script data-lift="head" id="flot" src="/classpath/flot/jquery.flot.js" type="text/javascript"></script>
+    <link data-lift="head" type="text/css" rel="stylesheet" href="/classpath/flot/jquery.flot.css"/>
+    <h2>Plot
+      {_dbTableNameLC}
+    </h2>
+    <lift:Plotter plot={_dbTableNameLC}>
+      <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
+      <label for="ind">Independent axis:</label> <input type="text" id="ind"/>
+      <label for="dep">Dependent axis:</label> <input type="text" id="dep"/>
+      <br/>
+      <label for="start">Range start:</label> <input type="text" id="start"/>
+      <label for="end">Range end:</label> <input type="text" id="end"/>
+      <button id="trigger">Plot</button>
+      <div id="placeholder" style="width: 600px; height: 400px;"></div>
+      <span id="results"></span>
+    </lift:Plotter>
   }
 }

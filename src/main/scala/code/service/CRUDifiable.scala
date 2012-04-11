@@ -2,7 +2,8 @@ package code.service
 
 import net.liftweb.common.{Empty, Box, Full}
 import code.helper._
-import net.liftweb.mapper.{Mapper, KeyedMapper, KeyedMetaMapper}
+import net.liftweb.util.FieldError
+import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper, KeyedMetaMapper}
 
 // TODO TypeClassify
 /*object CRUD {
@@ -21,6 +22,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
 
   def expose: List[(String, Transform)]
 
+  // TODO finish method
   def FKSetup(f: ForeignKeyField[_, _], data: Any) {
 
   }
@@ -38,10 +40,10 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
         case ((fieldName, transform), value) =>
           item.fieldByName[Any](fieldName) match {
             case Full(field) => field.set_?(transform(value))
-              /*field match {
-                case fk: ForeignKeyField[Any, OwnerType] => FKSetup(fk, data)
-                case _ => field.set_?(transform(value))
-              }*/
+            /*field match {
+              case fk: ForeignKeyField[Any, OwnerType] => FKSetup(fk, data)
+              case _ => field.set_?(transform(value))
+            }*/
             case _ => Empty
           }
       }
@@ -49,23 +51,35 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     }
   }
 
-  def list: Box[List[Mapper[_]]] = Full(findAll())
-
-  def create(extractor: (Any, String) => Box[String], data: Any): Box[Mapper[_]] = {
-    setup(Full(create), extractor, data)
+  def validate(b: Box[Mapper[_]]): Either[List[FieldError], BaseMapper] = b match {
+    case Full(item) => {
+      item.validate match {
+        case Nil =>
+          item.save()
+          Right(item.asInstanceOf[BaseMapper])
+        case xs => Left(xs)
+      }
+    }
+    case _ => Left(Nil)
   }
 
-  def read(id: String): Box[Mapper[_]] =
+  def list: Box[List[BaseMapper]] = Full(findAll())
+
+  def create(extractor: (Any, String) => Box[String], data: Any): Either[List[FieldError], BaseMapper] = {
+    validate(setup(Full(create), extractor, data))
+  }
+
+  def read(id: String): Box[BaseMapper] =
     for {
       item <- find(id)
     } yield item
 
   def update(id: String, extractor: (Any, String) => Box[String],
-             data: Any): Box[Mapper[_]] = {
-    setup(find(id), extractor, data)
+             data: Any): Either[List[FieldError], BaseMapper] = {
+    validate(setup(find(id), extractor, data))
   }
 
-  def delete(id: String): Box[Mapper[_]] = {
+  def delete(id: String): Box[BaseMapper] = {
     for {
       item <- find(id)
     } yield {
@@ -73,4 +87,5 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
       item
     }
   }
+
 }

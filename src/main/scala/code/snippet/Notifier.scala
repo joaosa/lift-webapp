@@ -7,17 +7,14 @@ import reactive.web.html.TextInput
 import reactive.web.html.Button
 import net.liftweb.http.S
 import akka.actor.{ActorSystem, Props}
-import akka.pattern.ask
-import akka.util.Timeout
-import akka.util.duration._
-import code.service.{NotifierActor, Single}
+import code.service.{NotifierActor, Uni}
 import akka.dispatch.Promise
 
 class Notifier extends Observing {
 
   val system = ActorSystem("notifierActorSystem")
-  implicit val timeout = Timeout(1000 milliseconds)
 
+  // TODO notices aren't shown
   def alert(e: Either[Throwable, String]) {
     e match {
       case Right(result) =>
@@ -35,7 +32,7 @@ class Notifier extends Observing {
     val p = Promise[String]()(system.dispatcher)
     p.onComplete(alert)
     val notifier = system.actorOf(Props(new NotifierActor(p)))
-    notifier ! Single(what.value.value, who.value.value)
+    notifier ! Uni(what.value.value, who.value.value)
   }
 
   val who = TextInput()

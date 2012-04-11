@@ -2,19 +2,16 @@ package code.service
 
 import akka.remote.RemoteScope
 import akka.actor._
-import akka.pattern.ask
 import net.liftweb.mapper.{Like, OrderBy, Ascending, By}
 import code.model.{Device, Subscription, User}
-import akka.util.Timeout
-import akka.util.duration._
-import net.liftweb.common.{Empty, Box, Full}
-import akka.dispatch.{Promise, Future}
+import net.liftweb.common.{Box, Full}
+import akka.dispatch.Promise
 
 sealed trait Message
 
 case class Notification(content: String) extends Message
 
-case class Single(content: String, target: String) extends Message
+case class Uni(content: String, target: String) extends Message
 
 case class Broadcast(content: String) extends Message
 
@@ -28,8 +25,6 @@ class UserActor extends Actor {
 
 class NotifierActor(result: Promise[String]) extends Actor {
 
-  //implicit val timeout = Timeout(5 seconds)
-
   protected def receive = {
     case Broadcast(m) =>
       for {
@@ -38,9 +33,9 @@ class NotifierActor(result: Promise[String]) extends Actor {
       } yield {
         actorNotify(addresses, m)
       }
-    case Single(m, t) =>
+    case Uni(m, t) =>
       for {
-        user <- User.find(Like(User.email, t))
+        user <- User.find(Like(User.username, t))
         subs <- Subscription.find(By(Subscription.user, user.id.is))
         devices <- devicesToNotify(subs :: Nil)
         addresses <- deviceAddresses(devices)
@@ -67,11 +62,11 @@ class NotifierActor(result: Promise[String]) extends Actor {
   }
 
   private def actorNotify(addresses: List[Address], m: String) = {
-    Full(addresses.map {
+    addresses.map {
       addr =>
         val ref = context.actorOf(Props[UserActor].withDeploy(Deploy(scope = RemoteScope(addr))))
         ref ! Notification(m)
-    })
+    }
   }
 
 }
