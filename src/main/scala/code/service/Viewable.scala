@@ -15,7 +15,7 @@ trait Viewable[T] {
 object Viewable {
 
   // TODO recursion
-  implicit object Single extends Viewable[Mapper[_]] {
+  implicit object Mapper extends Viewable[Mapper[_]] {
     def toView(item: Mapper[_]): View = {
       val fields = item.allFields.map {
         case f: ForeignKeyField[_, _] => FKView(f)

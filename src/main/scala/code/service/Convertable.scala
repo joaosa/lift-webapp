@@ -22,7 +22,7 @@ object Convertable {
 
   implicit object Message extends Convertable[Message] {
     def toXml(t: Message) = <message>
-      {t.toString()}
+      {t.toString}
     </message>
   }
 
@@ -55,24 +55,14 @@ object Convertable {
 
 }
 
-class Message(content: String) {
+class Error(param: String) {
 
-  override def toString = content
+  override def toString = "Error %s" format param
 }
 
-class Error(param: String) extends Message("Error %s") {
+case object Missing extends Error("Parameter Missing.")
 
-  override def toString = super.toString format param
-}
+case object NotFound extends Error("Not Found.")
 
-case class Missing(param: String) extends Error("%s Parameter Missing.")
+case object Invalid extends Error("Invalid Parameters.")
 
-case class NotFound(param: String) extends Error("%s Not Found.")
-
-case class Invalid(param: String) extends Error("Invalid Parameters.")
-
-case class Notification(content: String, target: String) extends Message(content)
-
-case class Broadcast(content: String) extends Message(content)
-
-case class Reply(content: String) extends Message(content)

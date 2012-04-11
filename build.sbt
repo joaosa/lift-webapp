@@ -31,6 +31,9 @@ libraryDependencies ++= {
 
 libraryDependencies ++= Seq(
   "cc.co.scala-reactive" %% "reactive-web" % "0.2-SNAPSHOT" % "compile->default",
+  "org.scalaz" %% "scalaz-core" % "6.0.4",
+  "com.typesafe.akka" % "akka-actor" % "2.0",
+  "com.typesafe.akka" % "akka-remote" % "2.0",
   "org.eclipse.jetty" % "jetty-webapp" % "8.1.0.v20120127" % "container", // For Jetty, add scope test to make jetty avl. for tests
   "junit" % "junit" % "4.8" % "test->default", // For JUnit 4 testing
   "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9" % "test", // For specs.org tests

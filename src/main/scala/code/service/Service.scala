@@ -7,6 +7,10 @@ import net.liftweb.mapper.{Mapper, KeyedMapper, KeyedMetaMapper}
 import xml.NodeSeq
 import net.liftweb.http.rest.{JsonXmlSelect, RestHelper, JsonSelect, XmlSelect}
 import net.liftweb.http.{LiftResponse, Req}
+import akka.actor.{Props, ActorSystem}
+import akka.pattern.ask
+import akka.util.Timeout
+import akka.util.duration._
 
 trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
   with CRUDifiable[ServiceType]
@@ -97,8 +101,16 @@ trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
   // Notify
   serveJxa {
     servicePath prefixJx {
-      case "notify" :: who :: what :: Nil Post _ =>
-        for (answer <- (Notify !< Notification(what, who)).get(500L)) yield Reply(answer.toString)
+      case "notify" :: who :: what :: Nil Post _ => {
+        val system = ActorSystem("notifierActorSystem")
+        implicit val timeout = Timeout(5 seconds)
+        val notifier = system.actorOf(Props[NotifierActor], name = "Notifier")
+        ask(notifier, Single(what, who)).map(_.toString) onComplete {
+          case Right(result) => Reply(result)
+          case Left(error) => new Error(error.getMessage)
+        }
+      }
     }
   }
+
 }

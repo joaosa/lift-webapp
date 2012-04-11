@@ -13,6 +13,8 @@ import reactive.web.Reactions
 import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
 import net.liftweb.http.auth.AuthRole
+import akka.actor.ActorSystem
+import com.typesafe.config.ConfigFactory
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -122,5 +124,8 @@ class Boot {
     ResourceServer.allow({
       case "flot" :: "jquery.flot.text.js" :: Nil => true
     })
+
+    // Remote User Actor System
+    ActorSystem("userActorSystem")
   }
 }
