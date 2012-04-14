@@ -32,48 +32,50 @@ with Plottable[Long, ServiceType] {
   import Viewable._
   import Convertable._
 
+  def toXmlResp[T: Convertable](t: T) = implicitly[Convertable[T]].toXmlResp(t)
+  def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
+  def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
+  def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
+
   serve {
-    val toListView = implicitly[Viewable[BaseMapper]].list _
     servicePath prefix {
       // list
       case Nil XmlGet _ =>
-        for (items <- list) yield implicitly[Convertable[List[View]]].toXmlResp(toListView(items))
+        for (items <- list) yield toXmlResp(toListView(items))
       case Nil JsonGet _ =>
-        for (items <- list) yield implicitly[Convertable[List[View]]].toJsonResp(toListView(items))
+        for (items <- list) yield toJsonResp(toListView(items))
     }
   }
 
   serve {
-    val toView = implicitly[Viewable[Either[List[FieldError], BaseMapper]]].toView _
     servicePath prefix {
       // create
       case Nil XmlPut xml -> _ =>
-        implicitly[Convertable[View]].toXmlResp(toView(create(extract, xml)))
+        toXmlResp(toView(create(extract, xml)))
       case Nil JsonPut json -> _ =>
-        implicitly[Convertable[View]].toXmlResp(toView(create(extract, json)))
+        toJsonResp(toView(create(extract, json)))
 
       // update
       case id :: Nil XmlPost xml -> _ =>
-        implicitly[Convertable[View]].toXmlResp(toView(update(id, extract, xml)))
+        toXmlResp(toView(update(id, extract, xml)))
       case id :: Nil JsonPost json -> _ =>
-        implicitly[Convertable[View]].toXmlResp(toView(update(id, extract, json)))
+        toJsonResp(toView(update(id, extract, json)))
     }
   }
 
   serve {
-    val toView = implicitly[Viewable[BaseMapper]].toView _
     servicePath prefix {
       // read
       case id :: Nil XmlGet _ =>
-        for (item <- read(id)) yield implicitly[Convertable[View]].toXmlResp(toView(item))
+        for (item <- read(id)) yield toXmlResp(toView(item))
       case id :: Nil JsonGet _ =>
-        for (item <- read(id)) yield implicitly[Convertable[View]].toJsonResp(toView(item))
+        for (item <- read(id)) yield toJsonResp(toView(item))
 
       // delete
       case id :: Nil XmlDelete _ =>
-        for (item <- delete(id)) yield implicitly[Convertable[View]].toXmlResp(toView(item))
+        for (item <- delete(id)) yield toXmlResp(toView(item))
       case id :: Nil JsonDelete _ =>
-        for (item <- delete(id)) yield implicitly[Convertable[View]].toJsonResp(toView(item))
+        for (item <- delete(id)) yield toJsonResp(toView(item))
     }
   }
 
@@ -81,9 +83,9 @@ with Plottable[Long, ServiceType] {
   serve {
     servicePath prefix {
       case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
-        implicitly[Convertable[Chart]].toXmlResp(plot(plotKind, (ind, dep), Empty))
+        toXmlResp(plot(plotKind, (ind, dep), Empty))
       case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
-        implicitly[Convertable[Chart]].toJsonResp(plot(plotKind, (ind, dep), Empty))
+        toJsonResp(plot(plotKind, (ind, dep), Empty))
     }
   }
 

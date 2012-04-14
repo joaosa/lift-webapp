@@ -3,7 +3,7 @@ package code.service
 import code.helper.ForeignKeyField
 import net.liftweb.common.Full
 import net.liftweb.util.FieldError
-import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper}
+import net.liftweb.mapper.BaseMapper
 
 case class View(name: String, items: List[(String, String)])
 
