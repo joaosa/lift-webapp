@@ -19,7 +19,7 @@ object User extends User with LongKeyedMetaMapper[User]
   override def fieldOrder = List(username, email, password, role)
 
   def expose = ("username", Identity) :: ("email", Identity) ::
-    ("password", Identity) :: ("admin", Identity) :: Nil
+    ("password", Identity) :: ("role", Identity) :: Nil
 
   // find by first name
   def findByName(name: String): Box[User] = find(Like(username, name))
