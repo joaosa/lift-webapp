@@ -4,18 +4,29 @@ import net.liftweb.common.{Empty, Box, Full}
 import code.helper._
 import net.liftweb.util.FieldError
 import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper, KeyedMetaMapper}
+import net.liftweb.json._
+import xml.Elem
 
-// TODO TypeClassify
-/*object CRUD {
-  implicit def messageCRUD = new CRUD[Message] {
-    def expose = ("kind", Identity) :: ("date", Now) :: ("source", ByUserName) ::
-    ("destination", ByUserName) :: ("content", Identity) :: Nil
-  }
+trait Extractor[T] {
+  def extract(t: T, field: String): Box[String]
 }
 
-trait CRUD[CRUDType <: KeyedMapper[_, CRUDType]] {
-  def expose: List[(String, Transform)]
-}  */
+object Extractor {
+
+  implicit object JsonExtractor extends Extractor[JValue] {
+    def extract(t: JValue, field: String): Box[String] = {
+      Box(for (JString(str) <- t \ field) yield str)
+    }
+  }
+
+  implicit object XmlExtractor extends Extractor[Elem] {
+    def extract(t: Elem, field: String): Box[String] = {
+      Full((t \ field).text)
+    }
+  }
+
+}
+
 
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   self: CRUDType with KeyedMetaMapper[_, CRUDType] =>
@@ -27,14 +38,14 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
 
   }
 
+  def extractValues[T: Extractor](t: T): List[Box[String]] = expose map {
+    case (field, transform) => implicitly[Extractor[T]].extract(t, field)
+  }
+
   def setup[OwnerType <: KeyedMapper[_, OwnerType]]
-  (b: Box[KeyedMapper[_, OwnerType]],
-   extractor: (Any, String) => Box[String], data: Any): Box[Mapper[_]] = {
+  (b: Box[KeyedMapper[_, OwnerType]], values: List[Box[String]]): Box[Mapper[_]] = {
     for {
       item <- b
-      values <- Full(expose map {
-        case (field, transform) => extractor(data, field)
-      })
     } yield {
       (expose zip values) map {
         case ((fieldName, transform), value) =>
@@ -63,20 +74,23 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     case _ => Left(Nil)
   }
 
-  def list: Box[List[BaseMapper]] = Full(findAll())
-
-  def create(extractor: (Any, String) => Box[String], data: Any): Either[List[FieldError], BaseMapper] = {
-    validate(setup(Full(create), extractor, data))
+  def create[T: Extractor](t: T): Either[List[FieldError], BaseMapper] = {
+    validate(setup(Full(create), extractValues(t)))
   }
+
+  /*def createList(data: Any): Box[List[BaseMapper]] = {
+
+  }   */
 
   def read(id: String): Box[BaseMapper] =
     for {
       item <- find(id)
     } yield item
 
-  def update(id: String, extractor: (Any, String) => Box[String],
-             data: Any): Either[List[FieldError], BaseMapper] = {
-    validate(setup(find(id), extractor, data))
+  def readAll: Box[List[BaseMapper]] = Full(findAll())
+
+  def update[T: Extractor](id: String, t: T): Either[List[FieldError], BaseMapper] = {
+    validate(setup(find(id), extractValues(t)))
   }
 
   def delete(id: String): Box[BaseMapper] = {

@@ -4,7 +4,7 @@ import scala.xml.NodeSeq
 import net.liftweb.common.Full
 import net.liftweb.util
 import util.Helpers.strToCssBindPromoter
-import reactive.web.html.{ TextInput, Button }
+import reactive.web.html.{TextInput, Button}
 import reactive.Observing
 import reactive.web.RElem.rElemToNsFunc
 import code.helper.Date.{now, toString}

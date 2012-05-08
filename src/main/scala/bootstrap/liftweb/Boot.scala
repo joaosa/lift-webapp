@@ -20,7 +20,7 @@ import com.typesafe.config.ConfigFactory
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
  */
-class Boot {
+class Boot extends Loggable {
   def boot() {
     if (!DB.jndiJdbcConnAvailable_?) {
       val vendor =
@@ -108,11 +108,9 @@ class Boot {
       case Req("secure-basic" :: Nil, _, _) => Full(AuthRole("admin"))
     }
 
-    LiftRules.authentication = HttpBasicAuthentication("lift") {
+    LiftRules.authentication = HttpBasicAuthentication("Authenticate yourself") {
       case (login, password, req) => User.login(login, password)
     }
-
-    //case class HttpAuthProtected(role: () => Box[Role]) extends LocParam
 
     // Start reactive web
     Reactions.init(true)
