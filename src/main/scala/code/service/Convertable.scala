@@ -5,8 +5,8 @@ import net.liftweb.json.{Extraction, Xml}
 import sun.misc.BASE64Encoder
 import org.jfree.chart.ChartUtilities
 import net.liftweb.http.{JsonResponse, XmlResponse, InMemoryResponse}
-import xml.{Node, Elem, Null, TopScope}
 import net.liftweb.http.js.JsExp
+import xml._
 
 trait Convertable[T] extends RestHelper {
   def toXml(t: T): Node
@@ -28,7 +28,7 @@ object Convertable {
 
   implicit object View extends Convertable[View] {
     def toXml(t: View) = Elem(null, t.name, Null, TopScope,
-      Xml.toXml(Extraction.decompose(t.items.toMap)).toList: _*)
+      Xml.toXml(Extraction.decompose(t.items.toMap)): _*)
   }
 
   implicit object ViewList extends Convertable[List[View]] {

@@ -16,7 +16,9 @@ with Plottable[Long, ServiceType] {
 
   private def basePath: List[String] = "webservices" :: Nil
 
-  private def servicePath: List[String] = basePath ::: _dbTableNameLC :: Nil
+  private def modelName: String = dbName.toLowerCase
+
+  private def servicePath: List[String] = basePath ::: modelName :: Nil
 
   import Viewable._
   import Convertable._
@@ -38,8 +40,8 @@ with Plottable[Long, ServiceType] {
         toJsonResp(toView(create(json)))
 
       // create readAll
-      /*case "list" :: Nil JsonPut json -> _ =>
-        toJsonResp(toListView(createList(json)))*/
+      case "list" :: Nil JsonPut json -> _ =>
+        toJsonResp(toListView(createList(json, modelName)))
     }
   }
 

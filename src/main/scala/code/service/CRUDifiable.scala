@@ -8,20 +8,28 @@ import net.liftweb.json._
 import xml.Elem
 
 trait Extractor[T] {
-  def extract(t: T, field: String): Box[String]
+  def extractField(t: T, field: String): Box[String]
+  def extractModel(t: T, modelName: String): List[T]
 }
 
 object Extractor {
 
   implicit object JsonExtractor extends Extractor[JValue] {
-    def extract(t: JValue, field: String): Box[String] = {
-      Box(for (JString(str) <- t \ field) yield str)
+    def extractField(t: JValue, field: String): Box[String] = {
+      Box(for (JString(s) <- t \\ field) yield s)
+    }
+    def extractModel(t: JValue, modelName: String): List[JValue] = {
+      (for (JArray(m) <- t \\ modelName) yield m).flatten
     }
   }
 
   implicit object XmlExtractor extends Extractor[Elem] {
-    def extract(t: Elem, field: String): Box[String] = {
+    def extractField(t: Elem, field: String): Box[String] = {
       Full((t \ field).text)
+    }
+    def extractModel(t: Elem, modelName: String): List[Elem] = {
+      // TODO: implement
+      List()
     }
   }
 
@@ -38,19 +46,21 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
 
   }
 
-  def extractValues[T: Extractor](t: T): List[Box[String]] = expose map {
-    case (field, transform) => implicitly[Extractor[T]].extract(t, field)
+  def transformValues[T: Extractor](t: T): List[(String, Box[Any])] = {
+    expose.map(_._1) zip (expose map {
+      case (field, transform) => transform(implicitly[Extractor[T]].extractField(t, field))
+    })
   }
 
   def setup[OwnerType <: KeyedMapper[_, OwnerType]]
-  (b: Box[KeyedMapper[_, OwnerType]], values: List[Box[String]]): Box[Mapper[_]] = {
+  (b: Box[KeyedMapper[_, OwnerType]], kv: List[(String, Box[Any])]): Box[Mapper[_]] = {
     for {
       item <- b
     } yield {
-      (expose zip values) map {
-        case ((fieldName, transform), value) =>
+      kv map {
+        case (fieldName, value) =>
           item.fieldByName[Any](fieldName) match {
-            case Full(field) => field.set_?(transform(value))
+            case Full(field) => field.set_?(value)
             /*field match {
               case fk: ForeignKeyField[Any, OwnerType] => FKSetup(fk, data)
               case _ => field.set_?(transform(value))
@@ -75,12 +85,12 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   }
 
   def create[T: Extractor](t: T): Either[List[FieldError], BaseMapper] = {
-    validate(setup(Full(create), extractValues(t)))
+    validate(setup(Full(create), transformValues(t)))
   }
 
-  /*def createList(data: Any): Box[List[BaseMapper]] = {
-
-  }   */
+  def createList[T: Extractor](t: T, modelName: String): List[Either[List[FieldError], BaseMapper]] = {
+    implicitly[Extractor[T]].extractModel(t, modelName).map(create(_))
+  }
 
   def read(id: String): Box[BaseMapper] =
     for {
@@ -90,7 +100,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   def readAll: Box[List[BaseMapper]] = Full(findAll())
 
   def update[T: Extractor](id: String, t: T): Either[List[FieldError], BaseMapper] = {
-    validate(setup(find(id), extractValues(t)))
+    validate(setup(find(id), transformValues(t)))
   }
 
   def delete(id: String): Box[BaseMapper] = {
