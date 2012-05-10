@@ -18,10 +18,10 @@ object Viewable {
   // TODO recursion
   implicit object BaseMapper extends Viewable[BaseMapper] {
     def toView(item: BaseMapper): View = {
-      val fields = item.allFields.flatMap {
+      val fields = item.allFields.toList.flatMap {
         case f: ForeignKeyField[_, _] => FKView(f)
         case f => (f.name, f.asHtml.toString()) :: Nil
-      }.toList
+      }
       View(item.dbName.toLowerCase, fields)
     }
 
@@ -41,7 +41,7 @@ object Viewable {
 
   }
 
-  // FIXME only supports one FieldError
+  // TODO only supports one FieldError, fix by replacing Viewable[BaseMapper] with Viewable[BaseField]
   implicit object FieldErrorOrBaseMapper extends Viewable[Either[List[FieldError], BaseMapper]] {
     def toView(t: Either[List[FieldError], BaseMapper]): View = {
       t match {
