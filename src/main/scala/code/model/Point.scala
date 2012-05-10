@@ -1,14 +1,9 @@
 package code.model
 
-import net.liftweb.mapper.{
-  LongKeyedMetaMapper,
-  LongKeyedMapper,
-  IdPK,
-  CRUDify,
-  MappedDouble
-}
 import code.service.Service
 import code.helper._
+import net.liftweb.mapper._
+import net.liftweb.util.FieldError
 
 /**
  * The singleton that has methods for accessing the database
@@ -30,7 +25,15 @@ class Point extends LongKeyedMapper[Point] with IdPK {
 
   object data extends ForeignKeyField(this, Data, Data.name)
 
-  object independent extends MappedDouble(this)
+  object independent extends MappedDouble(this) {
+    override def validations = validateUniqueness _ :: Nil
+    def validateUniqueness(v: Double) = {
+      Point.findAll(By(Point.data, data)) match {
+        case Nil => Nil
+        case _ => List(FieldError(this, "Value must be unique"))
+      }
+    }
+  }
 
   object dependent extends MappedDouble(this)
 }

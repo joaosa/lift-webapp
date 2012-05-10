@@ -44,8 +44,7 @@ abstract class ValueListField[T <: Mapper[T]](theOwner: T, values: List[String])
   override def validations = validateKind _ :: Nil
   def validateKind(kind: String) = {
     kind match {
-      case x if values.contains(kind) =>
-        List[FieldError]()
+      case x if values.contains(kind) => Nil
       case _ => List(FieldError(this, "Invalid value"))
     }
   }
