@@ -5,7 +5,7 @@ import code.helper._
 import net.liftweb.util.FieldError
 import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper, KeyedMetaMapper}
 import net.liftweb.json._
-import xml.Elem
+import xml.{TopScope, Null, Elem}
 
 trait Extractor[T] {
   def extractField(t: T, field: String): Box[String]
@@ -25,11 +25,10 @@ object Extractor {
 
   implicit object XmlExtractor extends Extractor[Elem] {
     def extractField(t: Elem, field: String): Box[String] = {
-      Full((t \ field).text)
+      Full((t \\ field).text)
     }
     def extractModel(t: Elem, modelName: String): List[Elem] = {
-      // TODO: implement
-      List()
+      (t \\ modelName).seq.toList.map(_.asInstanceOf[Elem])
     }
   }
 

@@ -40,6 +40,8 @@ with Plottable[Long, ServiceType] {
         toJsonResp(toView(create(json)))
 
       // create readAll
+      case "list" :: Nil XmlPut xml -> _ =>
+        toXmlResp(toListView(createList(xml, modelName)))
       case "list" :: Nil JsonPut json -> _ =>
         toJsonResp(toListView(createList(json, modelName)))
     }
