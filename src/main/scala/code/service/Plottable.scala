@@ -195,8 +195,8 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   def plot(plotKind: String, axis: (String, String), range: Box[(String, String)]): Chart = {
     import Viewable._
     plotKind match {
-      case "group" => GroupPlot(toListView(findAll()), axis._1, axis._2, range)
-      case "time" => TimePlot(toListView(findAll()), axis._1, axis._2, range)
+      case "group" => GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), axis._1, axis._2, range)
+      case "time" => TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), axis._1, axis._2, range)
       case "sine" => SinePlot((View("SinePlot Wave",
         List((10.0.toString, sin(10.0).toString))) :: Nil), axis._1, axis._2, range)
       /*case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
