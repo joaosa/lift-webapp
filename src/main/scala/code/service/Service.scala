@@ -27,10 +27,6 @@ with Plottable[Long, ServiceType] {
 
   def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
 
-  def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
-
-  def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
-
   serve {
     servicePath prefix {
       // create

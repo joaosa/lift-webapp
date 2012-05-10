@@ -15,6 +15,10 @@ trait Viewable[T] {
 
 object Viewable {
 
+  def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
+
+  def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
+
   // TODO recursion
   implicit object BaseMapper extends Viewable[BaseMapper] {
     def toView(item: BaseMapper): View = {

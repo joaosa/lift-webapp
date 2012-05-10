@@ -195,8 +195,8 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   def plot(plotKind: String, axis: (String, String), range: Box[(String, String)]): Chart = {
     import Viewable._
     plotKind match {
-      case "group" => GroupPlot(findAll().map(implicitly[Viewable[BaseMapper]].toView(_)), axis._1, axis._2, range)
-      case "time" => TimePlot(findAll().map(implicitly[Viewable[BaseMapper]].toView(_)), axis._1, axis._2, range)
+      case "group" => GroupPlot(toListView(findAll()), axis._1, axis._2, range)
+      case "time" => TimePlot(toListView(findAll()), axis._1, axis._2, range)
       case "sine" => SinePlot((View("SinePlot Wave",
         List((10.0.toString, sin(10.0).toString))) :: Nil), axis._1, axis._2, range)
       /*case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
@@ -223,11 +223,17 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
     </h2>
     <lift:Plotter plot={_dbTableNameLC}>
       <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
-      <label for="ind">Independent axis:</label> <input type="text" id="ind"/>
-      <label for="dep">Dependent axis:</label> <input type="text" id="dep"/>
+      <div>
+        <b>Axis:</b>
+        <label for="ind">independent:</label> <input type="text" id="ind"/>
+        <label for="dep">dependent:</label> <input type="text" id="dep"/>
+      </div>
       <br/>
-      <label for="start">Range start:</label> <input type="text" id="start"/>
-      <label for="end">Range end:</label> <input type="text" id="end"/>
+      <div>
+        <b>Range:</b>
+        <label for="start">start:</label> <input type="text" id="start"/>
+        <label for="end">end:</label> <input type="text" id="end"/>
+      </div>
       <button id="trigger">Plot</button>
       <div id="placeholder" style="width: 600px; height: 400px;"></div>
       <span id="results"></span>
