@@ -5,7 +5,7 @@ import code.helper._
 import net.liftweb.util.FieldError
 import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper, KeyedMetaMapper}
 import net.liftweb.json._
-import xml.{TopScope, Null, Elem}
+import xml.Elem
 
 trait Extractor[T] {
   def extractField(t: T, field: String): Box[String]
