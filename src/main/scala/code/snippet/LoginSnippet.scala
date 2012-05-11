@@ -7,7 +7,7 @@ import reactive.web.html.TextInput
 import reactive.web.html.Button
 import code.model.User
 
-class Login extends Observing {
+class LoginSnippet extends Observing {
 
   val trigger = Button("Login") {
     User.login(login.value.value,
