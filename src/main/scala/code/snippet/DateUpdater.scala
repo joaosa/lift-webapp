@@ -7,7 +7,7 @@ import reactive._
 import reactive.web.html._
 import code.helper.Date.{now, toString}
 
-class TimerSnippet extends Observing {
+class DateUpdater extends Observing {
 
   // Create an EventStream that fires timer ticks for up to 10 minutes
   val clockES = new reactive.Timer(0 second, 1 second, { t => this; t > (10 minutes) })

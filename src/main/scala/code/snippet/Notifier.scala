@@ -10,7 +10,7 @@ import akka.actor.{ActorSystem, Props}
 import code.service.{NotifierActor, Uni}
 import akka.dispatch.Promise
 
-class NotifierSnippet extends Observing {
+class Notifier extends Observing {
 
   val system = ActorSystem("notifierActorSystem")
 

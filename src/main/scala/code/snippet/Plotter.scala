@@ -14,7 +14,7 @@ import net.liftweb.http.js.JsCmds.Script
 import reactive.web.html.Select
 import reactive.Val
 
-class PlotterSnippet extends Observing {
+class Plotter extends Observing {
 
   val plotter = S.attr("plot") match {
     case Full("users") => User
