@@ -10,6 +10,8 @@ scalacOptions += "-unchecked"
 
 seq(webSettings: _*)
 
+ssl in container.Configuration := Some(8443, "/Users/jjadonotenter/keystore", "hmsportugal", "hmsp")
+
 // if you have issues pulling dependencies from the scala-tools repositories (checksums don't match), you can disable checksums
 //checksums := Nil
 
