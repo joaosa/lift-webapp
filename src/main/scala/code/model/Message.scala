@@ -20,8 +20,6 @@ object Message extends Message with LongKeyedMetaMapper[Message]
 
   def expose = ("kind", Identity) :: ("date", Now) :: ("source", ByUserName) :: 
   ("destination", ByUserName) :: ("content", Identity) :: Nil
-
-  def name(e: Message) = "%s %s" format (e.kind.asHtml, e.date.asHtml)
 }
 
 /**
@@ -30,13 +28,15 @@ object Message extends Message with LongKeyedMetaMapper[Message]
 class Message extends LongKeyedMapper[Message] with IdPK {
   def getSingleton = Message // reference to the companion object above
 
+  def show = "%s %s" format (kind.asHtml, date.asHtml)
+
   object kind extends ValueListField(this, List("Ping", "Data", "Alert"))
 
   object date extends DateField(this)
 
-  object source extends ForeignKeyField(this, User, User.name)
+  object source extends ForeignKeyField(this, User)
 
-  object destination extends ForeignKeyField(this, User, User.name)
+  object destination extends ForeignKeyField(this, User)
 
   object content extends MappedText(this)
 }

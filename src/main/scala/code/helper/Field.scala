@@ -14,12 +14,12 @@ import net.liftweb.mapper.IdPK
 import code.helper.Date._
 import net.liftweb.mapper.MappedString
 
-abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O] with IdPK](theOwner: T, _foreignMeta: => KeyedMetaMapper[Long, O], show: O => String)
-  extends MappedLongForeignKey(theOwner, _foreignMeta) {
+abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O] with IdPK {def show: String}](theOwner: T, _foreignMeta: => KeyedMetaMapper[Long, O])
+  extends MappedLongForeignKey(theOwner , _foreignMeta) {
   override def validSelectValues = {
-    Full(for (e <- foreignMeta.getSingleton.findAll()) yield (e.id.is, show(e)))
+    Full(for (e <- foreignMeta.getSingleton.findAll()) yield (e.id.is, e.show))
   }
-  override def asHtml = Text(foreign.map(e => show(e)) openOr "None")
+  override def asHtml = Text(foreign.map(e => e.toString()) openOr "None")
 }
 
 abstract class DateField[T <: Mapper[T]](theOwner: T) extends MappedDateTime(theOwner) {

@@ -24,5 +24,5 @@ case object Notification extends Notification with LongKeyedMetaMapper[Notificat
 class Notification extends LongKeyedMapper[Notification] with IdPK {
   def getSingleton = Notification // reference to the companion object above
 
-  object message extends ForeignKeyField(this, Message, Message.name)
+  object message extends ForeignKeyField(this, Message)
 }

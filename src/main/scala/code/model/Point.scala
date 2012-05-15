@@ -23,7 +23,7 @@ object Point extends Point with LongKeyedMetaMapper[Point]
 class Point extends LongKeyedMapper[Point] with IdPK {
   def getSingleton = Point // reference to the companion object above
 
-  object data extends ForeignKeyField(this, Data, Data.name)
+  object data extends ForeignKeyField(this, Data)
 
   object independent extends MappedDouble(this) {
     override def validations = validateUniqueness _ :: Nil

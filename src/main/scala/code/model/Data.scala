@@ -17,8 +17,6 @@ case object Data extends Data with LongKeyedMetaMapper[Data]
 
   def expose = ("kind", Identity) :: ("user", ToLong) ::
     ("date", Identity) :: Nil
-
-  def name(data: Data): String = "%s of %s on %s" format (data.kind, data.user, data.date)
 }
 
 /**
@@ -27,9 +25,11 @@ case object Data extends Data with LongKeyedMetaMapper[Data]
 class Data extends LongKeyedMapper[Data] with IdPK {
   def getSingleton = Data // reference to the companion object above
 
+  def show: String = "%s of %s on %s" format (kind, user, date)
+
   object kind extends ValueListField(this, List("UC", "FHR"))
 
-  object user extends ForeignKeyField(this, User, User.name)
+  object user extends ForeignKeyField(this, User)
 
   object date extends DateField(this)
 }

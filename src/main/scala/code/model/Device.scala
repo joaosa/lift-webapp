@@ -22,7 +22,7 @@ object Device extends Device with LongKeyedMetaMapper[Device]
 class Device extends LongKeyedMapper[Device] with IdPK {
   def getSingleton = Device // reference to the companion object above
 
-  object user extends ForeignKeyField(this, User, User.name)
+  object user extends ForeignKeyField(this, User)
 
   object name extends MappedString(this, 15)
 

@@ -30,5 +30,5 @@ class Subscription extends LongKeyedMapper[Subscription] with IdPK {
 
   object kind extends ValueListField(this, List("Alert"))
 
-  object user extends ForeignKeyField(this, User, User.name)
+  object user extends ForeignKeyField(this, User)
 }

@@ -24,12 +24,10 @@ object User extends User with LongKeyedMetaMapper[User]
   // find by first name
   def findByName(name: String): Box[User] = find(Like(username, name))
 
-  def name(u: User) = u.username.asHtml.toString()
-
   def getUsername(firstName: String, lastName: String) =
     "%s %s" format (firstName, lastName)
 
-  def auth(login: String, password: String): Box[User] = {
+  def authenticate(login: String, password: String): Box[User] = {
     User.find(By(User.email, login)) match {
       case Full(user) if user.password.match_?(password) => Full(user)
       case _ => Empty
@@ -37,7 +35,7 @@ object User extends User with LongKeyedMetaMapper[User]
   }
 
   def login(login: String, password: String): Boolean = {
-    auth(login, password) match {
+    authenticate(login, password) match {
       case Full(user) =>
         S.setSessionAttribute("user", user.email.is)
         userRoles(AuthRole(user.role.is) :: Nil)
@@ -59,6 +57,8 @@ object User extends User with LongKeyedMetaMapper[User]
  */
 class User extends LongKeyedMapper[User] with IdPK {
   def getSingleton = User // reference to the companion object above
+
+  def show = email.asHtml.toString()
 
   object username extends MappedString(this, 32)
 
