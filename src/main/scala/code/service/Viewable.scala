@@ -19,11 +19,11 @@ object Viewable {
 
   def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
 
-  // TODO recursion
+  // TODO recursion & create a flag to enable it
   implicit object BaseMapper extends Viewable[BaseMapper] {
     def toView(item: BaseMapper): View = {
       val fields = item.allFields.toList.flatMap {
-        case f: ForeignKeyField[_, _] => FKView(f)
+        //case f: ForeignKeyField[_, _] => FKView(f)
         case f => (f.name, f.asHtml.toString()) :: Nil
       }
       View(item.dbName.toLowerCase, fields)
