@@ -14,7 +14,7 @@ import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
 import net.liftweb.http.auth.AuthRole
 import akka.actor.ActorSystem
-import com.typesafe.config.ConfigFactory
+import code.service.{Test, Service}
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -62,11 +62,18 @@ class Boot extends Loggable {
     //LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
     LiftRules.setSiteMapFunc(() => sitemap())
 
+    // webservice authentication
+    val withAuthentication: PartialFunction[Req, Unit] = {
+      case _ if Service.LoggedIn.is =>
+    }
+
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
-    // LiftRules.dispatch.append(EventController)
+    LiftRules.dispatch.append(Service)
+    LiftRules.dispatch.append(withAuthentication guard Test)
+    LiftRules.dispatch.append(withAuthentication guard User)
     // stateless -- no session created
-    LiftRules.statelessDispatch.append(User)
+    //LiftRules.statelessDispatch.append(User)
     LiftRules.statelessDispatch.append(Subscription)
     LiftRules.statelessDispatch.append(Device)
     LiftRules.statelessDispatch.append(Message)

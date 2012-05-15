@@ -8,17 +8,44 @@ import akka.pattern.ask
 import akka.util.Timeout
 import akka.util.duration._
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
+import net.liftweb.http.SessionVar
+
+object Test extends RestHelper {
+  serveJxa {
+    Service.basePath prefixJx {
+      case "protected" :: Nil Get _ =>
+        "Ohh, secret"
+    }
+  }
+}
+
+object Service extends RestHelper {
+
+  object LoggedIn extends SessionVar(false)
+
+  def basePath: List[String] = "webservices" :: Nil
+
+  serveJxa {
+    basePath prefixJx {
+      case "login" :: Nil Get req =>
+        LoggedIn(true)
+      case "logout" :: Nil Get req =>
+        LoggedIn(false)
+      case "state" :: Nil Get _ =>
+        LoggedIn.is
+    }
+  }
+
+}
 
 trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
 with CRUDifiable[ServiceType]
 with Plottable[Long, ServiceType] {
   self: ServiceType with KeyedMetaMapper[_, ServiceType] =>
 
-  private def basePath: List[String] = "webservices" :: Nil
-
   private def modelName: String = dbName.toLowerCase
 
-  private def servicePath: List[String] = basePath ::: modelName :: Nil
+  private def servicePath: List[String] = Service.basePath ::: modelName :: Nil
 
   import Viewable._
   import Convertable._
