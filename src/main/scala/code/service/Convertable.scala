@@ -20,6 +20,10 @@ trait Convertable[T] extends RestHelper {
 
 object Convertable {
 
+  def toXmlResp[T: Convertable](t: T) = implicitly[Convertable[T]].toXmlResp(t)
+
+  def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
+
   implicit object Message extends Convertable[Message] {
     def toXml(t: Message) = <message>
       {t.toString}

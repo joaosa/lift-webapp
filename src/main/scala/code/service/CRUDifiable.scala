@@ -14,6 +14,9 @@ trait Extractor[T] {
 
 object Extractor {
 
+  def extractField[T: Extractor](t: T, fieldName: String) = implicitly[Extractor[T]].extractField(t, fieldName)
+  def extractModel[T: Extractor](t: T, modelName: String) = implicitly[Extractor[T]].extractModel(t, modelName)
+
   implicit object JsonExtractor extends Extractor[JValue] {
     def extractField(t: JValue, field: String): Box[String] = {
       Box(for (JString(s) <- t \\ field) yield s)
@@ -47,7 +50,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
 
   def transformValues[T: Extractor](t: T): List[(String, Box[Any])] = {
     expose.map(_._1) zip (expose map {
-      case (field, transform) => transform(implicitly[Extractor[T]].extractField(t, field))
+      case (field, transform) => transform(Extractor.extractField(t, field))
     })
   }
 
@@ -88,7 +91,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   }
 
   def createList[T: Extractor](t: T, modelName: String): List[Either[List[FieldError], BaseMapper]] = {
-    implicitly[Extractor[T]].extractModel(t, modelName).map(create(_))
+    Extractor.extractModel(t, modelName).map(create(_))
   }
 
   def read(id: String): Box[BaseMapper] =

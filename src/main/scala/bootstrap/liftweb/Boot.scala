@@ -14,7 +14,7 @@ import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
 import net.liftweb.http.auth.AuthRole
 import akka.actor.ActorSystem
-import code.service.{Test, Service}
+import code.service.Service
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -69,16 +69,15 @@ class Boot extends Loggable {
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
     LiftRules.dispatch.append(Service)
-    LiftRules.dispatch.append(withAuthentication guard Test)
-    LiftRules.dispatch.append(withAuthentication guard User)
     // stateless -- no session created
     //LiftRules.statelessDispatch.append(User)
-    LiftRules.statelessDispatch.append(Subscription)
-    LiftRules.statelessDispatch.append(Device)
-    LiftRules.statelessDispatch.append(Message)
-    LiftRules.statelessDispatch.append(Notification)
-    LiftRules.statelessDispatch.append(Data)
-    LiftRules.statelessDispatch.append(Point)
+    LiftRules.statelessDispatch.append(withAuthentication guard User)
+    LiftRules.statelessDispatch.append(withAuthentication guard Subscription)
+    LiftRules.statelessDispatch.append(withAuthentication guard Device)
+    LiftRules.statelessDispatch.append(withAuthentication guard Message)
+    LiftRules.statelessDispatch.append(withAuthentication guard Notification)
+    LiftRules.statelessDispatch.append(withAuthentication guard Data)
+    LiftRules.statelessDispatch.append(withAuthentication guard Point)
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts

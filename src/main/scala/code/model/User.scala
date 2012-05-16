@@ -27,8 +27,8 @@ object User extends User with LongKeyedMetaMapper[User]
   def getUsername(firstName: String, lastName: String) =
     "%s %s" format (firstName, lastName)
 
-  def authenticate(login: String, password: String): Box[User] = {
-    User.find(By(User.email, login)) match {
+  def authenticate(email: String, password: String): Box[User] = {
+    User.find(By(User.email, email)) match {
       case Full(user) if user.password.match_?(password) => Full(user)
       case _ => Empty
     }
