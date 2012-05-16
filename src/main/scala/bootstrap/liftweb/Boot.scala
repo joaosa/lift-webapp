@@ -46,7 +46,6 @@ class Boot extends Loggable {
 
     // Build SiteMap
     def sitemap() = SiteMap(
-      //Menu(S ? "Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
       Menu(S ? "Home") / "index",
       Menu(S ? "User") / "login" submenus (),
       Menu(S ? "Admins") / "admins" / ** submenus (

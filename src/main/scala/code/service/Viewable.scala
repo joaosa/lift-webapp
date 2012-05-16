@@ -23,8 +23,8 @@ object Viewable {
   implicit object BaseMapper extends Viewable[BaseMapper] {
     def toView(item: BaseMapper): View = {
       val fields = item.allFields.toList.flatMap {
-        //case f: ForeignKeyField[_, _] => FKView(f)
-        case f => (f.name, f.toString) :: Nil
+        case f: ForeignKeyField[_, _] => (f.name, f.toString()) :: Nil//FKView(f)
+        case f => (f.name, f.asHtml.toString()) :: Nil
       }
       View(item.dbName.toLowerCase, fields)
     }

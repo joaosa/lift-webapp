@@ -31,7 +31,7 @@ abstract class DomainField[T <: Mapper[T]](theOwner: T, domainRestriction: (Doub
   override def validations = validateDomain _ :: Nil
   def validateDomain(value: Double) = {
     value match {
-      case x if domainRestriction(value) => List[FieldError]()
+      case x if domainRestriction(value) => Nil
       case _ => List(FieldError(this, "Invalid value"))
     }
   }

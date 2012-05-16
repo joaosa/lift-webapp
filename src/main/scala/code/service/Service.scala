@@ -1,14 +1,11 @@
 package code.service
 
 import net.liftweb.common.Empty
-import net.liftweb.http.rest.RestHelper
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
-import akka.pattern.ask
-import akka.util.Timeout
-import akka.util.duration._
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
-import net.liftweb.http.SessionVar
+import net.liftweb.http.rest.{RestContinuation, RestHelper}
+import net.liftweb.http.{PlainTextResponse, SessionVar}
 
 object Test extends RestHelper {
   serveJxa {
@@ -33,6 +30,28 @@ object Service extends RestHelper {
         LoggedIn(false)
       case "state" :: Nil Get _ =>
         LoggedIn.is
+    }
+  }
+
+  // Notify
+  serve {
+    basePath prefix {
+      case "notify" :: who :: what :: Nil Post _ => {
+        RestContinuation.async {
+          satisfyRequest => {
+            val system = ActorSystem()
+            val p = Promise[String]()(system.dispatcher)
+            p onComplete {
+              case Right(result) =>
+                () => satisfyRequest(PlainTextResponse(result))
+              case Left(error) =>
+                () => satisfyRequest(PlainTextResponse(error.getMessage))
+            }
+            val notifier = system.actorOf(Props(new NotifierActor(p)))
+            notifier ! Uni(what, who)
+          }
+        }
+      }
     }
   }
 
@@ -115,23 +134,4 @@ with Plottable[Long, ServiceType] {
         toJsonResp(plot(plotKind, (ind, dep), Empty))
     }
   }
-
-  // Notify
-  serveJxa {
-    servicePath prefixJx {
-      case "notify" :: who :: what :: Nil Post _ => {
-
-        val system = ActorSystem()
-        implicit val timeout = new Timeout(1000 milliseconds)
-        val p = Promise[String]()(system.dispatcher)
-        p onComplete {
-          case Right(result) => Reply(result)
-          case Left(error) => new Error(error.getMessage)
-        }
-        val notifier = system.actorOf(Props(new NotifierActor(p)))
-        ask(notifier, Uni(what, who))
-      }
-    }
-  }
-
 }
