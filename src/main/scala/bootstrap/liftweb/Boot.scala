@@ -65,14 +65,15 @@ class Boot extends Loggable {
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
     LiftRules.dispatch.append(Service)
+    LiftRules.dispatch.append(withAuthentication guard User)
+    LiftRules.dispatch.append(withAuthentication guard Subscription)
+    LiftRules.dispatch.append(withAuthentication guard Device)
+    LiftRules.dispatch.append(withAuthentication guard Message)
+    LiftRules.dispatch.append(withAuthentication guard Notification)
+    LiftRules.dispatch.append(withAuthentication guard Data)
+    LiftRules.dispatch.append(withAuthentication guard Point)
     // stateless -- no session created
-    LiftRules.statelessDispatch.append(withAuthentication guard User)
-    LiftRules.statelessDispatch.append(withAuthentication guard Subscription)
-    LiftRules.statelessDispatch.append(withAuthentication guard Device)
-    LiftRules.statelessDispatch.append(withAuthentication guard Message)
-    LiftRules.statelessDispatch.append(withAuthentication guard Notification)
-    LiftRules.statelessDispatch.append(withAuthentication guard Data)
-    LiftRules.statelessDispatch.append(withAuthentication guard Point)
+    LiftRules.statelessDispatch.append(User)
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts
