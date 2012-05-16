@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 import net.liftweb.util.Helpers
 
 object Date {
-  private val datePattern = "dd/MM/yyyy HH:mm:ss"
+  private val datePattern = "yyyy-MM-dd HH:mm:ss Z"
   private val dateFormat = DateTimeFormat forPattern datePattern
   def format(date: DateTime): String = date toString dateFormat
   def parse(date: String): DateTime = dateFormat.parseDateTime(date)
