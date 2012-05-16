@@ -13,8 +13,8 @@ object Point extends Point with LongKeyedMetaMapper[Point]
   override def dbTableName = "points" // define the DB table name
   override def fieldOrder = List(data, independent, dependent)
 
-  def expose = ("data", ToLong) :: ("independent", ToDouble) :: 
-  ("dependent", ToDouble) :: Nil
+  def expose = ("data", ToLong) :: ("date", Identity) ::
+    ("independent", ToDouble) :: ("dependent", ToDouble) :: Nil
 }
 
 /**
@@ -24,6 +24,8 @@ class Point extends LongKeyedMapper[Point] with IdPK {
   def getSingleton = Point // reference to the companion object above
 
   object data extends ForeignKeyField(this, Data)
+
+  object date extends DateField(this)
 
   object independent extends MappedDouble(this) {
     override def validations = validateUniqueness _ :: Nil
