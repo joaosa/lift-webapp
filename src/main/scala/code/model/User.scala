@@ -39,11 +39,8 @@ object User extends User with LongKeyedMetaMapper[User]
       case Full(user) =>
         S.setSessionAttribute("user", user.email.is)
         userRoles(AuthRole(user.role.is) :: Nil)
-        S.notice("Login successful!")
-        S.notice(S.getSessionAttribute("user") openOr "")
         true
       case _ =>
-        S.notice("Login failed!")
         false
     }
   }
