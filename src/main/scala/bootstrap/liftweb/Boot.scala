@@ -48,13 +48,14 @@ class Boot extends Loggable {
     // Build SiteMap
     def sitemap() = SiteMap(
       Menu(S ? "Home") / "index",
-      Menu(S ? "User") / "login" submenus (),
-      Menu(S ? "Admins") / "admins" / ** submenus (
+      Menu(S ? "User") / "users" / "index" submenus (
+        Menu(S ? "Login") / "users" / "login"),
+      Menu(S ? "Admins") / "admins" / "index" submenus (
         Menu(S ? "Notify") / "notify",
-        Menu(S ? "Users") / "users" / "index" submenus (User.menus ::: Subscription.menus ::: Device.menus),
-        Menu(S ? "Messages") / "messages" / "index" submenus (Message.menus),
-        Menu(S ? "Notifications") / "notifications" / "index" submenus (Notification.menus),
-        Menu(S ? "Data") / "data" / "index" submenus (Data.menus ::: Point.menus)))
+        Menu(S ? "Users") / "users" / "admin" submenus (User.menus ::: Subscription.menus ::: Device.menus),
+        Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
+        Menu(S ? "Notifications") / "notifications" / "admin" submenus (Notification.menus),
+        Menu(S ? "Data") / "data" / "admin" submenus (Data.menus ::: Point.menus)))
 
     //def sitemapMutators = User.sitemapMutator
     // set the sitemap.  Note if you don't want access control for
@@ -73,7 +74,7 @@ class Boot extends Loggable {
     LiftRules.dispatch.append(withAuthentication guard Data)
     LiftRules.dispatch.append(withAuthentication guard Point)
     // stateless -- no session created
-    LiftRules.statelessDispatch.append(User)
+    //LiftRules.statelessDispatch.append(User)
 
     // Use jQuery 1.4
     LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts
@@ -106,7 +107,8 @@ class Boot extends Loggable {
     // Authentication
     // This resource is protected by an AuthRole named admin.
     LiftRules.httpAuthProtectedResource.prepend {
-      case Req("secure-basic" :: Nil, _, _) => Full(AuthRole("admin"))
+      case Req("user" :: Nil, _, _) => Full(AuthRole("user"))
+      case Req("admins" :: Nil, _, _) => Full(AuthRole("admin"))
     }
 
     LiftRules.authentication = HttpBasicAuthentication("Authenticate yourself") {
