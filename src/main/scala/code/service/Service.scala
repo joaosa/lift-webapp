@@ -5,27 +5,31 @@ import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
-import net.liftweb.http.{PlainTextResponse, SessionVar}
-
-object Test extends RestHelper {
-  serveJxa {
-    Service.basePath prefixJx {
-      case "protected" :: Nil Get _ =>
-        "Ohh, secret"
-    }
-  }
-}
+import code.model.User
+import net.liftweb.http.{Req, PlainTextResponse, SessionVar}
 
 object Service extends RestHelper {
 
   object LoggedIn extends SessionVar(false)
 
-  def basePath: List[String] = "webservices" :: Nil
+  // webservice authentication
+  val withAuthentication: PartialFunction[Req, Unit] = {
+    case _ if LoggedIn.is =>
+  }
+
+  protected def basePath: List[String] = "webservices" :: Nil
+
+  import Extractor._
 
   serveJxa {
     basePath prefixJx {
-      case "login" :: Nil Get req =>
+      case "login" :: Nil XmlPost xml -> _ =>
         LoggedIn(true)
+      case "login" :: Nil JsonPost json -> _ =>
+        val login = extractField(json, "login")
+        val password = extractField(json, "password")
+        val state = User.login(login openOr "", password openOr "")
+        LoggedIn(state)
       case "logout" :: Nil Get req =>
         LoggedIn(false)
       case "state" :: Nil Get _ =>
@@ -68,10 +72,6 @@ with Plottable[Long, ServiceType] {
 
   import Viewable._
   import Convertable._
-
-  def toXmlResp[T: Convertable](t: T) = implicitly[Convertable[T]].toXmlResp(t)
-
-  def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
 
   serve {
     servicePath prefix {
