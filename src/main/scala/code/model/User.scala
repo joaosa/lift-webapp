@@ -2,30 +2,30 @@ package code.model
 
 import net.liftweb.mapper._
 import net.liftweb.common._
-import net.liftweb.http.S
 import code.service.Service
 import code.helper._
-import net.liftweb.http.auth.userRoles
-import net.liftweb.http.auth.AuthRole
+import net.liftweb.http.S
 
 /**
  * The singleton that has methods for accessing the database
  */
 object User extends User with LongKeyedMetaMapper[User]
-  with CRUDify[Long, User] with Service[User] {
+with CRUDify[Long, User] with Service[User] {
 
-  override def dbTableName = "users" // define the DB table name
+  override def dbTableName = "users"
+
+  // define the DB table name
   // define the order fields will appear in forms and output
   override def fieldOrder = List(username, email, password, role)
 
-  def expose = ("username", Identity) :: ("email", Identity) ::
-    ("password", Identity) :: ("role", Identity) :: Nil
+  def expose = ("username", Identity) ::("email", Identity) ::
+    ("password", Identity) ::("role", Identity) :: Nil
 
   // find by first name
   def findByName(name: String): Box[User] = find(Like(username, name))
 
   def getUsername(firstName: String, lastName: String) =
-    "%s %s" format (firstName, lastName)
+    "%s %s" format(firstName, lastName)
 
   def authenticate(email: String, password: String): Box[User] = {
     User.find(By(User.email, email)) match {
@@ -34,18 +34,8 @@ object User extends User with LongKeyedMetaMapper[User]
     }
   }
 
-  def login(login: String, password: String): Boolean = {
-    authenticate(login, password) match {
-      case Full(user) =>
-        S.setSessionAttribute("user", user.email.is)
-        userRoles(AuthRole(user.role.is) :: Nil)
-        true
-      case _ =>
-        false
-    }
-  }
-
   def devices(u: User): List[Device] = Device.findAll(By(Device.user, u.id.is))
+
   def devicesOnline(u: User): List[Device] = devices(u).filter(_.online.is)
 }
 

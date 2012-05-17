@@ -115,7 +115,7 @@ class Boot extends Loggable {
     }
 
     LiftRules.authentication = HttpBasicAuthentication("Authenticate yourself") {
-      case (login, password, req) => User.login(login, password)
+      case (login, password, req) => Service.login(login, password)
     }
 
     // Start reactive web

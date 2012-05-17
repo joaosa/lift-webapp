@@ -1,16 +1,37 @@
 package code.service
 
-import net.liftweb.common.Empty
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import code.model.User
-import net.liftweb.http.{Req, PlainTextResponse, SessionVar}
+import net.liftweb.common.{Full, BoxOrRaw, Empty}
+import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
+import net.liftweb.http.auth.{userRoles, AuthRole}
 
 object Service extends RestHelper {
 
   object LoggedIn extends SessionVar(false)
+
+  def login(login: String, password: String): Boolean = {
+    User.authenticate(login, password) match {
+      case Full(user) =>
+        userRoles(AuthRole(user.role.is) :: Nil)
+        LoggedIn(true)
+        isLoggedIn
+      case _ =>
+        isLoggedIn
+    }
+  }
+
+  def isLoggedIn: Boolean = {
+    LoggedIn.is
+  }
+
+  def logout: Boolean = {
+    LoggedIn(false)
+    !isLoggedIn
+  }
 
   // webservice authentication
   val withAuthentication: PartialFunction[Req, Unit] = {
@@ -21,19 +42,22 @@ object Service extends RestHelper {
 
   import Extractor._
 
+  def doLogin[T: Extractor](t: T): BoxOrRaw[Any] = {
+    val login = extractField(t, "login")
+    val password = extractField(t, "password")
+    this.login(login openOr "", password openOr "")
+  }
+
   serveJxa {
     basePath prefixJx {
       case "login" :: Nil XmlPost xml -> _ =>
-        LoggedIn(true)
+        doLogin(xml)
       case "login" :: Nil JsonPost json -> _ =>
-        val login = extractField(json, "login")
-        val password = extractField(json, "password")
-        val state = User.login(login openOr "", password openOr "")
-        LoggedIn(state)
+        doLogin(json)
       case "logout" :: Nil Get req =>
-        LoggedIn(false)
+        logout
       case "state" :: Nil Get _ =>
-        LoggedIn.is
+        isLoggedIn
     }
   }
 
