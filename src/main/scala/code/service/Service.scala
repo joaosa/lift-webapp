@@ -18,9 +18,9 @@ object Service extends RestHelper {
       case Full(user) =>
         userRoles(AuthRole(user.role.is) :: Nil)
         LoggedIn(true)
-        isLoggedIn
+        true
       case _ =>
-        isLoggedIn
+        false
     }
   }
 
