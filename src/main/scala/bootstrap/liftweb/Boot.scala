@@ -104,11 +104,14 @@ class Boot extends Loggable {
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper())
 
+    // Authorization
+    val roles = AuthRole("admin", AuthRole("user"))
+
     // Authentication
     // This resource is protected by an AuthRole named admin.
     LiftRules.httpAuthProtectedResource.prepend {
-      case Req("user" :: Nil, _, _) => Full(AuthRole("user"))
-      case Req("admins" :: Nil, _, _) => Full(AuthRole("admin"))
+      case Req("users" :: xs, _, _) => roles.getRoleByName("user")
+      case Req("admins" :: xs, _, _) => roles.getRoleByName("admin")
     }
 
     LiftRules.authentication = HttpBasicAuthentication("Authenticate yourself") {
