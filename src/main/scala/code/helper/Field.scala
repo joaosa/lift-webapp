@@ -23,7 +23,7 @@ abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O]
 }
 
 abstract class DateField[T <: Mapper[T]](theOwner: T) extends MappedDateTime(theOwner) {
-  override def asHtml = Text(toJoda(is))
+  override def asHtml = Text(format(toJoda(is)))
   override def defaultValue = now
 }
 

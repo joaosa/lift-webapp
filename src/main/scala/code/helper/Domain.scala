@@ -15,5 +15,4 @@ object Date {
 
   implicit def toDB(date: DateTime): javaDate = date.toDate
   implicit def toJoda(date: javaDate): DateTime = new DateTime(date)
-  implicit def toString(date: DateTime): String = format(date)
 }
