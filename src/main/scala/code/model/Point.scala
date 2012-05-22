@@ -30,7 +30,7 @@ class Point extends LongKeyedMapper[Point] with IdPK {
   object independent extends MappedDouble(this) {
     override def validations = validateUniqueness _ :: Nil
     def validateUniqueness(v: Double) = {
-      Point.findAll(By(Point.data, data)) match {
+      Point.findAll(By(Point.data, data), By(Point.independent, v)) match {
         case Nil => Nil
         case _ => List(FieldError(this, "Value must be unique"))
       }
