@@ -97,7 +97,6 @@ case class TimePlot(source: List[View],
                     indRange: Box[(String, String)])
   extends Chart {
   def toSeries = {
-    // TODO update to match new DB structure
     import code.helper.Formattable._
     new Series(dep, source.map {
       s =>
