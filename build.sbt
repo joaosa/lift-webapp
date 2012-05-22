@@ -10,7 +10,7 @@ scalacOptions += "-unchecked"
 
 seq(webSettings: _*)
 
-ssl in container.Configuration := Some(8443, "keystore", "hmsportugal", "hmsp")
+ssl in container.Configuration := Some(8443, "keystore", "hmsportugal", "hmsportugal")
 
 resolvers ++= Seq(
   "Sonatype Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
