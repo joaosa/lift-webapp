@@ -7,15 +7,16 @@ import util.Helpers.strToCssBindPromoter
 import reactive.web.html.{TextInput, Button}
 import reactive.Observing
 import reactive.web.RElem.rElemToNsFunc
-import code.helper.Date.{now, toString}
 import code.model._
 import net.liftweb.http.S
 import net.liftweb.http.js.JsCmds.Script
 import reactive.web.html.Select
 import reactive.Val
+import reactive.web.Cell
 
 class Plotter extends Observing {
 
+  // TODO remove this check
   val plotter = S.attr("plot") match {
     case Full("users") => User
     case Full("subscriptions") => Subscription
@@ -25,43 +26,61 @@ class Plotter extends Observing {
     case _ => Point
   }
 
-  val trigger = Button("Plot") {}
+  def getInd(plotType: String): Seq[String] = {
+    plotType match {
+      case "group" => plotter.allFields.map(_.name)
+      case "time" => "date" :: Nil
+      case _ => Nil
+    }
+  }
+
+  def getDep(plotType: String): Seq[String] = {
+    plotType match {
+      case "group" => "count" :: Nil
+      case "time" => plotter.allFields.map(_.name)
+      case _ => Nil
+    }
+  }
+
+  val trigger = Button("Choose") {}
 
   val kind = Select(Val(List("blank", "group", "time", "sine")))
-  kind.selectedIndex() = Some(0)
+  kind.selectedIndex() = Some(2)
 
-  val ind = TextInput()
-  ind.value updateOn trigger.click
+  val ind = Select(Val(getInd(kind.selectedItem.value getOrElse "")))
+  ind.selectedIndex() = Some(0)
 
-  val dep = TextInput()
-  dep.value updateOn trigger.click
+  val dep = Select(Val(getDep(kind.selectedItem.value getOrElse "")))
+  dep.selectedIndex() = Some(2)
+
+  import code.helper.Formattable._
 
   val start = TextInput()
-  start.value() = now.minusDays(1)
+  start.value() = format(now.minusDays(1))
   start.value updateOn trigger.click
 
   val end = TextInput()
-  end.value() = now
+  end.value() = format(now)
   end.value updateOn trigger.click
 
-  def render = {
+  def render =
     "#plotKind" #> kind &
       "#ind" #> ind &
       "#dep" #> dep &
       "#start" #> start &
       "#end" #> end &
       "#trigger" #> trigger &
-      "#results" #> reactive.web.Cell(
+      "#results" #> Cell {
         for {
           kindName <- kind.selectedItem
-          indName <- ind.value
-          depName <- dep.value
+          indName <- ind.selectedItem
+          depName <- dep.selectedItem
           indMin <- start.value
           indMax <- end.value
         } yield {
           _: NodeSeq =>
-            Script(plotter.plot(kindName getOrElse "", (indName, depName), Full(indMin, indMax))
+            Script(plotter.plot(kindName getOrElse "", indName getOrElse "", depName getOrElse "", Full(indMin, indMax))
               .toJs("placeholder"))
-        })
-  }
+        }
+      }
 }

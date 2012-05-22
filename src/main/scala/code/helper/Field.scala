@@ -11,7 +11,6 @@ import net.liftweb.mapper.MappedDateTime
 import net.liftweb.util.FieldError
 import net.liftweb.mapper.MappedDouble
 import net.liftweb.mapper.IdPK
-import code.helper.Date._
 import net.liftweb.mapper.MappedString
 
 abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O] with IdPK {def show: String}](theOwner: T, _foreignMeta: => KeyedMetaMapper[Long, O])
@@ -23,7 +22,8 @@ abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O]
 }
 
 abstract class DateField[T <: Mapper[T]](theOwner: T) extends MappedDateTime(theOwner) {
-  override def asHtml = Text(format(toJoda(is)))
+  import code.helper.Formattable._
+  override def asHtml = Text(Formattable.format(is))
   override def defaultValue = now
 }
 

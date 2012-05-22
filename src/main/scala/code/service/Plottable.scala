@@ -1,9 +1,8 @@
 package code.service
 
 import net.liftweb.common.{Full, Box}
-import code.helper.Date._
 import scala.math.sin
-import java.util.{Date => javaDate}
+import java.util.Date
 import net.liftweb.sitemap.{Menu, Loc}
 import scala.xml.NodeSeq
 import net.liftweb.proto.Crudify
@@ -98,11 +97,15 @@ case class TimePlot(source: List[View],
                     indRange: Box[(String, String)])
   extends Chart {
   def toSeries = {
+    // TODO update to match new DB structure
+    import code.helper.Formattable._
     new Series(dep, source.map {
-      _.items.map {
-        case (k, v) => (parse(k).getTime.toDouble, v.toDouble)
-      }.toSet
-    }.flatten.toSet) :: Nil
+      s =>
+        val dataMap = s.items.toMap
+        val date = Joda.parse(dataMap(ind)).getTime.toDouble
+        val value = dataMap(dep).toDouble
+        (date, value)
+    }.toSet) :: Nil
   }
 
   def toExport = {
@@ -110,7 +113,7 @@ case class TimePlot(source: List[View],
     val dataset = new TimeSeries(series.head.label)
     series.head.data map {
       case (x, y) =>
-        dataset.addOrUpdate(new Millisecond(new javaDate(x.toLong)), y)
+        dataset.addOrUpdate(new Millisecond(new Date(x.toLong)), y)
     }
     ChartFactory.createTimeSeriesChart(
       dep + " over " + ind,
@@ -146,7 +149,7 @@ case class GroupPlot(source: List[View],
   extends Chart {
   def toSeries = {
     val dataByKey =
-      source.map(_.items.toMap).groupBy(_(dep))
+      source.map(_.items.toMap).groupBy(_(ind))
     (dataByKey map {
       case (k, v) => {
         val index = dataByKey.keySet.toList.indexOf(k) + 1
@@ -192,15 +195,15 @@ case class GroupPlot(source: List[View],
 trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: PlotType with KeyedMetaMapper[_, PlotType] =>
 
-  def plot(plotKind: String, axis: (String, String), range: Box[(String, String)]): Chart = {
+  def plot(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): Chart = {
     import Viewable._
     plotKind match {
-      case "group" => GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), axis._1, axis._2, range)
-      case "time" => TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), axis._1, axis._2, range)
+      case "group" => GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
+      case "time" => TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
       case "sine" => SinePlot((View("SinePlot Wave",
-        List((10.0.toString, sin(10.0).toString))) :: Nil), axis._1, axis._2, range)
+        List((10.0.toString, sin(10.0).toString))) :: Nil), ind, dep, range)
       /*case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
-        yield (i / 10.0, sin(i / 10.0))).toSet), axis._1, axis._2, range)*/
+        yield (i / 10.0, sin(i / 10.0))).toSet), ind, dep, range)*/
       case _ => Blank
     }
   }
@@ -217,26 +220,26 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
 
   def _plotTemplate = {
     <script data-lift="head" id="flot" src="/classpath/flot/jquery.flot.js" type="text/javascript"></script>
-    <link data-lift="head" type="text/css" rel="stylesheet" href="/classpath/flot/jquery.flot.css"/>
-    <h2>Plot
-      {_dbTableNameLC}
-    </h2>
-    <lift:Plotter plot={_dbTableNameLC}>
-      <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
-      <div>
-        <b>Axis:</b>
-        <label for="ind">independent:</label> <input type="text" id="ind"/>
-        <label for="dep">dependent:</label> <input type="text" id="dep"/>
-      </div>
-      <br/>
-      <div>
-        <b>Range:</b>
-        <label for="start">start:</label> <input type="text" id="start"/>
-        <label for="end">end:</label> <input type="text" id="end"/>
-      </div>
-      <button id="trigger">Plot</button>
-      <div id="placeholder" style="width: 600px; height: 400px;"></div>
-      <span id="results"></span>
-    </lift:Plotter>
+        <link data-lift="head" type="text/css" rel="stylesheet" href="/classpath/flot/jquery.flot.css"/>
+      <h2>Plot
+        {_dbTableNameLC}
+      </h2>
+      <lift:Plotter plot={_dbTableNameLC}>
+        <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
+        <div>
+          <b>Axis:</b>
+          <label for="ind">independent:</label> <input type="text" id="ind"/>
+          <label for="dep">dependent:</label> <input type="text" id="dep"/>
+        </div>
+          <br/>
+        <div>
+          <b>Range:</b>
+          <label for="start">start:</label> <input type="text" id="start"/>
+          <label for="end">end:</label> <input type="text" id="end"/>
+        </div>
+        <button id="trigger">Plot</button>
+        <div id="placeholder" style="width: 600px; height: 400px;"></div>
+        <span id="results"></span>
+      </lift:Plotter>
   }
 }

@@ -5,7 +5,6 @@ import net.liftweb.util._
 import Helpers._
 import reactive._
 import reactive.web.html._
-import code.helper.Date.{now, format}
 
 class DateUpdater extends Observing {
 
@@ -17,6 +16,7 @@ class DateUpdater extends Observing {
 
   def render = {
     // replace the contents of the element with id "time" with the date
+    import code.helper.Formattable._
     "#time *" #> Span(clockSig.map(t => Text(format(now))))
   }
 }
