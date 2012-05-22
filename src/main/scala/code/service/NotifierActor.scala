@@ -7,16 +7,6 @@ import code.model.{Device, Subscription, User}
 import net.liftweb.common.{Box, Full}
 import akka.dispatch.Promise
 
-sealed trait Message
-
-case class Notification(content: String) extends Message
-
-case class Uni(content: String, target: String) extends Message
-
-case class Broadcast(content: String) extends Message
-
-case class Reply(content: String) extends Message
-
 class UserActor extends Actor {
   protected def receive = {
     case Notification(m) => sender ! Reply("GOT IT")

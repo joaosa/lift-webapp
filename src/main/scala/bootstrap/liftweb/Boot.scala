@@ -63,6 +63,18 @@ class Boot extends Loggable {
     //LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
     LiftRules.setSiteMapFunc(() => sitemap())
 
+    def requireSSL() = {
+      for {
+        r <- S.request
+        lowLevelReq <- Box !! r if lowLevelReq.request.scheme == "http"
+      } yield {
+        S.redirectTo("https://" + lowLevelReq.request.serverName + lowLevelReq.contextPath)
+      }
+      Empty
+    }
+
+    object RequireSSL extends Loc.EarlyResponse(requireSSL)
+
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
     LiftRules.dispatch.append(Service)

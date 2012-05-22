@@ -5,11 +5,25 @@ import akka.dispatch.Promise
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import code.model.User
-import net.liftweb.common.{Full, BoxOrRaw, Empty}
-import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
+import net.liftweb.common.{Full, Empty}
 import net.liftweb.http.auth.{userRoles, AuthRole}
+import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
+
+sealed trait Message {
+  def content: String
+}
+
+case class Notification(content: String) extends Message
+
+case class Uni(content: String, target: String) extends Message
+
+case class Broadcast(content: String) extends Message
+
+case class Reply(content: String) extends Message
 
 object Service extends RestHelper {
+
+  def basePath: List[String] = "webservices" :: Nil
 
   object LoggedIn extends SessionVar(false)
 
@@ -30,7 +44,7 @@ object Service extends RestHelper {
 
   def logout: Boolean = {
     LoggedIn(false)
-    !isLoggedIn
+    true
   }
 
   // webservice authentication
@@ -38,26 +52,31 @@ object Service extends RestHelper {
     case _ if LoggedIn.is =>
   }
 
-  protected def basePath: List[String] = "webservices" :: Nil
-
   import Extractor._
+  import Convertable._
 
-  def doLogin[T: Extractor](t: T): BoxOrRaw[Any] = {
+  def doLogin[T: Extractor](t: T): Message = {
     val login = extractField(t, "login")
     val password = extractField(t, "password")
-    this.login(login openOr "", password openOr "")
+    Reply(this.login(login openOr "", password openOr "").toString)
   }
 
-  serveJxa {
-    basePath prefixJx {
+  def doLogout(): Message = {
+    Reply(logout.toString)
+  }
+
+  serve {
+    basePath prefix {
       case "login" :: Nil XmlPost xml -> _ =>
-        doLogin(xml)
+        toXmlResp(doLogin(xml))
       case "login" :: Nil JsonPost json -> _ =>
-        doLogin(json)
-      case "logout" :: Nil Get req =>
-        logout
+        toJsonResp(doLogin(json))
+      case "logout" :: Nil XmlPost _ =>
+        toXmlResp(doLogout())
+      case "logout" :: Nil JsonPost _ =>
+        toJsonResp(doLogout())
       case "state" :: Nil Get _ =>
-        isLoggedIn
+        PlainTextResponse(isLoggedIn.toString)
     }
   }
 
@@ -153,9 +172,9 @@ with Plottable[Long, ServiceType] {
   serve {
     servicePath prefix {
       case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
-        toXmlResp(plot(plotKind, (ind, dep), Empty))
+        toXmlResp(plot(plotKind, ind, dep, Empty))
       case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
-        toJsonResp(plot(plotKind, (ind, dep), Empty))
+        toJsonResp(plot(plotKind, ind, dep, Empty))
     }
   }
 }

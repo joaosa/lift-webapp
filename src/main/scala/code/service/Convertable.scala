@@ -25,9 +25,7 @@ object Convertable {
   def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
 
   implicit object Message extends Convertable[Message] {
-    def toXml(t: Message) = <message>
-      {t.toString}
-    </message>
+    def toXml(t: Message) = <message>{t.content}</message>
   }
 
   implicit object View extends Convertable[View] {
@@ -36,9 +34,7 @@ object Convertable {
   }
 
   implicit object ViewList extends Convertable[List[View]] {
-    def toXml(t: List[View]) = <list>
-      {t.map(View.toXml)}
-    </list>
+    def toXml(t: List[View]) = <list>{t.map(View.toXml)}</list>
   }
 
   implicit object Chart extends Convertable[Chart] {
@@ -58,15 +54,3 @@ object Convertable {
   }
 
 }
-
-class Error(param: String) {
-
-  override def toString = "Error: %s" format param
-}
-
-case object Missing extends Error("Parameter Missing.")
-
-case object NotFound extends Error("Not Found.")
-
-case object Invalid extends Error("Invalid Parameters.")
-
