@@ -3,10 +3,10 @@ package code.service
 import net.liftweb.http.rest.RestHelper
 import net.liftweb.json.{Extraction, Xml}
 import sun.misc.BASE64Encoder
-import org.jfree.chart.ChartUtilities
 import net.liftweb.http.{JsonResponse, XmlResponse, InMemoryResponse}
 import net.liftweb.http.js.JsExp
 import xml._
+import org.jfree.chart.{JFreeChart, ChartUtilities}
 
 trait Convertable[T] extends RestHelper {
   def toXml(t: T): Node
@@ -37,20 +37,21 @@ object Converter {
     def toXml(t: List[View]) = <list>{t.map(View.toXml)}</list>
   }
 
-  implicit object Chart extends Convertable[Chart] {
-    def toXml(t: Chart) = encode(t)
+  implicit object JFreeChart extends Convertable[JFreeChart] {
+    def toXml(t: JFreeChart) = encode(t)
 
-    def toResp(c: Chart) = InMemoryResponse(toPNG(c),
-      List("Content-Type" -> "application/image",
-        "Content-Length" -> toPNG(c).length.toString), Nil, 200)
+    def toResp(t: JFreeChart) = {
+      val png = toPNG(t)
+      InMemoryResponse(png,
+        List("Content-Type" -> "application/image",
+          "Content-Length" -> png.length.toString), Nil, 200)
+    }
 
-    private def toPNG(c: Chart): Array[Byte] =
-      ChartUtilities.encodeAsPNG(
-        c.toExport.createBufferedImage(500, 500))
+    private def toPNG(t: JFreeChart): Array[Byte] = {
+      ChartUtilities.encodeAsPNG(t.createBufferedImage(500, 500))
+    }
 
-    private def encode(t: Chart) = <plot>
-      {new BASE64Encoder().encode(toPNG(t))}
-    </plot>
+    private def encode(t: JFreeChart) = <plot>{new BASE64Encoder().encode(toPNG(t))}</plot>
   }
 
 }

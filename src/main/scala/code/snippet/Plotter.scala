@@ -79,8 +79,8 @@ class Plotter extends Observing {
           indMax <- end.value
         } yield {
           _: NodeSeq =>
-            Script(plotter.plot(kindName getOrElse "", indName getOrElse "", depName getOrElse "", Full(indMin, indMax))
-              .toJs("placeholder"))
+            Script(plotter.plotToJs(kindName getOrElse "",
+              indName getOrElse "", depName getOrElse "", Full(indMin, indMax)))
         }
       }
 }

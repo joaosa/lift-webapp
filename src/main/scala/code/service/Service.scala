@@ -173,9 +173,9 @@ with Plottable[Long, ServiceType] {
   serve {
     servicePath prefix {
       case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
-        toXmlResp(plot(plotKind, ind, dep, Empty))
+        toXmlResp(plotToChart(plotKind, ind, dep, Empty))
       case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
-        toJsonResp(plot(plotKind, ind, dep, Empty))
+        toJsonResp(plotToChart(plotKind, ind, dep, Empty))
     }
   }
 }

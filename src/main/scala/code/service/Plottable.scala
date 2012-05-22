@@ -1,6 +1,5 @@
 package code.service
 
-import net.liftweb.common.{Full, Box}
 import scala.math.sin
 import java.util.Date
 import net.liftweb.sitemap.{Menu, Loc}
@@ -23,16 +22,14 @@ FlotGridOptions,
 FlotAxisOptions
 }
 import net.liftweb.mapper.{BaseMapper, KeyedMapper, KeyedMetaMapper}
+import net.liftweb.common.{Empty, Full, Box}
 
 case class Series(label: String, data: Set[(Double, Double)])
 
-sealed trait Chart {
+trait Chartable[T] {
+  def toSeries(t: T): List[Series]
 
-  def toSeries: List[Series]
-
-  def toExport: JFreeChart
-
-  def jsOptions: FlotOptions = new FlotOptions {}
+  def toChart(t: T): JFreeChart
 
   implicit def toJsSerie(entry: Series): FlotSerie = {
     new FlotSerie {
@@ -45,167 +42,210 @@ sealed trait Chart {
     entries.map(toJsSerie)
   }
 
-  def toJs(placeholder: String) =
-    Flot.renderJs(placeholder, toSeries, jsOptions, JsCmd.unitToJsCmd())
+  def jsOptions(s: List[Series]): FlotOptions
+
+  def toJs(t: T, placeholder: String) = {
+    val s = toSeries(t)
+    Flot.renderJs(placeholder, s, jsOptions(s), JsCmd.unitToJsCmd())
+  }
+
 }
 
-case object Blank extends Chart {
+object ChartBuilder {
 
-  def ind: String = "X"
+  def toSeries[T: Chartable](t: T) = implicitly[Chartable[T]].toSeries(t)
 
-  def dep: String = "Y"
+  def toChart[T: Chartable](t: T) = implicitly[Chartable[T]].toChart(t)
 
-  def toSeries = new Series("", Set.empty) :: Nil
+  def toJs[T: Chartable](t: T, placeholder: String) = implicitly[Chartable[T]].toJs(t, placeholder)
 
-  def toExport =
-    ChartFactory.createBarChart(
-      "Empty",
-      ind,
-      dep,
-      new DefaultCategoryDataset,
-      PlotOrientation.VERTICAL,
-      false,
-      true,
-      false)
+  implicit object Blank extends Chartable[Blank] {
+
+    def toSeries(t: Blank) = new Series("", Set.empty) :: Nil
+
+    def toChart(t: Blank) = {
+      ChartFactory.createBarChart(
+        toSeries(t).head.label,
+        t.ind,
+        t.dep,
+        new DefaultCategoryDataset,
+        PlotOrientation.VERTICAL,
+        false,
+        true,
+        false)
+    }
+
+    def jsOptions(s: List[Series]) = new FlotOptions {}
+  }
+
+  implicit object Sine extends Chartable[SinePlot] {
+    // TODO remove hardcoding
+    def toSeries(t: SinePlot) = new Series("SinePlot Wave", (for (i <- List.range(0, 140, 5))
+    yield (i / 10.0, sin(i / 10.0))).toSet) :: Nil
+
+    def toChart(t: SinePlot) = {
+      val s = toSeries(t)
+      val dataset = new XYSeries(s.head.label)
+      s.head.data map {
+        case (x, y) => dataset.addOrUpdate(x, y)
+      }
+      ChartFactory.createTimeSeriesChart(
+        t.dep + " over " + t.ind,
+        t.ind,
+        t.dep,
+        new XYSeriesCollection(dataset),
+        true,
+        true,
+        false)
+    }
+
+    def jsOptions(s: List[Series]) = new FlotOptions {}
+  }
+
+  implicit object Time extends Chartable[TimePlot] {
+    def toSeries(t: TimePlot) = {
+      import code.helper.Formatter._
+      new Series(t.dep, t.source.map {
+        s =>
+          val dataMap = s.items.toMap
+          val date = Joda.parse(dataMap(t.ind)).getTime.toDouble
+          val value = dataMap(t.dep).toDouble
+          (date, value)
+      }.toSet) :: Nil
+    }
+
+    def toChart(t: TimePlot) = {
+      val s = toSeries(t)
+      val dataset = new TimeSeries(s.head.label)
+      s.head.data map {
+        case (x, y) =>
+          dataset.addOrUpdate(new Millisecond(new Date(x.toLong)), y)
+      }
+      ChartFactory.createTimeSeriesChart(
+        t.dep + " over " + t.ind,
+        t.ind,
+        t.dep,
+        new TimeSeriesCollection(dataset),
+        true,
+        true,
+        false)
+    }
+
+    def jsOptions(s: List[Series]) = new FlotOptions {
+      override val grid = Full(new FlotGridOptions {
+        override val clickable = Full(true)
+        override val hoverable = Full(true)
+      })
+      override val xaxis = Full(new FlotAxisOptions {
+        override val mode = Full("time")
+      })
+      override val points = Full(new FlotPointsOptions {
+        override val show = Full(true)
+      })
+      override val lines = Full(new FlotLinesOptions {
+        override val show = Full(true)
+      })
+    }
+
+  }
+
+  implicit object Group extends Chartable[GroupPlot] {
+    def toSeries(t: GroupPlot) = {
+      val dataByKey =
+        t.source.map(_.items.toMap).groupBy(_(t.ind))
+      (dataByKey map {
+        case (k, v) => {
+          val index = dataByKey.keySet.toList.indexOf(k) + 1
+          new Series(k, Set((index.toDouble, v.size.toDouble)))
+        }
+      }).toList
+    }
+
+    def toChart(t: GroupPlot) = {
+      val s = toSeries(t)
+      val dataset = new DefaultCategoryDataset()
+      s map {
+        item =>
+          dataset.setValue(item.data.head._2, item.label, item.label)
+      }
+      ChartFactory.createBarChart(
+        t.ind + " " + t.dep,
+        t.ind,
+        t.dep,
+        dataset,
+        PlotOrientation.VERTICAL,
+        false,
+        true,
+        false)
+    }
+
+    def jsOptions(s: List[Series]) = new FlotOptions {
+      override val series = Full(Map(
+        "stack" -> Num(0),
+        "lines" -> JsObj(
+          "show" -> false,
+          "steps" -> false),
+        "bars" -> JsObj(
+          "show" -> true,
+          "barWidth" -> 0.9,
+          "align" -> "center")))
+      override val xaxis = Full(new FlotAxisOptions {
+        override val ticks = (0 to s.count(d => true) - 1).map(_.toDouble).toList
+      })
+      override val modeSelection = Full("x")
+    }
+  }
+
 }
 
-case class SinePlot(data: List[View],
+sealed trait Chart
+
+case class Blank(ind: String,
+                 dep: String,
+                 indRange: Box[(String, String)]) extends Chart
+
+case class SinePlot(source: List[View],
                     ind: String,
                     dep: String,
-                    indRange: Box[(String, String)])
-  extends Chart {
-  def toSeries = new Series("SinePlot Wave", (for (i <- List.range(0, 140, 5))
-  yield (i / 10.0, sin(i / 10.0))).toSet) :: Nil
-
-  def toExport = {
-    val dataset = new XYSeries(toSeries.head.label)
-    toSeries.head.data map {
-      case (x, y) => dataset.addOrUpdate(x, y)
-    }
-    ChartFactory.createTimeSeriesChart(
-      dep + " over " + ind,
-      ind,
-      dep,
-      new XYSeriesCollection(dataset),
-      true,
-      true,
-      false)
-  }
-}
+                    indRange: Box[(String, String)]) extends Chart
 
 case class TimePlot(source: List[View],
                     ind: String,
                     dep: String,
-                    indRange: Box[(String, String)])
-  extends Chart {
-  def toSeries = {
-    import code.helper.Formatter._
-    new Series(dep, source.map {
-      s =>
-        val dataMap = s.items.toMap
-        val date = Joda.parse(dataMap(ind)).getTime.toDouble
-        val value = dataMap(dep).toDouble
-        (date, value)
-    }.toSet) :: Nil
-  }
-
-  def toExport = {
-    lazy val series = toSeries
-    val dataset = new TimeSeries(series.head.label)
-    series.head.data map {
-      case (x, y) =>
-        dataset.addOrUpdate(new Millisecond(new Date(x.toLong)), y)
-    }
-    ChartFactory.createTimeSeriesChart(
-      dep + " over " + ind,
-      ind,
-      dep,
-      new TimeSeriesCollection(dataset),
-      true,
-      true,
-      false)
-  }
-
-  override def jsOptions = new FlotOptions {
-    override val grid = Full(new FlotGridOptions {
-      override val clickable = Full(true)
-      override val hoverable = Full(true)
-    })
-    override val xaxis = Full(new FlotAxisOptions {
-      override val mode = Full("time")
-    })
-    override val points = Full(new FlotPointsOptions {
-      override val show = Full(true)
-    })
-    override val lines = Full(new FlotLinesOptions {
-      override val show = Full(true)
-    })
-  }
-}
+                    indRange: Box[(String, String)]) extends Chart
 
 case class GroupPlot(source: List[View],
                      ind: String,
                      dep: String,
-                     indRange: Box[(String, String)])
-  extends Chart {
-  def toSeries = {
-    val dataByKey =
-      source.map(_.items.toMap).groupBy(_(ind))
-    (dataByKey map {
-      case (k, v) => {
-        val index = dataByKey.keySet.toList.indexOf(k) + 1
-        new Series(k, Set((index.toDouble, v.size.toDouble)))
-      }
-    }).toList
-  }
-
-  def toExport = {
-    val dataset = new DefaultCategoryDataset()
-    toSeries map {
-      item =>
-        dataset.setValue(item.data.head._2, item.label, item.label)
-    }
-    ChartFactory.createBarChart(
-      ind + " " + dep,
-      ind,
-      dep,
-      dataset,
-      PlotOrientation.VERTICAL,
-      false,
-      true,
-      false)
-  }
-
-  override def jsOptions = new FlotOptions {
-    override val series = Full(Map(
-      "stack" -> Num(0),
-      "lines" -> JsObj(
-        "show" -> false,
-        "steps" -> false),
-      "bars" -> JsObj(
-        "show" -> true,
-        "barWidth" -> 0.9,
-        "align" -> "center")))
-    override val xaxis = Full(new FlotAxisOptions {
-      override val ticks = (0 to toSeries.count(d => true) - 1).map(_.toDouble).toList
-    })
-    override val modeSelection = Full("x")
-  }
-}
+                     indRange: Box[(String, String)]) extends Chart
 
 trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: PlotType with KeyedMetaMapper[_, PlotType] =>
 
-  def plot(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): Chart = {
-    import Viewer._
+  import Viewer._
+  import ChartBuilder._
+
+  def plotToChart(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): JFreeChart = {
     plotKind match {
-      case "group" => GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
-      case "time" => TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
-      case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
+      case "group" => toChart(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range))
+      case "time" => toChart(TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range))
+      case "sine" => toChart(SinePlot(View("SinePlot Wave", (for {i <- List.range(0, 140, 5)}
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
-      }) :: Nil, ind, dep, range)
-      case _ => Blank
+      }) :: Nil, ind, dep, range))
+      case _ => toChart(new Blank("X", "Y", Empty))
+    }
+  }
+
+  def plotToJs(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): JsCmd = {
+    plotKind match {
+      case "group" => toJs(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
+      case "time" => toJs(TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
+      case "sine" => toJs(SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
+      yield (i / 10.0, sin(i / 10.0))).map {
+        case (k, v) => (k.toString, v.toString)
+      }) :: Nil, ind, dep, range), placeholder)
+      case _ => toJs(new Blank("X", "Y", Empty), placeholder)
     }
   }
 
@@ -216,6 +256,8 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
     Full(Menu(Loc("Plot " + _dbTableNameLC, List(_dbTableNameLC) ::: "plot" :: Nil,
       "Plot " + _dbTableNameLC, Loc.Template(() => plotTemplate()))))
   }
+
+  val placeholder = "placeholder"
 
   def plotTemplate(): NodeSeq = pageWrapper(_plotTemplate)
 
@@ -239,7 +281,7 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
           <label for="end">end:</label> <input type="text" id="end"/>
         </div>
         <button id="trigger">Plot</button>
-        <div id="placeholder" style="width: 600px; height: 400px;"></div>
+        <div id={placeholder} style="width: 600px; height: 400px;"></div>
         <span id="results"></span>
       </lift:Plotter>
   }
