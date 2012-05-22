@@ -13,7 +13,7 @@ trait Viewable[T] {
   def list(t: List[T]): List[View] = t.map(toView)
 }
 
-object Viewable {
+object Viewer {
 
   def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
 

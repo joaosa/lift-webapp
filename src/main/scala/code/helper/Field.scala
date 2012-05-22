@@ -22,8 +22,8 @@ abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O]
 }
 
 abstract class DateField[T <: Mapper[T]](theOwner: T) extends MappedDateTime(theOwner) {
-  import code.helper.Formattable._
-  override def asHtml = Text(Formattable.format(is))
+  import code.helper.Formatter._
+  override def asHtml = Text(Formatter.format(is))
   override def defaultValue = now
 }
 

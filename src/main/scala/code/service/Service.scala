@@ -53,9 +53,9 @@ object Service extends RestHelper {
   }
 
   import Extractor._
-  import Convertable._
+  import Converter._
 
-  def doLogin[T: Extractor](t: T): Message = {
+  def doLogin[T: Extractable](t: T): Message = {
     val login = extractField(t, "login")
     val password = extractField(t, "password")
     Reply(this.login(login openOr "", password openOr "").toString)
@@ -113,8 +113,9 @@ with Plottable[Long, ServiceType] {
 
   private def servicePath: List[String] = Service.basePath ::: modelName :: Nil
 
-  import Viewable._
-  import Convertable._
+  import Viewer._
+  import Extractor._
+  import Converter._
 
   serve {
     servicePath prefix {

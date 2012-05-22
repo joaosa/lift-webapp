@@ -40,7 +40,7 @@ object ByUserName extends Transform {
   }
 }
 object Now extends Transform {
-  import code.helper.Formattable._
+  import code.helper.Formatter._
   override def apply(b: Box[String]): Box[Date] = {
     Full(now)
   }

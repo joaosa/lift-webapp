@@ -11,7 +11,7 @@ trait Formattable[T] {
   def parse(s: String): T
 }
 
-object Formattable {
+object Formatter {
 
   def now: DateTime = Helpers.now
 

@@ -27,9 +27,6 @@ import net.liftweb.mapper.{BaseMapper, KeyedMapper, KeyedMetaMapper}
 case class Series(label: String, data: Set[(Double, Double)])
 
 sealed trait Chart {
-  def ind: String = "X"
-
-  def dep: String = "Y"
 
   def toSeries: List[Series]
 
@@ -53,6 +50,11 @@ sealed trait Chart {
 }
 
 case object Blank extends Chart {
+
+  def ind: String = "X"
+
+  def dep: String = "Y"
+
   def toSeries = new Series("", Set.empty) :: Nil
 
   def toExport =
@@ -68,8 +70,8 @@ case object Blank extends Chart {
 }
 
 case class SinePlot(data: List[View],
-                    override val ind: String,
-                    override val dep: String,
+                    ind: String,
+                    dep: String,
                     indRange: Box[(String, String)])
   extends Chart {
   def toSeries = new Series("SinePlot Wave", (for (i <- List.range(0, 140, 5))
@@ -92,12 +94,12 @@ case class SinePlot(data: List[View],
 }
 
 case class TimePlot(source: List[View],
-                    override val ind: String,
-                    override val dep: String,
+                    ind: String,
+                    dep: String,
                     indRange: Box[(String, String)])
   extends Chart {
   def toSeries = {
-    import code.helper.Formattable._
+    import code.helper.Formatter._
     new Series(dep, source.map {
       s =>
         val dataMap = s.items.toMap
@@ -142,8 +144,8 @@ case class TimePlot(source: List[View],
 }
 
 case class GroupPlot(source: List[View],
-                     override val ind: String,
-                     override val dep: String,
+                     ind: String,
+                     dep: String,
                      indRange: Box[(String, String)])
   extends Chart {
   def toSeries = {
@@ -195,14 +197,14 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: PlotType with KeyedMetaMapper[_, PlotType] =>
 
   def plot(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): Chart = {
-    import Viewable._
+    import Viewer._
     plotKind match {
       case "group" => GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
       case "time" => TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range)
-      case "sine" => SinePlot((View("SinePlot Wave",
-        List((10.0.toString, sin(10.0).toString))) :: Nil), ind, dep, range)
-      /*case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
-        yield (i / 10.0, sin(i / 10.0))).toSet), ind, dep, range)*/
+      case "sine" => SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
+      yield (i / 10.0, sin(i / 10.0))).map {
+        case (k, v) => (k.toString, v.toString)
+      }) :: Nil, ind, dep, range)
       case _ => Blank
     }
   }

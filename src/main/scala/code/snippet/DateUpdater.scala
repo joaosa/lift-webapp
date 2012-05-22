@@ -16,7 +16,7 @@ class DateUpdater extends Observing {
 
   def render = {
     // replace the contents of the element with id "time" with the date
-    import code.helper.Formattable._
+    import code.helper.Formatter._
     "#time *" #> Span(clockSig.map(t => Text(format(now))))
   }
 }

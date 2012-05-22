@@ -53,7 +53,7 @@ class Plotter extends Observing {
   val dep = Select(Val(getDep(kind.selectedItem.value getOrElse "")))
   dep.selectedIndex() = Some(2)
 
-  import code.helper.Formattable._
+  import code.helper.Formatter._
 
   val start = TextInput()
   start.value() = format(now.minusDays(1))
