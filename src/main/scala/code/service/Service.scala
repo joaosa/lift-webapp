@@ -84,6 +84,7 @@ object Service extends RestHelper {
   serve {
     basePath prefix {
       case "notify" :: who :: what :: Nil Post _ => {
+        // TODO fix async
         RestContinuation.async {
           satisfyRequest => {
             val system = ActorSystem()
@@ -173,9 +174,17 @@ with Plottable[Long, ServiceType] {
   serve {
     servicePath prefix {
       case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
-        toXmlResp(plotToChart(plotKind, ind, dep, Empty))
+        RestContinuation.async {
+          satisfyRequest => {
+            toXmlResp(plotToChart(plotKind, ind, dep, Empty))
+          }
+        }
       case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
-        toJsonResp(plotToChart(plotKind, ind, dep, Empty))
+        RestContinuation.async {
+          satisfyRequest => {
+            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, Empty)))
+          }
+        }
     }
   }
 }

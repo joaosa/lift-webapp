@@ -59,11 +59,11 @@ object ChartBuilder {
 
   def toJs[T: Chartable](t: T, placeholder: String) = implicitly[Chartable[T]].toJs(t, placeholder)
 
-  implicit object Blank extends Chartable[Blank] {
+  implicit object Blank extends Chartable[BlankPlot] {
 
-    def toSeries(t: Blank) = new Series("", Set.empty) :: Nil
+    def toSeries(t: BlankPlot) = new Series("", Set.empty) :: Nil
 
-    def toChart(t: Blank) = {
+    def toChart(t: BlankPlot) = {
       ChartFactory.createBarChart(
         toSeries(t).head.label,
         t.ind,
@@ -200,7 +200,7 @@ object ChartBuilder {
 
 sealed trait Chart
 
-case class Blank(ind: String,
+case class BlankPlot(ind: String,
                  dep: String,
                  indRange: Box[(String, String)]) extends Chart
 
@@ -233,7 +233,7 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
       }) :: Nil, ind, dep, range))
-      case _ => toChart(new Blank("X", "Y", Empty))
+      case _ => toChart(BlankPlot("X", "Y", Empty))
     }
   }
 
@@ -245,12 +245,11 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
       }) :: Nil, ind, dep, range), placeholder)
-      case _ => toJs(new Blank("X", "Y", Empty), placeholder)
+      case _ => toJs(BlankPlot("X", "Y", Empty), placeholder)
     }
   }
 
-  override def menus = List(showAllMenuLoc, createMenuLoc, viewMenuLoc,
-    editMenuLoc, deleteMenuLoc, plotMenuLoc).flatMap(x => x)
+  abstract override def menus = super.menus ::: plotMenuLoc.toList
 
   def plotMenuLoc: Box[Menu] = {
     Full(Menu(Loc("Plot " + _dbTableNameLC, List(_dbTableNameLC) ::: "plot" :: Nil,
