@@ -150,6 +150,7 @@ object ChartBuilder {
   }
 
   implicit object Group extends Chartable[GroupPlot] {
+    // TODO make map typesafe
     def toSeries(t: GroupPlot) = {
       val dataByKey =
         t.source.map(_.items.toMap).groupBy(_(t.ind))
@@ -279,7 +280,6 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
           <label for="start">start:</label> <input type="text" id="start"/>
           <label for="end">end:</label> <input type="text" id="end"/>
         </div>
-        <button id="trigger">Plot</button>
         <div id={placeholder} style="width: 600px; height: 400px;"></div>
         <span id="results"></span>
       </lift:Plotter>

@@ -4,15 +4,14 @@ import scala.xml.NodeSeq
 import net.liftweb.common.Full
 import net.liftweb.util
 import util.Helpers.strToCssBindPromoter
-import reactive.web.html.{TextInput, Button}
-import reactive.Observing
+import reactive.web.html.TextInput
 import reactive.web.RElem.rElemToNsFunc
 import code.model._
 import net.liftweb.http.S
-import net.liftweb.http.js.JsCmds.Script
 import reactive.web.html.Select
-import reactive.Val
+import net.liftweb.http.js.JsCmds.Script
 import reactive.web.Cell
+import reactive._
 
 class Plotter extends Observing {
 
@@ -26,42 +25,53 @@ class Plotter extends Observing {
     case _ => Point
   }
 
-  def getInd(plotType: String): Seq[String] = {
-    plotType match {
-      case "group" => plotter.allFields.map(_.name)
-      case "time" => "date" :: Nil
-      case _ => Nil
+  def getIndItems(kind: Option[String]): Seq[String] = {
+    kind match {
+      case Some("group") => plotter.allFields.map(_.name)
+      case Some("time") => "date" :: Nil
+      case _ => "---" :: Nil
     }
   }
 
-  def getDep(plotType: String): Seq[String] = {
-    plotType match {
-      case "group" => "count" :: Nil
-      case "time" => plotter.allFields.map(_.name)
-      case _ => Nil
+  def getDepItems(kind: Option[String]): Seq[String] = {
+    kind match {
+      case Some("group") => "count" :: Nil
+      case Some("time") => plotter.allFields.map(_.name)
+      case _ => "---" :: Nil
     }
   }
 
-  val trigger = Button("Choose") {}
+  def plot: Signal[NodeSeq => NodeSeq] = {
+    for {
+      kindName <- kind.selectedItem
+      indName <- ind.selectedItem
+      depName <- dep.selectedItem
+      indMin <- start.value
+      indMax <- end.value
+    } yield {
+      _: NodeSeq =>
+        Script(plotter.plotToJs(kindName getOrElse "",
+          indName getOrElse "", depName getOrElse "", Full(indMin, indMax)))
+    }
+  }
 
-  val kind = Select(Val(List("blank", "group", "time", "sine")))
-  kind.selectedIndex() = Some(2)
+  val kind = Select(Val(Seq("blank", "group", "time", "sine")))
 
-  val ind = Select(Val(getInd(kind.selectedItem.value getOrElse "")))
-  ind.selectedIndex() = Some(0)
+  val ind = Select(kind.selectedItem.map(s => getIndItems(s)))
 
-  val dep = Select(Val(getDep(kind.selectedItem.value getOrElse "")))
-  dep.selectedIndex() = Some(2)
+  val dep = Select(kind.selectedItem.map(s => getDepItems(s)))
 
   import code.helper.Formatter._
 
   val start = TextInput()
   start.value() = format(now.minusDays(1))
-  start.value updateOn trigger.click
+  //start.value updateOn trigger.click
 
   val end = TextInput()
   end.value() = format(now)
-  end.value updateOn trigger.click
+  //end.value updateOn trigger.click
+
+  val results = Cell(plot)
 
   def render =
     "#plotKind" #> kind &
@@ -69,18 +79,5 @@ class Plotter extends Observing {
       "#dep" #> dep &
       "#start" #> start &
       "#end" #> end &
-      "#trigger" #> trigger &
-      "#results" #> Cell {
-        for {
-          kindName <- kind.selectedItem
-          indName <- ind.selectedItem
-          depName <- dep.selectedItem
-          indMin <- start.value
-          indMax <- end.value
-        } yield {
-          _: NodeSeq =>
-            Script(plotter.plotToJs(kindName getOrElse "",
-              indName getOrElse "", depName getOrElse "", Full(indMin, indMax)))
-        }
-      }
+      "#results" #> results
 }
