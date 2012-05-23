@@ -150,7 +150,7 @@ object ChartBuilder {
   }
 
   implicit object Group extends Chartable[GroupPlot] {
-    // TODO make map typesafe
+    // TODO make gets on Map typesafe
     def toSeries(t: GroupPlot) = {
       val dataByKey =
         t.source.map(_.items.toMap).groupBy(_(t.ind))
