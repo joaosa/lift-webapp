@@ -5,6 +5,7 @@ import code.model._
 import net.liftweb.mapper.Like
 import net.liftweb.common.Full
 import net.liftweb.common.Empty
+import net.liftweb.util.Helpers.now
 import java.util.Date
 
 sealed class Transform(p: Any) {
@@ -40,7 +41,6 @@ object ByUserName extends Transform {
   }
 }
 object Now extends Transform {
-  import code.helper.Formatter._
   override def apply(b: Box[String]): Box[Date] = {
     Full(now)
   }

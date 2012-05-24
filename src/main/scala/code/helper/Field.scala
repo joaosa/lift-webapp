@@ -12,6 +12,7 @@ import net.liftweb.util.FieldError
 import net.liftweb.mapper.MappedDouble
 import net.liftweb.mapper.IdPK
 import net.liftweb.mapper.MappedString
+import net.liftweb.util.Helpers.now
 
 abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O] with IdPK {def show: String}](theOwner: T, _foreignMeta: => KeyedMetaMapper[Long, O])
   extends MappedLongForeignKey(theOwner , _foreignMeta) {
