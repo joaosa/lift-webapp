@@ -3,6 +3,7 @@ package code.snippet
 import scala.xml.NodeSeq
 import net.liftweb.common.Full
 import net.liftweb.util
+import net.liftweb.util.Helpers.now
 import util.Helpers.strToCssBindPromoter
 import reactive.web.html.TextInput
 import reactive.web.RElem.rElemToNsFunc
