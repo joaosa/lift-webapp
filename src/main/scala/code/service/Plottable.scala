@@ -23,8 +23,9 @@ FlotAxisOptions
 }
 import net.liftweb.mapper.{BaseMapper, KeyedMapper, KeyedMetaMapper}
 import net.liftweb.common.{Empty, Full, Box}
+import net.liftweb.util.Helpers.tryo
 
-case class Series(label: String, data: Set[(Double, Double)])
+case class Series(label: Box[String], data: Set[Box[(Double, Double)]])
 
 trait Chartable[T] {
   def toSeries(t: T): List[Series]
@@ -33,8 +34,8 @@ trait Chartable[T] {
 
   implicit def toJsSerie(entry: Series): FlotSerie = {
     new FlotSerie {
-      override val data = entry.data.toList
-      override val label = Full(entry.label)
+      override val data = entry.data.filter(!_.isEmpty).map(_.open_!).toList
+      override val label = entry.label
     }
   }
 
@@ -61,11 +62,11 @@ object ChartBuilder {
 
   implicit object Blank extends Chartable[BlankPlot] {
 
-    def toSeries(t: BlankPlot) = new Series("", Set.empty) :: Nil
+    def toSeries(t: BlankPlot) = new Series(Empty, Set.empty) :: Nil
 
     def toChart(t: BlankPlot) = {
       ChartFactory.createBarChart(
-        toSeries(t).head.label,
+        toSeries(t).head.label getOrElse "",
         t.ind,
         t.dep,
         new DefaultCategoryDataset,
@@ -80,14 +81,15 @@ object ChartBuilder {
 
   implicit object Sine extends Chartable[SinePlot] {
     // TODO remove hardcoding
-    def toSeries(t: SinePlot) = new Series("SinePlot Wave", (for (i <- List.range(0, 140, 5))
-    yield (i / 10.0, sin(i / 10.0))).toSet) :: Nil
+    def toSeries(t: SinePlot) = new Series(Full("SinePlot Wave"), (for (i <- List.range(0, 140, 5))
+    yield Full(i / 10.0, sin(i / 10.0))).toSet) :: Nil
 
     def toChart(t: SinePlot) = {
       val s = toSeries(t)
-      val dataset = new XYSeries(s.head.label)
+      val dataset = new XYSeries(s.head.label openOr "")
       s.head.data map {
-        case (x, y) => dataset.addOrUpdate(x, y)
+        case Full((x, y)) => dataset.addOrUpdate(x, y)
+        case _ => Unit
       }
       ChartFactory.createTimeSeriesChart(
         t.dep + " over " + t.ind,
@@ -105,21 +107,25 @@ object ChartBuilder {
   implicit object Time extends Chartable[TimePlot] {
     def toSeries(t: TimePlot) = {
       import code.helper.Formatter._
-      new Series(t.dep, t.source.map {
-        s =>
-          val dataMap = s.items.toMap
-          val date = Joda.parse(dataMap(t.ind)).getTime.toDouble
-          val value = dataMap(t.dep).toDouble
-          (date, value)
+      new Series(Full(t.dep), t.source.map {
+        v =>
+          val dataMap = v.items.toMap
+          val date = Joda.parse(dataMap.getOrElse(t.ind, "")).map(_.getTime.toDouble)
+          val value = tryo { dataMap(t.dep).toDouble }
+          (date, value) match {
+            case (Full(x), Full(y)) => Full((x, y))
+            case _ => Empty
+          }
       }.toSet) :: Nil
     }
 
     def toChart(t: TimePlot) = {
       val s = toSeries(t)
-      val dataset = new TimeSeries(s.head.label)
+      val dataset = new TimeSeries(s.head.label openOr "")
       s.head.data map {
-        case (x, y) =>
+        case Full((x, y)) =>
           dataset.addOrUpdate(new Millisecond(new Date(x.toLong)), y)
+        case _ => Unit
       }
       ChartFactory.createTimeSeriesChart(
         t.dep + " over " + t.ind,
@@ -150,14 +156,13 @@ object ChartBuilder {
   }
 
   implicit object Group extends Chartable[GroupPlot] {
-    // TODO make gets on Map typesafe
+    // TODO make gets typesafe on Map
     def toSeries(t: GroupPlot) = {
-      val dataByKey =
-        t.source.map(_.items.toMap).groupBy(_(t.ind))
+      val dataByKey = t.source.map(_.items.toMap).groupBy(_.getOrElse(t.ind, ""))
       (dataByKey map {
         case (k, v) => {
-          val index = dataByKey.keySet.toList.indexOf(k) + 1
-          new Series(k, Set((index.toDouble, v.size.toDouble)))
+          val index = dataByKey.keySet.toList.indexOf(k) + 1.0
+          new Series(Full(k), Set(Full((index, v.size.toDouble))))
         }
       }).toList
     }
@@ -167,7 +172,10 @@ object ChartBuilder {
       val dataset = new DefaultCategoryDataset()
       s map {
         item =>
-          dataset.setValue(item.data.head._2, item.label, item.label)
+          item.data.head match {
+            case Full(p) => dataset.setValue(p._2, item.label openOr "", item.label openOr "")
+            case _ => Unit
+          }
       }
       ChartFactory.createBarChart(
         t.ind + " " + t.dep,
