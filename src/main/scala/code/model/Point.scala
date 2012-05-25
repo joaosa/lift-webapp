@@ -11,7 +11,7 @@ import net.liftweb.util.FieldError
 object Point extends Point with LongKeyedMetaMapper[Point]
   with CRUDify[Long, Point] with Service[Point] {
   override def dbTableName = "points" // define the DB table name
-  override def fieldOrder = List(data, independent, dependent)
+  override def fieldOrder = List(data, date, independent, dependent)
 
   def expose = ("data", ToLong) :: ("date", Identity) ::
     ("independent", ToDouble) :: ("dependent", ToDouble) :: Nil
