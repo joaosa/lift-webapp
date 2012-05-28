@@ -22,7 +22,7 @@ object Formatter {
 
   implicit def toJoda(date: Date): DateTime = new DateTime(date)
 
-  private val datePattern = "yyyy-MM-dd HH:mm:ss Z"
+  private val datePattern = "yyyy-MM-dd HH:mm:ss:SSS Z"
   private val dateFormat = DateTimeFormat forPattern datePattern
 
   implicit object Joda extends Formattable[DateTime] {
