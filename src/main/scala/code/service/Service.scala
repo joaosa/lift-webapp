@@ -173,16 +173,16 @@ with Plottable[Long, ServiceType] {
   // Plot
   serve {
     servicePath prefix {
-      case "plot" :: plotKind :: ind :: dep :: Nil XmlGet _ =>
+      case "plot" :: plotKind :: ind :: dep :: Nil XmlPost _ =>
         RestContinuation.async {
           satisfyRequest => {
-            toXmlResp(plotToChart(plotKind, ind, dep, Empty))
+            satisfyRequest(toXmlResp(plotToChart(plotKind, ind, dep, ("",""))))
           }
         }
-      case "plot" :: plotKind :: ind :: dep :: Nil JsonGet _ =>
+      case "plot" :: plotKind :: ind :: dep :: Nil JsonPost _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, Empty)))
+            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, ("",""))))
           }
         }
     }
