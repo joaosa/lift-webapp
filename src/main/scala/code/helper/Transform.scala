@@ -33,8 +33,15 @@ object ToDouble extends Transform {
 }
 object ByUserName extends Transform {
   override def apply(v: Box[String]): Box[Long] = {
-    val e = User.find(Like(User.username, v openOr ""))
-    e match {
+      User.find(Like(User.username, v openOr "")) match {
+      case Full(f) => Full(f.id.is)
+      case _ => Empty
+    }
+  }
+}
+object ByEmail extends Transform {
+  override def apply(v: Box[String]): Box[Long] = {
+    User.find(Like(User.email, v openOr "")) match {
       case Full(f) => Full(f.id.is)
       case _ => Empty
     }
