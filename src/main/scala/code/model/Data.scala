@@ -10,12 +10,12 @@ import code.helper._
 /**
  * The singleton that has methods for accessing the database
  */
-case object Data extends Data with LongKeyedMetaMapper[Data]
+object Data extends Data with LongKeyedMetaMapper[Data]
   with CRUDify[Long, Data] with Service[Data] {
   override def dbTableName = "data" // define the DB table name
   override def fieldOrder = List(kind, user, date)
 
-  def expose = ("kind", Identity) :: ("user", ToLong) ::
+  def expose = ("id", ToLong) :: ("kind", Identity) :: ("user", ByEmail) ::
     ("date", Identity) :: Nil
 }
 
