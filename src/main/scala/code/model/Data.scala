@@ -15,7 +15,7 @@ object Data extends Data with LongKeyedMetaMapper[Data]
   override def dbTableName = "data" // define the DB table name
   override def fieldOrder = List(kind, user, date)
 
-  def expose = ("id", ToLong) :: ("kind", Identity) :: ("user", ByEmail) ::
+  def expose = ("kind", Identity) :: ("user", ByEmail) ::
     ("date", Identity) :: Nil
 }
 

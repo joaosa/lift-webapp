@@ -5,6 +5,7 @@ import code.helper._
 import net.liftweb.util.FieldError
 import net.liftweb.mapper._
 
+// TODO abstract "BaseMapper with IdPK"
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   self: CRUDType with KeyedMetaMapper[_, CRUDType] =>
 
