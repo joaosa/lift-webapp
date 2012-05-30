@@ -3,7 +3,7 @@ package code.service
 import net.liftweb.common.{Empty, Box, Full}
 import code.helper._
 import net.liftweb.util.FieldError
-import net.liftweb.mapper.{BaseMapper, Mapper, KeyedMapper, KeyedMetaMapper}
+import net.liftweb.mapper._
 
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   self: CRUDType with KeyedMetaMapper[_, CRUDType] =>
@@ -41,43 +41,43 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     }
   }
 
-  def validate(b: Box[Mapper[_]]): Either[List[FieldError], BaseMapper] = b match {
+  def validate(b: Box[Mapper[_]]): Either[List[FieldError], BaseMapper with IdPK] = b match {
     case Full(item) => {
       item.validate match {
         case Nil =>
           item.save()
-          Right(item.asInstanceOf[BaseMapper])
+          Right(item.asInstanceOf[BaseMapper with IdPK])
         case xs => Left(xs)
       }
     }
     case _ => Left(Nil)
   }
 
-  def create[T: Extractable](t: T): Either[List[FieldError], BaseMapper] = {
+  def create[T: Extractable](t: T): Either[List[FieldError], BaseMapper with IdPK] = {
     validate(setup(Full(create), transformValues(t)))
   }
 
-  def createList[T: Extractable](t: T, modelName: String): List[Either[List[FieldError], BaseMapper]] = {
+  def createList[T: Extractable](t: T, modelName: String): List[Either[List[FieldError], BaseMapper with IdPK]] = {
     Extractor.extractModel(t, modelName).map(create(_))
   }
 
-  def read(id: String): Box[BaseMapper] =
+  def read(id: String): Box[BaseMapper with IdPK] =
     for {
       item <- find(id)
-    } yield item
+    } yield item.asInstanceOf[BaseMapper with IdPK]
 
-  def readAll: Box[List[BaseMapper]] = Full(findAll())
+  def readAll: Box[List[BaseMapper with IdPK]] = Full(findAll().map(_.asInstanceOf[BaseMapper with IdPK]))
 
-  def update[T: Extractable](id: String, t: T): Either[List[FieldError], BaseMapper] = {
+  def update[T: Extractable](id: String, t: T): Either[List[FieldError], BaseMapper with IdPK] = {
     validate(setup(find(id), transformValues(t)))
   }
 
-  def delete(id: String): Box[BaseMapper] = {
+  def delete(id: String): Box[BaseMapper with IdPK] = {
     for {
       item <- find(id)
     } yield {
       delete_!(item)
-      item
+      item.asInstanceOf[BaseMapper with IdPK]
     }
   }
 

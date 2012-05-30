@@ -2,12 +2,12 @@ package code.service
 
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
-import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import code.model.User
 import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
+import net.liftweb.mapper.{BaseMapper, IdPK, KeyedMapper, KeyedMetaMapper}
 
 sealed trait Message {
   def content: String

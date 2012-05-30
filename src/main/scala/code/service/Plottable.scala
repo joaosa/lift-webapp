@@ -246,9 +246,9 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
 
   def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String)): JFreeChart = {
     plotKind match {
-      case "group" => toChart(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range))
+      case "group" => toChart(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range))
       case "time" =>
-        toChart(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper])), ind, dep, range))
+        toChart(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range))
       case "sine" => toChart(SinePlot(View("SinePlot Wave", (for {i <- List.range(0, 140, 5)}
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
@@ -259,9 +259,9 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
 
   def plotToJs(plotKind: String, ind: String, dep: String, range: (String, String)): JsCmd = {
     plotKind match {
-      case "group" => toJs(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
+      case "group" => toJs(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range), placeholder)
       case "time" =>
-        toJs(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
+        toJs(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range), placeholder)
       case "sine" => toJs(SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
