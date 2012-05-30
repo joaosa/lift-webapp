@@ -52,7 +52,7 @@ class Plotter extends Observing {
     } yield {
       _: NodeSeq =>
         Script(plotter.plotToJs(kindName getOrElse "",
-          indName getOrElse "", depName getOrElse "", Full(indMin, indMax)))
+          indName getOrElse "", depName getOrElse "", (indMin, indMax)))
     }
   }
 
@@ -66,11 +66,9 @@ class Plotter extends Observing {
 
   val start = TextInput()
   start.value() = format(now.minusDays(1))
-  //start.value updateOn trigger.click
 
   val end = TextInput()
   end.value() = format(now)
-  //end.value updateOn trigger.click
 
   val results = Cell(plot)
 

@@ -5,7 +5,7 @@ import akka.dispatch.Promise
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import code.model.User
-import net.liftweb.common.{Full, Empty}
+import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
 
@@ -170,19 +170,22 @@ with Plottable[Long, ServiceType] {
     }
   }
 
+  import Extractor._
+  def range[T: Extractable](t: T): Pair[String, String] = (extractField(t, "start") openOr "", extractField(t, "end") openOr "")
+
   // Plot
   serve {
     servicePath prefix {
-      case "plot" :: plotKind :: ind :: dep :: Nil XmlPost _ =>
+      case "plot" :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toXmlResp(plotToChart(plotKind, ind, dep, ("",""))))
+            satisfyRequest(toXmlResp(plotToChart(plotKind, ind, dep, range(xml))))
           }
         }
-      case "plot" :: plotKind :: ind :: dep :: Nil JsonPost _ =>
+      case "plot" :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, ("",""))))
+            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, range(json))))
           }
         }
     }

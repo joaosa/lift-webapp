@@ -21,9 +21,10 @@ FlotLinesOptions,
 FlotGridOptions,
 FlotAxisOptions
 }
-import net.liftweb.mapper.{BaseMapper, KeyedMapper, KeyedMetaMapper}
 import net.liftweb.common.{Empty, Full, Box}
 import net.liftweb.util.Helpers.tryo
+import net.liftweb.mapper._
+import code.helper.Formattable
 
 case class Series(label: Box[String], data: Set[Box[(Double, Double)]])
 
@@ -58,7 +59,7 @@ object ChartBuilder {
 
   def toChart[T: Chartable](t: T) = implicitly[Chartable[T]].toChart(t)
 
-  def toJs[T: Chartable](t: T, placeholder: String) = implicitly[Chartable[T]].toJs(t, placeholder)
+  implicit def toJs[T: Chartable](t: T, placeholder: String) = implicitly[Chartable[T]].toJs(t, placeholder)
 
   implicit object Blank extends Chartable[BlankPlot] {
 
@@ -211,50 +212,61 @@ sealed trait Chart
 
 case class BlankPlot(ind: String,
                  dep: String,
-                 indRange: Box[(String, String)]) extends Chart
+                 indRange: (String, String)) extends Chart
 
 case class SinePlot(source: List[View],
                     ind: String,
                     dep: String,
-                    indRange: Box[(String, String)]) extends Chart
+                    indRange: (String, String)) extends Chart
 
 case class TimePlot(source: List[View],
                     ind: String,
                     dep: String,
-                    indRange: Box[(String, String)]) extends Chart
+                    indRange: (String, String)) extends Chart
 
 case class GroupPlot(source: List[View],
                      ind: String,
                      dep: String,
-                     indRange: Box[(String, String)]) extends Chart
+                     indRange: (String, String)) extends Chart
 
 trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: PlotType with KeyedMetaMapper[_, PlotType] =>
 
   import Viewer._
   import ChartBuilder._
+  import code.helper.Formatter._
 
-  def plotToChart(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): JFreeChart = {
+  def getField(fieldName: String) =
+  // By_>=(fieldByName[Any]("dependent").open_!, 3.0)
+    fieldOrder.map(f => (f.name, f)).toMap.getOrElse(fieldName, Unit).asInstanceOf[MappedField[Any, PlotType]]
+
+  def getWithRange(fieldName: String, range: (String, String)) =
+    findAll(By_>=(getField(fieldName), implicitly[Formattable[Date]].parse(range._1).open_!),
+      By_<=(getField(fieldName), implicitly[Formattable[Date]].parse(range._2).open_!))
+
+  def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String)): JFreeChart = {
     plotKind match {
       case "group" => toChart(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range))
-      case "time" => toChart(TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range))
+      case "time" =>
+        toChart(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper])), ind, dep, range))
       case "sine" => toChart(SinePlot(View("SinePlot Wave", (for {i <- List.range(0, 140, 5)}
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
       }) :: Nil, ind, dep, range))
-      case _ => toChart(BlankPlot("X", "Y", Empty))
+      case _ => toChart(BlankPlot("X", "Y", range))
     }
   }
 
-  def plotToJs(plotKind: String, ind: String, dep: String, range: Box[(String, String)]): JsCmd = {
+  def plotToJs(plotKind: String, ind: String, dep: String, range: (String, String)): JsCmd = {
     plotKind match {
       case "group" => toJs(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
-      case "time" => toJs(TimePlot(toListView(findAll().map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
+      case "time" =>
+        toJs(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper])), ind, dep, range), placeholder)
       case "sine" => toJs(SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
       yield (i / 10.0, sin(i / 10.0))).map {
         case (k, v) => (k.toString, v.toString)
       }) :: Nil, ind, dep, range), placeholder)
-      case _ => toJs(BlankPlot("X", "Y", Empty), placeholder)
+      case _ => toJs(BlankPlot("X", "Y", range), placeholder)
     }
   }
 
