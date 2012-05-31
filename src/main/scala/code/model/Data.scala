@@ -1,11 +1,8 @@
 package code.model
 
-import net.liftweb.mapper.LongKeyedMetaMapper
-import net.liftweb.mapper.CRUDify
 import code.service.Service
-import net.liftweb.mapper.LongKeyedMapper
-import net.liftweb.mapper.IdPK
 import code.helper._
+import net.liftweb.mapper._
 
 /**
  * The singleton that has methods for accessing the database
@@ -17,6 +14,8 @@ object Data extends Data with LongKeyedMetaMapper[Data]
 
   def expose = ("kind", Identity) :: ("user", ByEmail) ::
     ("date", Identity) :: Nil
+
+  def withUser(id: String) = By(Data.user, id.toLong)
 }
 
 /**
