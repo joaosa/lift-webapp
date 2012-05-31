@@ -16,9 +16,9 @@ trait Viewable[T] {
 // TODO abstract "BaseMapper with IdPK"
 object Viewer {
 
-  def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
+  implicit def toListView[T: Viewable](t: List[T]) = implicitly[Viewable[T]].list(t)
 
-  def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
+  implicit def toView[T: Viewable](t: T) = implicitly[Viewable[T]].toView(t)
 
   // TODO recursion & create a flag to enable it
   implicit object BaseMapper extends Viewable[BaseMapper with IdPK] {

@@ -171,7 +171,7 @@ with Plottable[Long, ServiceType] {
   }
 
   import Extractor._
-  def range[T: Extractable](t: T): Pair[String, String] = (extractField(t, "start") openOr "", extractField(t, "end") openOr "")
+  def range[T: Extractable](t: T) = (extractField(t, "start") openOr "", extractField(t, "end") openOr "")
 
   // Plot
   serve {

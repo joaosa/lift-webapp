@@ -46,7 +46,7 @@ trait Chartable[T] {
 
   def jsOptions(s: List[Series]): FlotOptions
 
-  def toJs(t: T, placeholder: String) = {
+  def toJs(placeholder: String, t: T): JsCmd = {
     val s = toSeries(t)
     Flot.renderJs(placeholder, s, jsOptions(s), JsCmd.unitToJsCmd())
   }
@@ -55,11 +55,14 @@ trait Chartable[T] {
 
 object ChartBuilder {
 
-  def toSeries[T: Chartable](t: T) = implicitly[Chartable[T]].toSeries(t)
+  implicit def toSeries[T: Chartable](t: T) = implicitly[Chartable[T]].toSeries(t)
 
-  def toChart[T: Chartable](t: T) = implicitly[Chartable[T]].toChart(t)
+  implicit def toChart[T: Chartable](t: T) = implicitly[Chartable[T]].toChart(t)
 
-  implicit def toJs[T: Chartable](t: T, placeholder: String) = implicitly[Chartable[T]].toJs(t, placeholder)
+  def placeholder = "placeholder"
+
+  implicit def toJs[T: Chartable, String](t: T): JsCmd =
+    implicitly[Chartable[T]].toJs(placeholder, t)
 
   implicit object Blank extends Chartable[BlankPlot] {
 
@@ -236,37 +239,40 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   import ChartBuilder._
   import code.helper.Formatter._
 
+  def get = findAll().map(_.asInstanceOf[BaseMapper with IdPK])
+
   def getField(fieldName: String) =
-  // By_>=(fieldByName[Any]("dependent").open_!, 3.0)
+    // By_>=(fieldByName[Any]("dependent").open_!, 3.0)
     fieldOrder.map(f => (f.name, f)).toMap.getOrElse(fieldName, Unit).asInstanceOf[MappedField[Any, PlotType]]
 
   def getWithRange(fieldName: String, range: (String, String)) =
     findAll(By_>=(getField(fieldName), implicitly[Formattable[Date]].parse(range._1).open_!),
-      By_<=(getField(fieldName), implicitly[Formattable[Date]].parse(range._2).open_!))
+      By_<=(getField(fieldName), implicitly[Formattable[Date]].parse(range._2).open_!)).map(_.asInstanceOf[BaseMapper with IdPK])
 
   def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String)): JFreeChart = {
     plotKind match {
-      case "group" => toChart(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range))
+      case "group" => GroupPlot(get, ind, dep, range)
       case "time" =>
-        toChart(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range))
-      case "sine" => toChart(SinePlot(View("SinePlot Wave", (for {i <- List.range(0, 140, 5)}
-      yield (i / 10.0, sin(i / 10.0))).map {
-        case (k, v) => (k.toString, v.toString)
-      }) :: Nil, ind, dep, range))
-      case _ => toChart(BlankPlot("X", "Y", range))
+        TimePlot(getWithRange(ind, range), ind, dep, range)
+      case "sine" =>
+        SinePlot(View("SinePlot Wave", (for {i <- List.range(0, 140, 5)}
+        yield (i / 10.0, sin(i / 10.0))).map {
+          case (k, v) => (k.toString, v.toString)
+        }) :: Nil, ind, dep, range)
+      case _ => BlankPlot("X", "Y", range)
     }
   }
 
   def plotToJs(plotKind: String, ind: String, dep: String, range: (String, String)): JsCmd = {
     plotKind match {
-      case "group" => toJs(GroupPlot(toListView(findAll().map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range), placeholder)
-      case "time" =>
-        toJs(TimePlot(toListView(getWithRange(ind, range).map(_.asInstanceOf[BaseMapper with IdPK])), ind, dep, range), placeholder)
-      case "sine" => toJs(SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
-      yield (i / 10.0, sin(i / 10.0))).map {
-        case (k, v) => (k.toString, v.toString)
-      }) :: Nil, ind, dep, range), placeholder)
-      case _ => toJs(BlankPlot("X", "Y", range), placeholder)
+      case "group" => GroupPlot(get, ind, dep, range)
+      case "time" => TimePlot(getWithRange(ind, range), ind, dep, range)
+      case "sine" =>
+        SinePlot(View("SinePlot Wave", (for (i <- List.range(0, 140, 5))
+        yield (i / 10.0, sin(i / 10.0))).map {
+          case (k, v) => (k.toString, v.toString)
+        }) :: Nil, ind, dep, range)
+      case _ => BlankPlot("X", "Y", range)
     }
   }
 
@@ -276,8 +282,6 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
     Full(Menu(Loc("Plot " + _dbTableNameLC, List(_dbTableNameLC) ::: "plot" :: Nil,
       "Plot " + _dbTableNameLC, Loc.Template(() => plotTemplate()))))
   }
-
-  val placeholder = "placeholder"
 
   def plotTemplate(): NodeSeq = pageWrapper(_plotTemplate)
 
