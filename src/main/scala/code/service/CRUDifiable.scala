@@ -22,8 +22,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     })
   }
 
-  def setup[OwnerType <: KeyedMapper[_, OwnerType]]
-  (b: Box[KeyedMapper[_, OwnerType]], kv: List[(String, Box[Any])]): Box[Mapper[_]] = {
+  def setup(b: Box[CRUDType], kv: List[(String, Box[Any])]): Box[Mapper[_]] = {
     for {
       item <- b
     } yield {
