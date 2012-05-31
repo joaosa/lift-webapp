@@ -108,7 +108,7 @@ object Service extends RestHelper {
 trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
 with CRUDifiable[ServiceType]
 with Plottable[Long, ServiceType] {
-  self: ServiceType with KeyedMetaMapper[_, ServiceType] =>
+  self: KeyedMetaMapper[_, ServiceType] =>
 
   private def modelName: String = dbName.toLowerCase
 
@@ -171,6 +171,7 @@ with Plottable[Long, ServiceType] {
   }
 
   import Extractor._
+
   def range[T: Extractable](t: T) = (extractField(t, "start") openOr "", extractField(t, "end") openOr "")
 
   // Plot

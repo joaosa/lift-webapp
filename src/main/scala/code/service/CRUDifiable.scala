@@ -7,7 +7,7 @@ import net.liftweb.mapper._
 
 // TODO abstract "BaseMapper with IdPK"
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
-  self: CRUDType with KeyedMetaMapper[_, CRUDType] =>
+  self: KeyedMetaMapper[_, CRUDType] =>
 
   def expose: List[(String, Transform)]
 
