@@ -13,9 +13,9 @@ import code.helper._
 case object Notification extends Notification with LongKeyedMetaMapper[Notification]
   with CRUDify[Long, Notification] with Service[Notification] {
   override def dbTableName = "notifications" // define the DB table name
-  override def fieldOrder = List(message)
+  override def fieldOrder = List(date, message)
 
-  def expose = ("message", ToLong) :: Nil
+  def expose = ("date", Now) :: ("message", ToLong) :: Nil
 }
 
 /**
@@ -23,6 +23,8 @@ case object Notification extends Notification with LongKeyedMetaMapper[Notificat
  */
 class Notification extends LongKeyedMapper[Notification] with IdPK {
   def getSingleton = Notification // reference to the companion object above
+
+  object date extends DateField(this)
 
   object message extends ForeignKeyField(this, Message)
 }
