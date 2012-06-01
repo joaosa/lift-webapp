@@ -34,9 +34,11 @@ with CRUDify[Long, User] with Service[User] {
     }
   }
 
-  def devices(u: User): List[Device] = Device.findAll(By(Device.user, u.id.is))
+  def devices(u: User) = Device.findAll(By(Device.user, u.id.is))
 
-  def devicesOnline(u: User): List[Device] = devices(u).filter(_.online.is)
+  def data(u: User) = Data.find(By(Data.user, u.id.is))
+
+  def devicesOnline(u: User) = devices(u).filter(_.online.is)
 }
 
 /**
@@ -59,6 +61,8 @@ class User extends LongKeyedMapper[User] with IdPK {
   object role extends ValueListField(this, List("user", "admin")) {
     override def defaultValue = "user"
   }
+
+  def data = Data.findAll(By(Data.user, this.id))
 
   // TODO: support timezone and locale (look into MegaProtoUser)
 }
