@@ -54,6 +54,13 @@ object ByEmail extends Transform {
   }
 }
 
+object ToDate extends Transform {
+  import Formatter._
+  override def apply(v: Box[String]): Box[Date] = {
+    implicitly[Formattable[Date]].parse(v openOr "")
+  }
+}
+
 object Now extends Transform {
   override def apply(b: Box[String]): Box[Date] = {
     Full(now)
