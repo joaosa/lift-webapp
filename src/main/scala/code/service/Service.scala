@@ -3,11 +3,11 @@ package code.service
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
-import code.model.User
 import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
+import code.model.{Point, User}
 
 sealed trait Message {
   def content: String
@@ -172,21 +172,23 @@ with Plottable[Long, ServiceType] {
 
   import Extractor._
 
-  def range[T: Extractable](t: T) = (extractField(t, "start") openOr "", extractField(t, "end") openOr "")
+  def range[T: Extractable](t: T) = Full(extractField(t, "start") openOr "", extractField(t, "end") openOr "")
 
   // Plot
+  // TODO include dataId filtering
+  import Plotter._
   serve {
     servicePath prefix {
       case "plot" :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toXmlResp(plotToChart(plotKind, ind, dep, range(xml))))
+            satisfyRequest(toXmlResp(Plotter.plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(xml))))
           }
         }
       case "plot" :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toJsonResp(plotToChart(plotKind, ind, dep, range(json))))
+            satisfyRequest(toXmlResp(Plotter.plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(json))))
           }
         }
     }

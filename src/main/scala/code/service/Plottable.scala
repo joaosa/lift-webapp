@@ -25,6 +25,7 @@ import net.liftweb.common.{Empty, Full, Box}
 import net.liftweb.util.Helpers.tryo
 import net.liftweb.mapper._
 import code.helper.Formattable
+import code.model._
 
 case class Series(label: Box[String], data: Set[Box[(Double, Double)]])
 
@@ -63,19 +64,6 @@ object ChartBuilder {
 
   implicit def toJs[T: Chartable, String](t: T): JsCmd =
     implicitly[Chartable[T]].toJs(placeholder, t)
-
-  /*def get[T <: Mapper[T]](entity: MetaMapper[T]) = entity.findAll().map(_.asInstanceOf[BaseMapper with IdPK])
-
-  def getField[T <: Mapper[T]](entity: MetaMapper[T], fieldName: String) =
-  // By_>=(fieldByName[Any]("dependent").open_!, 3.0)
-    entity.fieldOrder.map(f => (f.name, f)).toMap.getOrElse(fieldName, Unit).asInstanceOf[MappedField[Any, T]]
-
-  import code.helper.Formatter._
-  def WithRange[T <: Mapper[T]](entity: MetaMapper[T], fieldName: String, range: (String, String)) =
-    By_>=(getField(entity, fieldName), implicitly[Formattable[Date]].parse(range._1).open_!) ::
-      By_<=(getField(entity, fieldName), implicitly[Formattable[Date]].parse(range._2).open_!) :: Nil
-
-  def WithField[T <: Mapper[T]](entity: MetaMapper[T], fieldName: String, id: String) = By(getField(entity, fieldName), id) :: Nil*/
 
   implicit object Blank extends Chartable[BlankPlot] {
 
@@ -229,23 +217,92 @@ object ChartBuilder {
 sealed trait Chart
 
 case class BlankPlot(ind: String,
-                     dep: String,
-                     indRange: (String, String)) extends Chart
+                     dep: String) extends Chart
 
 case class SinePlot(source: List[View],
                     ind: String,
-                    dep: String,
-                    indRange: (String, String)) extends Chart
+                    dep: String) extends Chart
 
 case class TimePlot(source: List[View],
                     ind: String,
-                    dep: String,
-                    indRange: (String, String)) extends Chart
+                    dep: String) extends Chart
 
 case class GroupPlot(source: List[View],
                      ind: String,
-                     dep: String,
-                     indRange: (String, String)) extends Chart
+                     dep: String) extends Chart
+
+trait Plottable2[T] {
+
+  def getInd(t: T, kind: Box[String]): Seq[String]
+
+  def getDep(t: T, kind: Box[String]): Seq[String]
+
+  def toBlank(t: T, range: Box[(String, String)]): BlankPlot = BlankPlot("X", "Y")
+
+  def toBar(t: T, ind: String, dep: String, range: Box[(String, String)], params: String*): GroupPlot
+
+  def toTime(t: T, ind: String, dep: String, range: Box[(String, String)], params: String*): TimePlot
+}
+
+object Plotter {
+
+  import Viewer._
+  import ChartBuilder._
+
+  def getInd[T: Plottable2](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable2[T]].getInd(t, kind)
+
+  def getDep[T: Plottable2](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable2[T]].getDep(t, kind)
+
+  def plotToJs[T: Plottable2](t: T, plotType: Box[String],
+                              ind: Box[String], dep: Box[String],
+                              range: Box[(String, String)],
+                              params: String*): JsCmd = {
+    (plotType, ind, dep) match {
+      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable2[T]].toBar(t, x, y, range)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable2[T]].toTime(t, x, y, range, params: _*)
+      case _ => implicitly[Plottable2[T]].toBlank(t, range)
+    }
+  }
+
+  def plotToChart[T: Plottable2](t: T, plotType: Box[String],
+                                 ind: Box[String], dep: Box[String],
+                                 range: Box[(String, String)],
+                                 params: String*): JFreeChart = {
+    (plotType, ind, dep) match {
+      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable2[T]].toBar(t, x, y, range)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable2[T]].toTime(t, x, y, range, params: _*)
+      case _ => implicitly[Plottable2[T]].toBlank(t, range)
+    }
+  }
+
+  implicit object PointPlot extends Plottable2[Point.type] {
+
+    def getInd(t: Point.type, kind: Box[String]): Seq[String] = {
+      kind match {
+        case Full("group") => t.allFields.map(_.name)
+        case Full("time") => "date" :: Nil
+        case _ => "---" :: Nil
+      }
+    }
+
+    def getDep(t: Point.type, kind: Box[String]): Seq[String] = {
+      kind match {
+        case Full("group") => "count" :: Nil
+        case Full("time") => t.allFields.map(_.name)
+        case _ => "---" :: Nil
+      }
+    }
+
+    def toBar(t: Point.type, ind: String, dep: String, range: Box[(String, String)], params: String*): GroupPlot =
+      GroupPlot(t.getSingleton.findAll().map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
+
+    def toTime(t: Point.type, ind: String, dep: String, range: Box[(String, String)], params: String*) = {
+      val dataId: Box[String] = if (params.isEmpty) Empty else Full(params.head)
+      TimePlot(Data.pointsInRange(dataId, range).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
+    }
+  }
+
+}
 
 trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: KeyedMetaMapper[_, PlotType] =>
@@ -260,37 +317,26 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
     fieldOrder.map(f => (f.name, f)).toMap.getOrElse(fieldName, Unit).asInstanceOf[MappedField[Any, PlotType]]
 
   import code.helper.Formatter._
+
   def WithRange(fieldName: String, range: (String, String)) =
     By_>=(getField(fieldName), implicitly[Formattable[Date]].parse(range._1).open_!) ::
       By_<=(getField(fieldName), implicitly[Formattable[Date]].parse(range._2).open_!) :: Nil
 
-  //def WithField(fieldName: String, id: Any) = By(getField(fieldName), id) :: Nil
-
   def plotToJs(plotKind: String, ind: String, dep: String, range: (String, String)): JsCmd = {
     plotKind match {
-      case "group" => GroupPlot(get, ind, dep, range)
+      case "group" => GroupPlot(get, ind, dep)
       case "time" =>
-        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep, range)
-      case "sine" =>
-        SinePlot(View("Sine", (for (i <- List.range(0, 140, 5))
-        yield (i / 10.0, sin(i / 10.0))).map {
-          case (k, v) => (k.toString, v.toString)
-        }) :: Nil, ind, dep, range)
-      case _ => BlankPlot("X", "Y", range)
+        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
+      case _ => BlankPlot("X", "Y")
     }
   }
 
-  def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String)): JFreeChart = {
+  def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String), params: String*): JFreeChart = {
     plotKind match {
-      case "group" => GroupPlot(get, ind, dep, range)
+      case "group" => GroupPlot(get, ind, dep)
       case "time" =>
-        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep, range)
-      case "sine" =>
-        SinePlot(View("Sine", (for {i <- List.range(0, 140, 5)}
-        yield (i / 10.0, sin(i / 10.0))).map {
-          case (k, v) => (k.toString, v.toString)
-        }) :: Nil, ind, dep, range)
-      case _ => BlankPlot("X", "Y", range)
+        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
+      case _ => BlankPlot("X", "Y")
     }
   }
 
@@ -309,7 +355,8 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
       <h2>Plot
         {_dbTableNameLC}
       </h2>
-      <lift:Plotter plot={_dbTableNameLC}>
+      <lift:Plotter>
+        <label for="model">Model:</label> <input type="text" id="model"/>
         <label for="plotKind">Plot kind:</label> <input type="text" id="plotKind"/>
         <div>
           <b>Axis:</b>

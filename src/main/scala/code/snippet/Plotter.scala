@@ -7,43 +7,19 @@ import net.liftweb.util.Helpers.now
 import util.Helpers.strToCssBindPromoter
 import reactive.web.html.TextInput
 import reactive.web.RElem.rElemToNsFunc
-import code.model._
-import net.liftweb.http.S
 import reactive.web.html.Select
 import net.liftweb.http.js.JsCmds.Script
 import reactive.web.Cell
 import reactive._
+import code.service.Plotter._
+import code.model._
+import net.liftweb.mapper.BaseMapper
 
 class Plotter extends Observing {
 
-  // TODO remove this check
-  val plotter = S.attr("plot") match {
-    case Full("users") => User
-    case Full("subscriptions") => Subscription
-    case Full("devices") => Device
-    case Full("messages") => Message
-    case Full("data") => Data
-    case _ => Point
-  }
-
-  def getIndItems(kind: Option[String]): Seq[String] = {
-    kind match {
-      case Some("group") => plotter.allFields.map(_.name)
-      case Some("time") => "date" :: Nil
-      case _ => "---" :: Nil
-    }
-  }
-
-  def getDepItems(kind: Option[String]): Seq[String] = {
-    kind match {
-      case Some("group") => "count" :: Nil
-      case Some("time") => plotter.allFields.map(_.name)
-      case _ => "---" :: Nil
-    }
-  }
-
   def plot: Signal[NodeSeq => NodeSeq] = {
     for {
+      model <- model.selectedItem
       kindName <- kind.selectedItem
       indName <- ind.selectedItem
       depName <- dep.selectedItem
@@ -51,16 +27,17 @@ class Plotter extends Observing {
       indMax <- end.value
     } yield {
       _: NodeSeq =>
-        Script(plotter.plotToJs(kindName getOrElse "",
-          indName getOrElse "", depName getOrElse "", (indMin, indMax)))
+        Script(plotToJs(model.get, kindName, indName, depName, Full((indMin, indMax)), "1"))
     }
   }
 
+  val model = Select(Val(Seq(Point)), (t: BaseMapper) => t.dbName)
+
   val kind = Select(Val(Seq("blank", "group", "time", "sine")))
 
-  val ind = Select(kind.selectedItem.map(s => getIndItems(s)))
+  val ind = Select(kind.selectedItem.map(s => getInd(model.selectedItem.value.get, s)))
 
-  val dep = Select(kind.selectedItem.map(s => getDepItems(s)))
+  val dep = Select(kind.selectedItem.map(s => getDep(model.selectedItem.value.get, s)))
 
   import code.helper.Formatter._
 
@@ -73,7 +50,8 @@ class Plotter extends Observing {
   val results = Cell(plot)
 
   def render =
-    "#plotKind" #> kind &
+    "#model" #> model &
+      "#plotKind" #> kind &
       "#ind" #> ind &
       "#dep" #> dep &
       "#start" #> start &
