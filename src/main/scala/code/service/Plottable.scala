@@ -91,6 +91,7 @@ object ChartBuilder {
           val value = tryo {
             dataMap(t.dep).toDouble
           }
+          println("PAIR: ", (date, value))
           (date, value) match {
             case (Full(x), Full(y)) => Full((x, y))
             case _ => Empty
@@ -213,7 +214,7 @@ trait Plottable[T] {
 
   def toBar(t: T, ind: String, dep: String, range: Box[(String, String)], params: String*): GroupPlot
 
-  def toTime(t: T, ind: String, dep: String, range: Box[(String, String)], params: String*): TimePlot
+  def toTime(t: T, id: Box[String], ind: String, dep: String, range: Box[(String, String)]): TimePlot
 }
 
 object Plotter {
@@ -225,24 +226,25 @@ object Plotter {
 
   def getDep[T: Plottable](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable[T]].getDep(t, kind)
 
-  def plotToJs[T: Plottable](t: T, plotType: Box[String],
+  def plotToJs[T: Plottable](t: T, id: Box[String], plotType: Box[String],
                               ind: Box[String], dep: Box[String],
                               range: Box[(String, String)],
                               params: String*): JsCmd = {
+    println("TYPEPLOT: ", (plotType, ind, dep))
     (plotType, ind, dep) match {
       case (Full("group"), Full(x), Full(y)) => implicitly[Plottable[T]].toBar(t, x, y, range)
-      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, x, y, range, params: _*)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, id, x, y, range)
       case _ => implicitly[Plottable[T]].toBlank(t, range)
     }
   }
 
-  def plotToChart[T: Plottable](t: T, plotType: Box[String],
-                                 ind: Box[String], dep: Box[String],
+  def plotToChart[T: Plottable](t: T, id: Box[String], plotType: Box[String],
+                                ind: Box[String], dep: Box[String],
                                  range: Box[(String, String)],
                                  params: String*): JFreeChart = {
     (plotType, ind, dep) match {
       case (Full("group"), Full(x), Full(y)) => implicitly[Plottable[T]].toBar(t, x, y, range)
-      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, x, y, range, params: _*)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, id, x, y, range)
       case _ => implicitly[Plottable[T]].toBlank(t, range)
     }
   }
@@ -268,9 +270,8 @@ object Plotter {
     def toBar(t: Point.type, ind: String, dep: String, range: Box[(String, String)], params: String*): GroupPlot =
       GroupPlot(t.getSingleton.findAll().map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
 
-    def toTime(t: Point.type, ind: String, dep: String, range: Box[(String, String)], params: String*) = {
-      val dataId: Box[String] = if (params.isEmpty) Empty else Full(params.head)
-      TimePlot(Data.pointsInRange(dataId, range).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
+    def toTime(t: Point.type, id: Box[String], ind: String, dep: String, range: Box[(String, String)]) = {
+      TimePlot(Data.pointsInRange(id, range).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
     }
   }
 

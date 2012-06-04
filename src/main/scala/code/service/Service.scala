@@ -7,7 +7,7 @@ import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
 import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
-import code.model.{Point, User}
+import code.model._
 
 sealed trait Message {
   def content: String
@@ -114,16 +114,16 @@ object Service extends RestHelper {
 
   serve {
     basePath prefix {
-      case "plot" :: model :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
+      case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toXmlResp(plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(xml))))
+            satisfyRequest(toXmlResp(plotToChart(Point, Full(id), Full(plotKind), Full(ind), Full(dep), range(xml))))
           }
         }
-      case "plot" :: model :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
+      case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toXmlResp(plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(json))))
+            satisfyRequest(toXmlResp(plotToChart(Point, Full(id), Full(plotKind), Full(ind), Full(dep), range(json))))
           }
         }
     }

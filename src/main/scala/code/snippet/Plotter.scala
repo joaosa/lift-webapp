@@ -27,13 +27,14 @@ class Plotter extends Observing {
       indMax <- end.value
     } yield {
       _: NodeSeq =>
-        Script(plotToJs(model.get, kindName, indName, depName, Full((indMin, indMax)), "1"))
+        // TODO remove hardcoding
+        Script(plotToJs(model.get, Full("1"), kindName, indName, depName, Full((indMin, indMax))))
     }
   }
 
   val model = Select(Val(Seq(Point)), (t: BaseMapper) => t.dbName)
 
-  val kind = Select(Val(Seq("blank", "group", "time", "sine")))
+  val kind = Select(Val(Seq("blank", "group", "time")))
 
   val ind = Select(kind.selectedItem.map(s => getInd(model.selectedItem.value.get, s)))
 
