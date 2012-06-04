@@ -1,6 +1,5 @@
 package code.service
 
-import scala.math.sin
 import java.util.Date
 import net.liftweb.sitemap.{Menu, Loc}
 import scala.xml.NodeSeq
@@ -8,7 +7,6 @@ import net.liftweb.proto.Crudify
 import org.jfree.data.category.DefaultCategoryDataset
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.{JFreeChart, ChartFactory}
-import org.jfree.data.xy.{XYSeries, XYSeriesCollection}
 import org.jfree.data.time.{TimeSeriesCollection, TimeSeries, Millisecond}
 import net.liftweb.http.js.JE.{Num, JsObj}
 import net.liftweb.http.js.JsCmd
@@ -24,7 +22,6 @@ FlotAxisOptions
 import net.liftweb.common.{Empty, Full, Box}
 import net.liftweb.util.Helpers.tryo
 import net.liftweb.mapper._
-import code.helper.Formattable
 import code.model._
 
 case class Series(label: Box[String], data: Set[Box[(Double, Double)]])
@@ -77,31 +74,6 @@ object ChartBuilder {
         new DefaultCategoryDataset,
         PlotOrientation.VERTICAL,
         false,
-        true,
-        false)
-    }
-
-    def jsOptions(s: List[Series]) = new FlotOptions {}
-  }
-
-  implicit object Sine extends Chartable[SinePlot] {
-    // TODO remove hardcoding
-    def toSeries(t: SinePlot) = new Series(Full("Sine"), (for (i <- List.range(0, 140, 5))
-    yield Full(i / 10.0, sin(i / 10.0))).toSet) :: Nil
-
-    def toChart(t: SinePlot) = {
-      val s = toSeries(t)
-      val dataset = new XYSeries(s.head.label openOr "")
-      s.head.data map {
-        case Full((x, y)) => dataset.addOrUpdate(x, y)
-        case _ => Unit
-      }
-      ChartFactory.createTimeSeriesChart(
-        t.dep + " over " + t.ind,
-        t.ind,
-        t.dep,
-        new XYSeriesCollection(dataset),
-        true,
         true,
         false)
     }
@@ -231,7 +203,7 @@ case class GroupPlot(source: List[View],
                      ind: String,
                      dep: String) extends Chart
 
-trait Plottable2[T] {
+trait Plottable[T] {
 
   def getInd(t: T, kind: Box[String]): Seq[String]
 
@@ -249,33 +221,33 @@ object Plotter {
   import Viewer._
   import ChartBuilder._
 
-  def getInd[T: Plottable2](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable2[T]].getInd(t, kind)
+  def getInd[T: Plottable](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable[T]].getInd(t, kind)
 
-  def getDep[T: Plottable2](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable2[T]].getDep(t, kind)
+  def getDep[T: Plottable](t: T, kind: Box[String]): Seq[String] = implicitly[Plottable[T]].getDep(t, kind)
 
-  def plotToJs[T: Plottable2](t: T, plotType: Box[String],
+  def plotToJs[T: Plottable](t: T, plotType: Box[String],
                               ind: Box[String], dep: Box[String],
                               range: Box[(String, String)],
                               params: String*): JsCmd = {
     (plotType, ind, dep) match {
-      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable2[T]].toBar(t, x, y, range)
-      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable2[T]].toTime(t, x, y, range, params: _*)
-      case _ => implicitly[Plottable2[T]].toBlank(t, range)
+      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable[T]].toBar(t, x, y, range)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, x, y, range, params: _*)
+      case _ => implicitly[Plottable[T]].toBlank(t, range)
     }
   }
 
-  def plotToChart[T: Plottable2](t: T, plotType: Box[String],
+  def plotToChart[T: Plottable](t: T, plotType: Box[String],
                                  ind: Box[String], dep: Box[String],
                                  range: Box[(String, String)],
                                  params: String*): JFreeChart = {
     (plotType, ind, dep) match {
-      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable2[T]].toBar(t, x, y, range)
-      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable2[T]].toTime(t, x, y, range, params: _*)
-      case _ => implicitly[Plottable2[T]].toBlank(t, range)
+      case (Full("group"), Full(x), Full(y)) => implicitly[Plottable[T]].toBar(t, x, y, range)
+      case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, x, y, range, params: _*)
+      case _ => implicitly[Plottable[T]].toBlank(t, range)
     }
   }
 
-  implicit object PointPlot extends Plottable2[Point.type] {
+  implicit object PointPlot extends Plottable[Point.type] {
 
     def getInd(t: Point.type, kind: Box[String]): Seq[String] = {
       kind match {
@@ -304,41 +276,8 @@ object Plotter {
 
 }
 
-trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
+trait Plotifiable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
   self: KeyedMetaMapper[_, PlotType] =>
-
-  import ChartBuilder._
-  import Viewer._
-
-  def get = findAll().map(_.asInstanceOf[BaseMapper with IdPK])
-
-  def getField(fieldName: String) =
-  // By_>=(fieldByName[Any]("dependent").open_!, 3.0)
-    fieldOrder.map(f => (f.name, f)).toMap.getOrElse(fieldName, Unit).asInstanceOf[MappedField[Any, PlotType]]
-
-  import code.helper.Formatter._
-
-  def WithRange(fieldName: String, range: (String, String)) =
-    By_>=(getField(fieldName), implicitly[Formattable[Date]].parse(range._1).open_!) ::
-      By_<=(getField(fieldName), implicitly[Formattable[Date]].parse(range._2).open_!) :: Nil
-
-  def plotToJs(plotKind: String, ind: String, dep: String, range: (String, String)): JsCmd = {
-    plotKind match {
-      case "group" => GroupPlot(get, ind, dep)
-      case "time" =>
-        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
-      case _ => BlankPlot("X", "Y")
-    }
-  }
-
-  def plotToChart(plotKind: String, ind: String, dep: String, range: (String, String), params: String*): JFreeChart = {
-    plotKind match {
-      case "group" => GroupPlot(get, ind, dep)
-      case "time" =>
-        TimePlot(findAll(WithRange(ind, range): _*).map(_.asInstanceOf[BaseMapper with IdPK]), ind, dep)
-      case _ => BlankPlot("X", "Y")
-    }
-  }
 
   abstract override def menus = super.menus ::: plotMenuLoc.toList
 
@@ -369,7 +308,7 @@ trait Plottable[_, PlotType <: KeyedMapper[_, PlotType]] extends Crudify {
           <label for="start">start:</label> <input type="text" id="start"/>
           <label for="end">end:</label> <input type="text" id="end"/>
         </div>
-        <div id={placeholder} style="width: 600px; height: 400px;"></div>
+        <div id={ChartBuilder.placeholder} style="width: 600px; height: 400px;"></div>
         <span id="results"></span>
       </lift:Plotter>
   }

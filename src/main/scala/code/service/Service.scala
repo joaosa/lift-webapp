@@ -103,11 +103,37 @@ object Service extends RestHelper {
     }
   }
 
+  import Extractor._
+
+  def range[T: Extractable](t: T) = Full(extractField(t, "start") openOr "", extractField(t, "end") openOr "")
+
+  // Plot
+  // TODO include dataId filtering
+
+  import Plotter._
+
+  serve {
+    basePath prefix {
+      case "plot" :: model :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
+        RestContinuation.async {
+          satisfyRequest => {
+            satisfyRequest(toXmlResp(plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(xml))))
+          }
+        }
+      case "plot" :: model :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
+        RestContinuation.async {
+          satisfyRequest => {
+            satisfyRequest(toXmlResp(plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(json))))
+          }
+        }
+    }
+  }
+
 }
 
 trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
 with CRUDifiable[ServiceType]
-with Plottable[Long, ServiceType] {
+with Plotifiable[Long, ServiceType] {
   self: KeyedMetaMapper[_, ServiceType] =>
 
   private def modelName: String = dbName.toLowerCase
@@ -167,30 +193,6 @@ with Plottable[Long, ServiceType] {
         for (item <- delete(id)) yield toXmlResp(toView(item))
       case id :: Nil JsonDelete _ =>
         for (item <- delete(id)) yield toJsonResp(toView(item))
-    }
-  }
-
-  import Extractor._
-
-  def range[T: Extractable](t: T) = Full(extractField(t, "start") openOr "", extractField(t, "end") openOr "")
-
-  // Plot
-  // TODO include dataId filtering
-  import Plotter._
-  serve {
-    servicePath prefix {
-      case "plot" :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
-        RestContinuation.async {
-          satisfyRequest => {
-            satisfyRequest(toXmlResp(Plotter.plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(xml))))
-          }
-        }
-      case "plot" :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
-        RestContinuation.async {
-          satisfyRequest => {
-            satisfyRequest(toXmlResp(Plotter.plotToChart(Point, Full(plotKind), Full(ind), Full(dep), range(json))))
-          }
-        }
     }
   }
 }
