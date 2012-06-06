@@ -1,34 +1,42 @@
 package code.model
 
-import net.liftweb.mapper.{
-  LongKeyedMetaMapper,
-  LongKeyedMapper,
-  IdPK,
-  CRUDify
-}
 import code.helper._
 import code.service.Service
+import net.liftweb.mapper._
+import net.liftweb.common.Full
 
 /**
  * The singleton that has methods for accessing the database
  */
 object Subscription extends Subscription with LongKeyedMetaMapper[Subscription]
-  with CRUDify[Long, Subscription] with Service[Subscription] {
-  override def dbTableName = "subscriptions" // define the DB table name
+with CRUDify[Long, Subscription] with Service[Subscription] {
+  override def dbTableName = "subscriptions"
+
+  // define the DB table name
   override def fieldOrder = List(user)
 
   def expose = ("kind" -> Identity) :: ("user" -> ByUserName) :: Nil
+
+  def findByEmail(email: String): List[Subscription] =
+    User.find(Like(User.email, email)) match {
+      case Full(u) =>
+        Subscription.findAll(By(Subscription.user, u.id.is)).toList
+      case _ => Nil
+    }
 }
 
 /**
  * An O-R mapped class
  */
 class Subscription extends LongKeyedMapper[Subscription] with IdPK {
-  def getSingleton = Subscription // reference to the companion object above
+  def getSingleton = Subscription
+
+  // reference to the companion object above
 
   object date extends DateField(this)
 
   object kind extends ValueListField(this, List("Alert"))
 
   object user extends ForeignKeyField(this, User)
+
 }

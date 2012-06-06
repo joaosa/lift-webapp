@@ -2,7 +2,7 @@ package code.service
 
 import akka.remote.RemoteScope
 import akka.actor._
-import net.liftweb.mapper.{Like, OrderBy, Ascending, By}
+import net.liftweb.mapper.{OrderBy, Ascending}
 import code.model.{Device, Subscription, User}
 import net.liftweb.common.{Box, Full}
 import akka.dispatch.Promise
@@ -19,16 +19,15 @@ class NotifierActor(result: Promise[String]) extends Actor {
     case Broadcast(m) =>
       for {
         devices <- devicesToNotify(Subscription.findAll(OrderBy(Subscription.id, Ascending)))
-        addresses <- deviceAddresses(devices)
+        addresses <- deviceAddresses(devices :: Nil)
       } yield {
         actorNotify(addresses, m)
       }
     case Uni(m, t) =>
       for {
-        user <- User.find(Like(User.email, t))
-        subs <- Subscription.find(By(Subscription.user, user.id.is))
+        subs <- Subscription.findByEmail(t)
         devices <- devicesToNotify(subs :: Nil)
-        addresses <- deviceAddresses(devices)
+        addresses <- deviceAddresses(devices :: Nil)
       } yield {
         actorNotify(addresses, m)
       }
@@ -37,13 +36,13 @@ class NotifierActor(result: Promise[String]) extends Actor {
       println("Notify: invalid message type.")
   }
 
-  def devicesToNotify(subs: List[Subscription]): Box[List[Device]] = {
-    Full(subs.flatMap {
+  def devicesToNotify(subs: List[Subscription]): List[Device] = {
+    subs.flatMap {
       _.user.foreign match {
         case Full(u) => User.devices(u)
         case _ => Nil
       }
-    })
+    }
   }
 
   // TODO: remove hardcoding
