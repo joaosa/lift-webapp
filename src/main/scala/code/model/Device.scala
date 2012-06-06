@@ -31,4 +31,6 @@ class Device extends LongKeyedMapper[Device] with IdPK {
   object port extends MappedInt(this)
 
   object online extends MappedBoolean(this)
+
+  object location extends MappedText(this)
 }

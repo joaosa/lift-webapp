@@ -25,7 +25,7 @@ class NotifierActor(result: Promise[String]) extends Actor {
       }
     case Uni(m, t) =>
       for {
-        user <- User.find(Like(User.username, t))
+        user <- User.find(Like(User.email, t))
         subs <- Subscription.find(By(Subscription.user, user.id.is))
         devices <- devicesToNotify(subs :: Nil)
         addresses <- deviceAddresses(devices)
