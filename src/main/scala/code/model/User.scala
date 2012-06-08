@@ -45,7 +45,8 @@ with CRUDify[Long, User] with Service[User] {
  * An O-R mapped class
  */
 class User extends LongKeyedMapper[User] with IdPK {
-  def getSingleton = User // reference to the companion object above
+  // reference to the companion object above
+  def getSingleton = User
 
   def show = email.asHtml.toString()
 

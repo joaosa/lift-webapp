@@ -24,16 +24,15 @@ with CRUDify[Long, Point] with Service[Point] {
  * An O-R mapped class
  */
 class Point extends LongKeyedMapper[Point] with IdPK {
-  def getSingleton = Point
-
   // reference to the companion object above
+  def getSingleton = Point
 
   object data extends ForeignKeyField(this, Data)
 
   object date extends DateField(this)
 
   object independent extends MappedDouble(this) {
-    // TODO enable when client side implementation handles this
+    // TODO to enable when client side implementation handles this
     /*override def validations = validateUniqueness _ :: Nil
     def validateUniqueness(v: Double) = {
       Point.findAll(By(Point.data, data), By(Point.independent, v)) match {
