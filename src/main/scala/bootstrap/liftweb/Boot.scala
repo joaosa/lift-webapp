@@ -39,7 +39,7 @@ class Boot extends Loggable {
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
     Schemifier.schemify(true, Schemifier.infoF _,
-      User, Subscription, Device, Message, Notification,
+      Location, User, Subscription, Device, Message, Notification,
       Data, Point)
 
     // where to search snippet
@@ -51,6 +51,7 @@ class Boot extends Loggable {
       Menu(S ? "User") / "users" / "index" submenus (
         Menu(S ? "Login") / "users" / "login"),
       Menu(S ? "Admins") / "admins" / "index" submenus (
+        Menu(S ? "Location") / "locations" / "admin" submenus (Location.menus),
         Menu(S ? "Notify") / "notify",
         Menu(S ? "Users") / "users" / "admin" submenus (User.menus ::: Subscription.menus ::: Device.menus),
         Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
@@ -73,11 +74,12 @@ class Boot extends Loggable {
       Empty
     }
 
-    object RequireSSL extends Loc.EarlyResponse(requireSSL)
+    //object RequireSSL extends Loc.EarlyResponse(requireSSL)
 
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
     LiftRules.dispatch.append(Service)
+    LiftRules.dispatch.append(withAuthentication guard Location)
     LiftRules.dispatch.append(withAuthentication guard User)
     LiftRules.dispatch.append(withAuthentication guard Subscription)
     LiftRules.dispatch.append(withAuthentication guard Device)

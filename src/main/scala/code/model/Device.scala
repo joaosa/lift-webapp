@@ -32,5 +32,6 @@ class Device extends LongKeyedMapper[Device] with IdPK {
 
   object online extends MappedBoolean(this)
 
-  object location extends MappedText(this)
+  object location extends ForeignKeyField(this, Location)
+
 }
