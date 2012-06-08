@@ -29,7 +29,7 @@ class Device extends LongKeyedMapper[Device] with IdPK {
 
   object user extends ForeignKeyField(this, User)
 
-  object name extends MappedString(this, 15)
+  object name extends MappedText(this)
 
   // TODO validate IPV4/V6 address
   object address extends MappedText(this)
