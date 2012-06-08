@@ -21,6 +21,7 @@ case class Broadcast(content: String) extends Message
 
 case class Reply(content: String) extends Message
 
+// TODO separate into distinct services
 object Service extends RestHelper {
 
   def basePath: List[String] = "webservices" :: Nil
@@ -108,7 +109,6 @@ object Service extends RestHelper {
   def range[T: Extractable](t: T) = Full(extractField(t, "start") openOr "", extractField(t, "end") openOr "")
 
   // Plot
-  // TODO include dataId filtering
 
   import Plotter._
 

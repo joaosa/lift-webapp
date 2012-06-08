@@ -2,7 +2,7 @@ package code.model
 
 import net.liftweb.mapper._
 import code.service.Service
-import code.helper.Identity
+import code.helper.{ToDate, ForeignKeyField, DateField, Identity}
 
 /**
  * The singleton that has methods for accessing the database
@@ -12,10 +12,10 @@ with CRUDify[Long, Location] with Service[Location] {
   override def dbTableName = "Locations"
 
   // define the DB table name
-  override def fieldOrder = List(latitude, longitude)
+  override def fieldOrder = List(device, date, latitude, longitude)
 
-  def expose = ("latitude", Identity) ::
-    ("longitude", Identity) :: Nil
+  def expose = ("device", Identity) ::("date", ToDate) ::
+    ("latitude", Identity) ::("longitude", Identity) :: Nil
 }
 
 /**
@@ -25,10 +25,11 @@ class Location extends LongKeyedMapper[Location] with IdPK {
   // reference to the companion object above
   def getSingleton = Location
 
-  def show = (latitude.asHtml, longitude.asHtml).toString()
+  object device extends ForeignKeyField(this, Device)
+
+  object date extends DateField(this)
 
   // TODO include gp coordinate validation
-  // TODO constraint: pair (la, lo) must be unique
   object latitude extends MappedString(this, 15)
 
   object longitude extends MappedString(this, 15)

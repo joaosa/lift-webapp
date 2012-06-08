@@ -4,7 +4,7 @@ import code.service.Service
 import code.helper._
 import net.liftweb.mapper._
 import java.util.Date
-import net.liftweb.common.{Empty, Box, Full}
+import net.liftweb.common.{Box, Full}
 
 /**
  * The singleton that has methods for accessing the database
@@ -23,10 +23,10 @@ with CRUDify[Long, Data] with Service[Data] {
   def pointsInRange(dataId: Box[String], range: Box[(String, String)]) = {
     dataId match {
       case Full(id) =>
-        Data.find(id) match {
-        case Full(d) if !range.isEmpty => d.pointsInRange(range.open_!)
-        case _ => Nil
-      }
+        (Data.find(id), range) match {
+          case (Full(d), Full(r)) => d.pointsInRange(r)
+          case _ => Nil
+        }
       case _ => findAll()
     }
   }
