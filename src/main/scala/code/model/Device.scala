@@ -31,7 +31,7 @@ class Device extends LongKeyedMapper[Device] with IdPK {
 
   object name extends MappedString(this, 15)
 
-  // IPV4
+  // TODO validate IPV4/V6 address
   object address extends MappedText(this)
 
   object port extends MappedInt(this)
