@@ -66,4 +66,13 @@ class User extends LongKeyedMapper[User] with IdPK {
   def data = Data.findAll(By(Data.user, this.id))
 
   // TODO: support timezone and locale (look into MegaProtoUser)
+
+  def isDeviceOwner(d: Device): Boolean =
+    Device.findAll(By(Device.user, id.is)).contains(d)
+
+  def isDeviceOwnerByID(deviceID: String): Boolean =
+    Device.findByID(deviceID) match {
+      case Full(d) => isDeviceOwner(d)
+      case _ => false
+    }
 }

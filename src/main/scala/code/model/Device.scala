@@ -16,6 +16,9 @@ with CRUDify[Long, Device] with Service[Device] {
 
   def expose = ("user", ByUserName) ::("name", Identity) ::
     ("address", Identity) ::("port", ToInt) :: Nil
+
+  def findByID(ID: String) = Device.find(By(Device.authID, ID))
+
 }
 
 /**
@@ -28,6 +31,10 @@ class Device extends LongKeyedMapper[Device] with IdPK {
   def show = name.asHtml.toString()
 
   object user extends ForeignKeyField(this, User)
+
+  // ID used on user+device authentication
+  // TODO must be unique
+  object authID extends MappedText(this)
 
   object name extends MappedText(this)
 

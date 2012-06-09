@@ -11,7 +11,7 @@ import code.service.Service
 class Login extends Observing {
 
   val trigger = Button("Login") {
-    if (Service.login(login.value.value,
+    if (Service.userLogin(login.value.value,
       password.value.value)) {
       S.notice("Login successful!")
       S.notice(S.getSessionAttribute("user") openOr "")

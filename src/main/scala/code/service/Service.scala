@@ -6,8 +6,8 @@ import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
-import net.liftweb.mapper.{KeyedMapper, KeyedMetaMapper}
 import code.model._
+import net.liftweb.mapper.{By, KeyedMapper, KeyedMetaMapper}
 
 sealed trait Message {
   def content: String
@@ -28,8 +28,18 @@ object Service extends RestHelper {
 
   object LoggedIn extends SessionVar(false)
 
-  def login(login: String, password: String): Boolean = {
-    User.authenticate(login, password) match {
+  def deviceLogin(userID: String, deviceID: String, password: String): Boolean =
+    User.find(By(User.email, userID)) match {
+      case Full(u) =>
+        u.isDeviceOwnerByID(deviceID) match {
+          case true => userLogin(userID, password)
+          case _ => false
+        }
+      case _ => false
+    }
+
+  def userLogin(userID: String, password: String): Boolean = {
+    User.authenticate(userID, password) match {
       case Full(user) =>
         userRoles(AuthRole(user.role.is) :: Nil)
         LoggedIn(true)
@@ -57,9 +67,16 @@ object Service extends RestHelper {
   import Converter._
 
   def doLogin[T: Extractable](t: T): Message = {
-    val login = extractField(t, "login")
+    val userID = extractField(t, "login")
     val password = extractField(t, "password")
-    Reply(this.login(login openOr "", password openOr "").toString)
+    val deviceID = extractField(t, "deviceID")
+
+    (deviceLogin(userID openOr "", deviceID openOr "",
+      password openOr ""), Device.findByID(deviceID openOr "")) match {
+      case (true, Full(d)) => Reply(d.id.toString())
+      case _ => Reply("Invalid Login.")
+    }
+
   }
 
   def doLogout(): Message = {
