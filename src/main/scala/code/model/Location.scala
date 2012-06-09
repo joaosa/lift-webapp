@@ -2,7 +2,7 @@ package code.model
 
 import net.liftweb.mapper._
 import code.service.Service
-import code.helper.{ToDate, ForeignKeyField, DateField, Identity}
+import code.helper._
 
 /**
  * The singleton that has methods for accessing the database
@@ -14,7 +14,7 @@ with CRUDify[Long, Location] with Service[Location] {
   // define the DB table name
   override def fieldOrder = List(device, date, latitude, longitude)
 
-  def expose = ("device", Identity) ::("date", ToDate) ::
+  def expose = ("device", ToLong) ::("date", ToDate) ::
     ("latitude", Identity) ::("longitude", Identity) :: Nil
 }
 
