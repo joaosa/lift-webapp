@@ -82,7 +82,7 @@ object Service extends RestHelper {
       User.findByEmail(extractField(t, "userID") openOr "")) match {
       case (true, Full(d), Full(u)) =>
         Reply(("id", d.id.toString()) ::("role", u.role.is) :: Nil)
-      case _ => Reply(("login", "Invalid Login.") :: Nil)
+      case _ => Reply(("error", "Invalid Login.") :: Nil)
     }
 
   }
