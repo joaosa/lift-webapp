@@ -24,10 +24,6 @@ object Converter {
 
   implicit def toJsonResp[T: Convertable](t: T) = implicitly[Convertable[T]].toJsonResp(t)
 
-  implicit object Message extends Convertable[Message] {
-    def toXml(t: Message) = <message>{t.content}</message>
-  }
-
   implicit object View extends Convertable[View] {
     def toXml(t: View) = Elem(null, t.name, Null, TopScope,
       Xml.toXml(Extraction.decompose(t.items.toMap)): _*)

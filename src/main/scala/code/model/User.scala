@@ -21,14 +21,12 @@ with CRUDify[Long, User] with Service[User] {
   def expose = ("username", Identity) ::("email", Identity) ::
     ("password", Identity) ::("role", Identity) :: Nil
 
-  // find by first name
-  def findByName(name: String): Box[User] = find(Like(username, name))
+  def findByName(name: String): Box[User] = find(By(User.username, name))
 
-  def getUsername(firstName: String, lastName: String) =
-    "%s %s" format(firstName, lastName)
+  def findByEmail(email: String): Box[User] = find(By(User.email, email))
 
   def authenticate(email: String, password: String): Box[User] = {
-    User.find(By(User.email, email)) match {
+    User.findByEmail(email) match {
       case Full(user) if user.password.match_?(password) => Full(user)
       case _ => Empty
     }

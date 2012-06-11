@@ -9,29 +9,30 @@ import akka.dispatch.Promise
 
 class UserActor extends Actor {
   protected def receive = {
-    case Notification(m) => sender ! Reply("GOT IT")
+    case Notification(m) => sender ! Reply(("notification", "GOT IT") :: Nil)
   }
 }
 
-class NotifierActor(result: Promise[String]) extends Actor {
+class NotifierActor(result: Promise[List[(String, String)]]) extends Actor {
 
   protected def receive = {
-    case Broadcast(m) =>
+    case Broadcast(content) =>
       for {
         devices <- devicesToNotify(Subscription.findAll(OrderBy(Subscription.id, Ascending)))
         addresses <- deviceAddresses(devices :: Nil)
       } yield {
-        actorNotify(addresses, m)
+        actorNotify(addresses, content)
       }
-    case Uni(m, t) =>
+    case Uni(content, t) =>
       for {
         subs <- Subscription.findByEmail(t)
         devices <- devicesToNotify(subs :: Nil)
         addresses <- deviceAddresses(devices :: Nil)
       } yield {
-        actorNotify(addresses, m)
+        actorNotify(addresses, content)
       }
-    case Reply(m) => result.complete(Right(m))
+    case Reply(content) =>
+      result.complete(Right(content))
     case _ =>
       println("Notify: invalid message type.")
   }
@@ -50,11 +51,11 @@ class NotifierActor(result: Promise[String]) extends Actor {
     Full(devices.map(d => Address("akka", "userActorSystem", "127.0.0.1", 2553)))
   }
 
-  private def actorNotify(addresses: List[Address], m: String) = {
+  private def actorNotify(addresses: List[Address], content: List[(String, String)]) = {
     addresses.map {
       addr =>
         val ref = context.actorOf(Props[UserActor].withDeploy(Deploy(scope = RemoteScope(addr))))
-        ref ! Notification(m)
+        ref ! Notification(content)
     }
   }
 

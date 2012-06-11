@@ -15,7 +15,7 @@ class Notifier extends Observing {
   val system = ActorSystem("notifierActorSystem")
 
   // TODO notices aren't shown
-  def alert(e: Either[Throwable, String]) {
+  def alert(e: Either[Throwable, List[(String, String)]]) {
     e match {
       case Right(result) =>
         println("Got: " + result)
@@ -29,10 +29,10 @@ class Notifier extends Observing {
   val trigger = Button("Send") {
     S.notice("Sent: " + what.value.value + " to " + who.value.value)
 
-    val p = Promise[String]()(system.dispatcher)
+    val p = Promise[List[(String, String)]]()(system.dispatcher)
     p.onComplete(alert)
     val notifier = system.actorOf(Props(new NotifierActor(p)))
-    notifier ! Uni(what.value.value, who.value.value)
+    notifier ! Uni(("content", what.value.value) :: Nil, who.value.value)
   }
 
   val who = TextInput()
@@ -41,9 +41,8 @@ class Notifier extends Observing {
   val what = TextInput()
   what.value updateOn trigger.click
 
-  def render = {
+  def render =
     "#who" #> who &
       "#what" #> what &
       "#trigger" #> trigger
-  }
 }
