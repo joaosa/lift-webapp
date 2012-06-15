@@ -29,9 +29,8 @@ with CRUDify[Long, Subscription] with Service[Subscription] {
  * An O-R mapped class
  */
 class Subscription extends LongKeyedMapper[Subscription] with IdPK {
-  def getSingleton = Subscription
-
   // reference to the companion object above
+  def getSingleton = Subscription
 
   object date extends DateField(this)
 

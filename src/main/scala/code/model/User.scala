@@ -61,7 +61,7 @@ class User extends LongKeyedMapper[User] with IdPK {
     override def defaultValue = "user"
   }
 
-  def data = Data.findAll(By(Data.user, this.id))
+  def data = Data.findAll(By(Data.user, id.is))
 
   // TODO: support timezone and locale (look into MegaProtoUser)
 

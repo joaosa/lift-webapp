@@ -39,7 +39,7 @@ class Boot extends Loggable {
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
     Schemifier.schemify(true, Schemifier.infoF _,
-      Location, User, Subscription, Device, Message, Notification,
+      Location, User, Subscription, Device, Message,
       Data, Point)
 
     // where to search snippet
@@ -57,8 +57,6 @@ class Boot extends Loggable {
         Menu(S ? "Users") / "users" / "admin" submenus (User.menus :::
           Subscription.menus ::: Device.menus),
         Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
-        Menu(S ? "Notifications") / "notifications" / "admin" submenus (
-          Notification.menus),
         Menu(S ? "Data") / "data" / "admin" submenus (
           Data.menus ::: Point.menus)))
 
@@ -88,7 +86,6 @@ class Boot extends Loggable {
     LiftRules.dispatch.append(withAuthentication guard Subscription)
     LiftRules.dispatch.append(withAuthentication guard Device)
     LiftRules.dispatch.append(withAuthentication guard Message)
-    LiftRules.dispatch.append(withAuthentication guard Notification)
     LiftRules.dispatch.append(withAuthentication guard Data)
     LiftRules.dispatch.append(withAuthentication guard Point)
     // stateless -- no session created
