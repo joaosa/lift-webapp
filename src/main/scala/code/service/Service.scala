@@ -22,10 +22,16 @@ case class Broadcast(content: List[(String, String)]) extends Message
 case class Reply(content: List[(String, String)]) extends Message
 
 trait Service extends RestHelper {
-  def basePath: List[String] = "webservices" :: Nil
+  protected def basePath: List[String] = "webservices" :: Nil
+
+  protected def path: List[String]
+
+  protected def servicePath: List[String] = basePath ::: path
 }
 
 object Login extends Service {
+
+  def path = Nil
 
   object LoggedIn extends SessionVar(false)
 
@@ -94,7 +100,7 @@ object Login extends Service {
   }
 
   serve {
-    basePath prefix {
+    servicePath prefix {
       case "login" :: Nil XmlPost xml -> _ =>
         toXmlResp(toView(doLogin(xml)))
       case "login" :: Nil JsonPost json -> _ =>
@@ -107,7 +113,7 @@ object Login extends Service {
   }
 
   serve {
-    basePath prefix {
+    servicePath prefix {
       case "state" :: Nil XmlGet _ =>
         PlainTextResponse(isLoggedIn.toString)
       case "state" :: Nil JsonGet _ =>
@@ -118,11 +124,13 @@ object Login extends Service {
 
 object Notifier extends Service {
 
+  def path = Nil
+
   import Converter._
   import Viewer._
 
   serve {
-    basePath prefix {
+    servicePath prefix {
       case "notify" :: who :: what :: Nil Post _ => {
         // TODO fix async
         // TODO support xml as well
@@ -147,6 +155,8 @@ object Notifier extends Service {
 
 object Plotter extends Service {
 
+  def path = Nil
+
   import Converter._
   import Extractor._
   import PlotBuilder._
@@ -157,7 +167,7 @@ object Plotter extends Service {
 
   serve {
 
-    basePath prefix {
+    servicePath prefix {
       case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
           satisfyRequest => {
@@ -180,9 +190,8 @@ with CRUDifiable[ServiceType]
 with Plotifiable[Long, ServiceType] {
   self: KeyedMetaMapper[_, ServiceType] =>
 
-  private def modelName: String = dbName.toLowerCase
-
-  private def servicePath: List[String] = basePath ::: modelName :: Nil
+  private def modelName = dbName.toLowerCase
+  def path = modelName :: Nil
 
   import Extractor._
   import Converter._
