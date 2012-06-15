@@ -11,11 +11,12 @@ import reactive.web.html.Select
 import net.liftweb.http.js.JsCmds.Script
 import reactive.web.Cell
 import reactive._
-import code.service.Plotter._
 import code.model._
 import net.liftweb.mapper.BaseMapper
 
 class Plotter extends Observing {
+
+  import code.service.PlotBuilder._
 
   def plot: Signal[NodeSeq => NodeSeq] = {
     for {

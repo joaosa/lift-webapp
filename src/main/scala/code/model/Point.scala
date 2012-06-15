@@ -1,16 +1,14 @@
 package code.model
 
-import code.service.Service
+import code.service.DomainService
 import code.helper._
 import net.liftweb.mapper._
-import java.util.Date
-import net.liftweb.common.{Full, Box}
 
 /**
  * The singleton that has methods for accessing the database
  */
 object Point extends Point with LongKeyedMetaMapper[Point]
-with CRUDify[Long, Point] with Service[Point] {
+with CRUDify[Long, Point] with DomainService[Point] {
   override def dbTableName = "points"
 
   // define the DB table name

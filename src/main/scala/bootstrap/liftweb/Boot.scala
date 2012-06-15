@@ -14,8 +14,8 @@ import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
 import net.liftweb.http.auth.AuthRole
 import akka.actor.ActorSystem
-import code.service.Service
-import code.service.Service.withAuthentication
+import code.service.{Notifier, Plotter, Login}
+import code.service.Login.withAuthentication
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -80,7 +80,9 @@ class Boot extends Loggable {
 
     // Hook RestHelper to boot
     // stateful -- associated with a servlet container session
-    LiftRules.dispatch.append(Service)
+    LiftRules.dispatch.append(Login)
+    LiftRules.dispatch.append(Notifier)
+    LiftRules.dispatch.append(Plotter)
     LiftRules.dispatch.append(withAuthentication guard Location)
     LiftRules.dispatch.append(withAuthentication guard User)
     LiftRules.dispatch.append(withAuthentication guard Subscription)
@@ -130,7 +132,7 @@ class Boot extends Loggable {
     }
 
     LiftRules.authentication = HttpBasicAuthentication("Authenticate yourself") {
-      case (login, password, req) => Service.userLogin(login, password)
+      case (login, password, req) => Login.userLogin(login, password)
     }
 
     // Start reactive web

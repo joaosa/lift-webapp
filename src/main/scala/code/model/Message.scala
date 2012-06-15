@@ -7,14 +7,14 @@ IdPK,
 CRUDify
 }
 import code.helper._
-import code.service.Service
+import code.service.DomainService
 import net.liftweb.mapper.MappedText
 
 /**
  * The singleton that has methods for accessing the database
  */
 object Message extends Message with LongKeyedMetaMapper[Message]
-with CRUDify[Long, Message] with Service[Message] {
+with CRUDify[Long, Message] with DomainService[Message] {
   override def dbTableName = "messages"
 
   // define the DB table name

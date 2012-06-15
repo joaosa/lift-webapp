@@ -6,12 +6,12 @@ import util.Helpers.strToCssBindPromoter
 import reactive.web.html.TextInput
 import reactive.web.html.Button
 import net.liftweb.http.S
-import code.service.Service
+import code.service.Login
 
 class Login extends Observing {
 
   val trigger = Button("Login") {
-    if (Service.userLogin(login.value.value,
+    if (Login.userLogin(login.value.value,
       password.value.value)) {
       S.notice("Login successful!")
       S.notice(S.getSessionAttribute("user") openOr "")

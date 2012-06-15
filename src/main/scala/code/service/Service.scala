@@ -21,10 +21,11 @@ case class Broadcast(content: List[(String, String)]) extends Message
 
 case class Reply(content: List[(String, String)]) extends Message
 
-// TODO separate into distinct services
-object Service extends RestHelper {
-
+trait Service extends RestHelper {
   def basePath: List[String] = "webservices" :: Nil
+}
+
+object Login extends Service {
 
   object LoggedIn extends SessionVar(false)
 
@@ -70,16 +71,17 @@ object Service extends RestHelper {
   import Viewer._
 
   def doLogin[T: Extractable](t: T): Message = {
-    val authenticated = (extractField(t, "userID"),
-      extractField(t, "deviceID"),
+    val userID = extractField(t, "userID")
+    val deviceID = extractField(t, "deviceID")
+
+    val authenticated = (userID, deviceID,
       extractField(t, "password")) match {
       case (Full(u), Full(d), Full(p)) => deviceLogin(u, d, p)
       case _ => false
     }
 
-    (authenticated,
-      Device.findByID(extractField(t, "deviceID") openOr ""),
-      User.findByEmail(extractField(t, "userID") openOr "")) match {
+    (authenticated, Device.findByID(deviceID openOr ""),
+      User.findByEmail(userID openOr "")) match {
       case (true, Full(d), Full(u)) =>
         Reply(("id", d.id.toString()) ::("role", u.role.is) :: Nil)
       case _ => Reply(("error", "Invalid Login.") :: Nil)
@@ -112,8 +114,13 @@ object Service extends RestHelper {
         PlainTextResponse(isLoggedIn.toString)
     }
   }
+}
 
-  // Notify
+object Notifier extends Service {
+
+  import Converter._
+  import Viewer._
+
   serve {
     basePath prefix {
       case "notify" :: who :: what :: Nil Post _ => {
@@ -136,14 +143,20 @@ object Service extends RestHelper {
       }
     }
   }
+}
 
+object Plotter extends Service {
+
+  import Converter._
   import Extractor._
+  import PlotBuilder._
 
-  def range[T: Extractable](t: T) = Full(extractField(t, "start") openOr "", extractField(t, "end") openOr "")
-
-  import Plotter._
+  def range[T: Extractable](t: T) =
+    Full(extractField(t, "start") openOr "",
+      extractField(t, "end") openOr "")
 
   serve {
+
     basePath prefix {
       case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
@@ -162,14 +175,14 @@ object Service extends RestHelper {
 
 }
 
-trait Service[ServiceType <: KeyedMapper[_, ServiceType]] extends RestHelper
+trait DomainService[ServiceType <: KeyedMapper[_, ServiceType]] extends Service
 with CRUDifiable[ServiceType]
 with Plotifiable[Long, ServiceType] {
   self: KeyedMetaMapper[_, ServiceType] =>
 
   private def modelName: String = dbName.toLowerCase
 
-  private def servicePath: List[String] = Service.basePath ::: modelName :: Nil
+  private def servicePath: List[String] = basePath ::: modelName :: Nil
 
   import Extractor._
   import Converter._

@@ -1,14 +1,14 @@
 package code.model
 
 import net.liftweb.mapper._
-import code.service.Service
+import code.service.DomainService
 import code.helper._
 
 /**
  * The singleton that has methods for accessing the database
  */
 object Location extends Location with LongKeyedMetaMapper[Location]
-with CRUDify[Long, Location] with Service[Location] {
+with CRUDify[Long, Location] with DomainService[Location] {
   override def dbTableName = "Locations"
 
   // define the DB table name

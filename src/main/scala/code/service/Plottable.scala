@@ -217,7 +217,7 @@ trait Plottable[T] {
   def toTime(t: T, id: Box[String], ind: String, dep: String, range: Box[(String, String)]): TimePlot
 }
 
-object Plotter {
+object PlotBuilder {
 
   import Viewer._
   import ChartBuilder._

@@ -1,15 +1,15 @@
 package code.model
 
-import code.helper._
-import code.service.Service
 import net.liftweb.mapper._
 import net.liftweb.common.Full
+import code.helper._
+import code.service.DomainService
 
 /**
  * The singleton that has methods for accessing the database
  */
 object Subscription extends Subscription with LongKeyedMetaMapper[Subscription]
-with CRUDify[Long, Subscription] with Service[Subscription] {
+with CRUDify[Long, Subscription] with DomainService[Subscription] {
   override def dbTableName = "subscriptions"
 
   // define the DB table name

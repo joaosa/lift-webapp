@@ -1,16 +1,16 @@
 package code.model
 
 import net.liftweb.mapper._
-import net.liftweb.common._
-import code.service.Service
 import code.helper._
+import code.service.DomainService
 import net.liftweb.http.S
+import net.liftweb.common.{Empty, Full, Box}
 
 /**
  * The singleton that has methods for accessing the database
  */
 object User extends User with LongKeyedMetaMapper[User]
-with CRUDify[Long, User] with Service[User] {
+with CRUDify[Long, User] with DomainService[User] {
 
   override def dbTableName = "users"
 
