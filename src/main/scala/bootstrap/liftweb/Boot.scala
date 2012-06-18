@@ -34,12 +34,12 @@ class Boot extends Loggable {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
-    
+
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
     Schemifier.schemify(true, Schemifier.infoF _,
-      Location, User, Subscription, Device, Message,
+      Location, User, UserRelation, Subscription, Device, Message,
       Data, Point)
 
     // where to search snippet
@@ -50,12 +50,12 @@ class Boot extends Loggable {
       Menu(S ? "Home") / "index",
       Menu(S ? "User") / "users" / "index" submenus (
         Menu(S ? "Login") / "users" / "login"),
-      Menu(S ? "Admins") / "admins" / "index" submenus (
+      Menu(S ? "Admins") / "admins" / "index" submenus(
         Menu(S ? "Location") / "locations" / "admin" submenus (
           Location.menus),
         Menu(S ? "Notify") / "notify",
         Menu(S ? "Users") / "users" / "admin" submenus (User.menus :::
-          Subscription.menus ::: Device.menus),
+          UserRelation.menus ::: Subscription.menus ::: Device.menus),
         Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
         Menu(S ? "Data") / "data" / "admin" submenus (
           Data.menus ::: Point.menus)))

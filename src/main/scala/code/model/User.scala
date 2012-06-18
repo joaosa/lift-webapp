@@ -12,9 +12,9 @@ import net.liftweb.common.{Empty, Full, Box}
 object User extends User with LongKeyedMetaMapper[User]
 with CRUDify[Long, User] with DomainService[User] {
 
+  // define the DB table name
   override def dbTableName = "users"
 
-  // define the DB table name
   // define the order fields will appear in forms and output
   override def fieldOrder = List(username, email, password, role)
 
@@ -42,7 +42,7 @@ with CRUDify[Long, User] with DomainService[User] {
 /**
  * An O-R mapped class
  */
-class User extends LongKeyedMapper[User] with IdPK {
+class User extends LongKeyedMapper[User] with IdPK with ManyToMany {
   // reference to the companion object above
   def getSingleton = User
 
@@ -61,6 +61,9 @@ class User extends LongKeyedMapper[User] with IdPK {
     override def defaultValue = "user"
   }
 
+  object users extends MappedManyToMany(UserRelation,
+    UserRelation.source, UserRelation.destination, User)
+
   def data = Data.findAll(By(Data.user, id.is))
 
   // TODO: support timezone and locale (look into MegaProtoUser)
@@ -73,4 +76,29 @@ class User extends LongKeyedMapper[User] with IdPK {
       case Full(d) => isDeviceOwner(d)
       case _ => false
     }
+}
+
+object UserRelation extends UserRelation
+with LongKeyedMetaMapper[UserRelation] with CRUDify[Long, UserRelation]
+with DomainService[UserRelation] {
+  // define the DB table name
+  override def dbTableName = "userRelations"
+
+  // define the order fields will appear in forms and output
+  override def fieldOrder = List(source, destination, kind)
+
+  def expose = ("source", ByEmail) ::("destination", ByEmail) ::
+    ("kind", Identity) :: Nil
+}
+
+class UserRelation extends LongKeyedMapper[UserRelation] with IdPK {
+  // reference to the companion object above
+  def getSingleton = UserRelation
+
+  object source extends ForeignKeyField(this, User)
+
+  object destination extends ForeignKeyField(this, User)
+
+  object kind extends ValueListField(this, List("doctor", "patient"))
+
 }
