@@ -1,14 +1,8 @@
 package code.model
 
-import net.liftweb.mapper.{
-LongKeyedMetaMapper,
-LongKeyedMapper,
-IdPK,
-CRUDify
-}
+import net.liftweb.mapper._
 import code.helper._
 import code.service.DomainService
-import net.liftweb.mapper.MappedText
 
 /**
  * The singleton that has methods for accessing the database
@@ -32,8 +26,7 @@ class Message extends LongKeyedMapper[Message] with IdPK {
 
   def show = "%s %s" format(kind.asHtml, date.asHtml)
 
-  object kind extends ValueListField(this,
-    List("Notification"))
+  object kind extends ValueListField(this, List("Notification"))
 
   object date extends DateField(this)
 
@@ -42,5 +35,7 @@ class Message extends LongKeyedMapper[Message] with IdPK {
   object destination extends ForeignKeyField(this, User)
 
   object content extends MappedText(this)
+
+  object delivered extends MappedBoolean(this)
 
 }
