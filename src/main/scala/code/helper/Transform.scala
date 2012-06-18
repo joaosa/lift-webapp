@@ -36,15 +36,6 @@ object ToDouble extends Transform {
   }
 }
 
-object ByUserName extends Transform {
-  override def apply(v: Box[String]): Box[Long] = {
-    User.find(Like(User.username, v openOr "")) match {
-      case Full(f) => Full(f.id.is)
-      case _ => Empty
-    }
-  }
-}
-
 object ByEmail extends Transform {
   override def apply(v: Box[String]): Box[Long] = {
     User.find(Like(User.email, v openOr "")) match {
@@ -58,6 +49,12 @@ object ToDate extends Transform {
   import Formatter._
   override def apply(v: Box[String]): Box[Date] = {
     implicitly[Formattable[Date]].parse(v openOr "")
+  }
+}
+
+object ToBoolean extends Transform {
+  override def apply(v: Box[String]): Box[Boolean] = {
+    implicitly[Formattable[Boolean]].parse(v openOr "")
   }
 }
 

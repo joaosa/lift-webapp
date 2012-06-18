@@ -14,8 +14,9 @@ with CRUDify[Long, Message] with DomainService[Message] {
   // define the DB table name
   override def fieldOrder = List(kind, date, source, destination, content)
 
-  def expose = ("kind", Identity) ::("date", Now) ::("source", ByUserName) ::
-    ("destination", ByUserName) ::("content", Identity) :: Nil
+  def expose = ("kind", Identity) ::("date", Now) ::("source", ByEmail) ::
+    ("destination", ByEmail) ::("content", Identity) ::
+    ("delivered", ToBoolean) :: Nil
 }
 
 /**
@@ -26,7 +27,7 @@ class Message extends LongKeyedMapper[Message] with IdPK {
 
   def show = "%s %s" format(kind.asHtml, date.asHtml)
 
-  object kind extends ValueListField(this, List("Notification"))
+  object kind extends ValueListField(this, List("alert"))
 
   object date extends DateField(this)
 
