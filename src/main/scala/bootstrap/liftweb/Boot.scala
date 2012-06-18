@@ -51,7 +51,7 @@ class Boot extends Loggable {
       Menu(S ? "User") / "users" / "index" submenus (
         Menu(S ? "Login") / "users" / "login"),
       Menu(S ? "Admins") / "admins" / "index" submenus(
-        Menu(S ? "Location") / "locations" / "admin" submenus (
+        Menu(S ? "Locations") / "locations" / "admin" submenus (
           Location.menus),
         Menu(S ? "Notify") / "notify",
         Menu(S ? "Users") / "users" / "admin" submenus (User.menus :::

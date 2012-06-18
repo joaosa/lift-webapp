@@ -1,18 +1,10 @@
 package code.helper
 
-import net.liftweb.mapper.KeyedMetaMapper
-import net.liftweb.mapper.MappedLongForeignKey
-import net.liftweb.common.Full
-import scala.xml.Text
-import scala.math.max
-import net.liftweb.mapper.Mapper
-import net.liftweb.mapper.KeyedMapper
-import net.liftweb.mapper.MappedDateTime
+import net.liftweb.mapper._
 import net.liftweb.util.FieldError
-import net.liftweb.mapper.MappedDouble
-import net.liftweb.mapper.IdPK
-import net.liftweb.mapper.MappedString
 import net.liftweb.util.Helpers.now
+import net.liftweb.common.Full
+import xml.Text
 
 abstract class ForeignKeyField[T <: KeyedMapper[_, T], O <: KeyedMapper[Long, O] with IdPK {def show: String}](theOwner: T, _foreignMeta: => KeyedMetaMapper[Long, O])
   extends MappedLongForeignKey(theOwner , _foreignMeta) {
@@ -41,7 +33,7 @@ abstract class DomainField[T <: Mapper[T]](theOwner: T, domainRestriction: (Doub
 abstract class ProbabilityField[T <: Mapper[T]](theOwner: T)
   extends DomainField(theOwner, x => 0 <= x && x <= 1)
 
-abstract class ValueListField[T <: Mapper[T]](theOwner: T, values: List[String]) extends MappedString(theOwner, values.map(_.size).reduceLeft(max)) {
+abstract class ValueListField[T <: Mapper[T]](theOwner: T, values: List[String]) extends MappedText(theOwner) {
   override def validations = validateKind _ :: Nil
   def validateKind(kind: String) = {
     kind match {
