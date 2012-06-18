@@ -55,7 +55,7 @@ class User extends LongKeyedMapper[User] with IdPK with ManyToMany {
 
   object password extends MappedPassword(this)
 
-  object role extends ValueListField(this, List("user", "admin")) {
+  object role extends ValueListField(this, List("user", "doc", "admin")) {
     override def defaultValue = "user"
   }
 
@@ -99,6 +99,6 @@ class UserRelation extends LongKeyedMapper[UserRelation] with IdPK {
 
   object destination extends ForeignKeyField(this, User)
 
-  object kind extends ValueListField(this, List("doctor", "patient"))
+  object kind extends ValueListField(this, List("doctor", "patient", "friend"))
 
 }

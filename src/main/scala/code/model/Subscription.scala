@@ -15,7 +15,7 @@ with CRUDify[Long, Subscription] with DomainService[Subscription] {
   // define the DB table name
   override def fieldOrder = List(user)
 
-  def expose = ("kind" -> Identity) :: ("user" -> ByUserName) :: Nil
+  def expose = ("kind" -> Identity) :: ("user" -> ByEmail) :: Nil
 
   def findByEmail(email: String): List[Subscription] =
     User.find(Like(User.email, email)) match {

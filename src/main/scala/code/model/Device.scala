@@ -15,7 +15,7 @@ with CRUDify[Long, Device] with DomainService[Device] {
   // define the DB table name
   override def fieldOrder = List(user, name, address, port)
 
-  def expose = ("user", ByUserName) ::("name", Identity) ::
+  def expose = ("user", ByEmail) ::("name", Identity) ::
     ("address", Identity) ::("port", ToInt) :: Nil
 
   def findByID(ID: String) = Device.find(By(Device.authID, ID))
