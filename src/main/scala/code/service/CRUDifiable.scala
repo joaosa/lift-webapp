@@ -2,7 +2,7 @@ package code.service
 
 import net.liftweb.common.{Empty, Box, Full}
 import code.helper._
-import net.liftweb.util.FieldError
+import net.liftweb.util.{BaseField, FieldError}
 import net.liftweb.mapper._
 
 // TODO abstract "BaseMapper with IdPK"
@@ -67,6 +67,14 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     } yield item.asInstanceOf[BaseMapper with IdPK]
 
   def readAll: Box[List[BaseMapper with IdPK]] = Full(findAll().map(_.asInstanceOf[BaseMapper with IdPK]))
+
+  def readField(id: String, fieldName: String): Box[(BaseMapper, BaseField)] =
+    for {
+      item <- find(id)
+      fields <- Box !! item.allFields.map(f => (f.name, f)).toMap
+      field <- fields.get(fieldName)
+    } yield (item, field)
+
 
   def update[T: Extractable](id: String, t: T): Either[List[FieldError], BaseMapper with IdPK] = {
     validate(setup(find(id), transformValues(t)))

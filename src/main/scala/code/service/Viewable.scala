@@ -2,7 +2,7 @@ package code.service
 
 import code.helper.ForeignKeyField
 import net.liftweb.common.Full
-import net.liftweb.util.FieldError
+import net.liftweb.util.{BaseField, FieldError}
 import net.liftweb.mapper.{IdPK, BaseMapper}
 
 case class View(name: String, items: List[(String, String)])
@@ -58,6 +58,11 @@ object Viewer {
 
   implicit object MessageView extends Viewable[Message] {
     def toView(t: Message) = View("message", t.content)
+  }
+
+  implicit object FieldView extends Viewable[(BaseMapper, BaseField)] {
+    def toView(t: (BaseMapper, BaseField)) = View(t._1.dbName.toLowerCase,
+      (t._2.name, t._2.asHtml.toString()) :: Nil)
   }
 
 }
