@@ -190,7 +190,7 @@ with CRUDifiable[ServiceType]
 with Plotifiable[Long, ServiceType] {
   self: KeyedMetaMapper[_, ServiceType] =>
 
-  private def modelName = dbName.toLowerCase
+  private def modelName = dbTableName
   def path = modelName :: Nil
 
   import Extractor._
@@ -236,6 +236,16 @@ with Plotifiable[Long, ServiceType] {
         for (items <- readAll) yield toXmlResp(toListView(items))
       case Nil JsonGet _ =>
         for (items <- readAll) yield toJsonResp(toListView(items))
+    }
+  }
+
+  serve {
+    servicePath prefix {
+      // read field as list
+      case id :: "field" :: field :: Nil XmlGet _ =>
+        for (f <- readField(id, field)) yield toXmlResp(toView(f))
+      case id :: "field" :: field :: Nil JsonGet _ =>
+        for (f <- readField(id, field)) yield toJsonResp(toView(f))
     }
   }
 

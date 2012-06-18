@@ -83,13 +83,12 @@ class Boot extends Loggable {
     LiftRules.dispatch.append(Login)
     LiftRules.dispatch.append(Notifier)
     LiftRules.dispatch.append(Plotter)
-    LiftRules.dispatch.append(withAuthentication guard Location)
-    LiftRules.dispatch.append(withAuthentication guard User)
-    LiftRules.dispatch.append(withAuthentication guard Subscription)
-    LiftRules.dispatch.append(withAuthentication guard Device)
-    LiftRules.dispatch.append(withAuthentication guard Message)
-    LiftRules.dispatch.append(withAuthentication guard Data)
-    LiftRules.dispatch.append(withAuthentication guard Point)
+
+    Seq(Location, User, UserRelation, Subscription,
+      Device, Message, Data, Point).map {
+      s => LiftRules.dispatch.append(withAuthentication guard s)
+    }
+
     // stateless -- no session created
     //LiftRules.statelessDispatch.append(User)
 

@@ -34,8 +34,6 @@ with CRUDify[Long, User] with DomainService[User] {
 
   def devices(u: User) = Device.findAll(By(Device.user, u.id.is))
 
-  def data(u: User) = Data.find(By(Data.user, u.id.is))
-
   def devicesOnline(u: User) = devices(u).filter(_.online.is)
 }
 
@@ -64,9 +62,11 @@ class User extends LongKeyedMapper[User] with IdPK with ManyToMany {
   object users extends MappedManyToMany(UserRelation,
     UserRelation.source, UserRelation.destination, User)
 
-  def data = Data.findAll(By(Data.user, id.is))
-
   // TODO: support timezone and locale (look into MegaProtoUser)
+
+  def relations = UserRelation.findAll(By(UserRelation.source, id.is))
+
+  def data = Data.findAll(By(Data.user, id.is))
 
   def isDeviceOwner(d: Device): Boolean =
     Device.findAll(By(Device.user, id.is)).contains(d)

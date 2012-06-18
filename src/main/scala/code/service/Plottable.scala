@@ -229,7 +229,6 @@ object PlotBuilder {
   def plotToJs[T: Plottable](t: T, id: Box[String], plotType: Box[String],
                               ind: Box[String], dep: Box[String],
                               range: Box[(String, String)]): JsCmd = {
-    println("TYPEPLOT: ", (plotType, ind, dep))
     (plotType, ind, dep) match {
       case (Full("group"), Full(x), Full(y)) => implicitly[Plottable[T]].toBar(t, x, y, range)
       case (Full("time"), Full(x), Full(y)) => implicitly[Plottable[T]].toTime(t, id, x, y, range)
