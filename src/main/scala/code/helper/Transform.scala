@@ -53,8 +53,8 @@ object ToDate extends Transform {
 }
 
 object ToBoolean extends Transform {
-  override def apply(v: Box[String]): Box[Boolean] = {
-    implicitly[Formattable[Boolean]].parse(v openOr "")
+  override def apply(b: Box[String]): Box[Boolean] = {
+    for (v <- b) yield v.toBoolean
   }
 }
 
