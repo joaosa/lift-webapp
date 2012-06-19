@@ -1,8 +1,9 @@
 package code.model
 
 import net.liftweb.mapper._
-import code.helper._
 import code.service.DomainService
+import code.helper.Transformer.{ToInt, Identity, ByEmail}
+import code.helper.ForeignKeyField
 
 
 /**

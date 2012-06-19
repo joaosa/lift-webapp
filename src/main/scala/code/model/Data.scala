@@ -2,9 +2,11 @@ package code.model
 
 import net.liftweb.mapper._
 import java.util.Date
-import net.liftweb.common.{Box, Full}
+import net.liftweb.common.Box
 import code.service.DomainService
-import code.helper._
+import code.helper.Transformer.{Identity, ByEmail}
+import code.helper.{Formattable, DateField, ForeignKeyField, ValueListField}
+import net.liftweb.common.Full
 
 
 /**

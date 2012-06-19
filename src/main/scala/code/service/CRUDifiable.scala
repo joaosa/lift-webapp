@@ -1,15 +1,15 @@
 package code.service
 
 import net.liftweb.common.{Empty, Box, Full}
-import code.helper._
 import net.liftweb.util.{BaseField, FieldError}
 import net.liftweb.mapper._
+import code.helper.{Transformable, ForeignKeyField}
 
 // TODO abstract "BaseMapper with IdPK"
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   self: KeyedMetaMapper[_, CRUDType] =>
 
-  def expose: List[(String, Transform)]
+  def expose: List[(String, Transformable[_])]
 
   // TODO finish method
   def FKSetup(f: ForeignKeyField[_, _], data: Any) {

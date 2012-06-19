@@ -1,10 +1,11 @@
 package code.model
 
 import net.liftweb.mapper._
-import code.helper._
 import code.service.DomainService
 import net.liftweb.http.S
 import net.liftweb.common.{Empty, Full, Box}
+import code.helper.Transformer.{ByEmail, Identity}
+import code.helper.{ForeignKeyField, ValueListField}
 
 /**
  * The singleton that has methods for accessing the database
