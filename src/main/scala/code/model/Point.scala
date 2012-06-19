@@ -15,8 +15,8 @@ with CRUDify[Long, Point] with DomainService[Point] {
   // define the DB table name
   override def fieldOrder = List(data, date, independent, dependent)
 
-  def expose = ("data", ToLong) ::("date", ToDate) ::
-    ("independent", ToDouble) ::("dependent", ToDouble) :: Nil
+  def expose = Seq((data, ToLong), (date, ToDate),
+    (independent, ToDouble), (dependent, ToDouble))
 }
 
 /**

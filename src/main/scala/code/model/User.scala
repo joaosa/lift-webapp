@@ -19,8 +19,8 @@ with CRUDify[Long, User] with DomainService[User] {
   // define the order fields will appear in forms and output
   override def fieldOrder = List(username, email, password, role)
 
-  def expose = ("username", Identity) ::("email", Identity) ::
-    ("password", Identity) ::("role", Identity) :: Nil
+  def expose = Seq((username, Identity), (email, Identity),
+    (password, Identity), (role, Identity))
 
   def findByName(name: String): Box[User] = find(By(User.username, name))
 
@@ -88,8 +88,8 @@ with DomainService[UserRelation] {
   // define the order fields will appear in forms and output
   override def fieldOrder = List(source, destination, kind)
 
-  def expose = ("source", ByEmail) ::("destination", ByEmail) ::
-    ("kind", Identity) :: Nil
+  def expose = (source, ByEmail) ::(destination, ByEmail) ::
+    (kind, Identity) :: Nil
 }
 
 class UserRelation extends LongKeyedMapper[UserRelation] with IdPK {

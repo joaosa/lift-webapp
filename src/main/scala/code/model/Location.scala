@@ -15,8 +15,8 @@ with CRUDify[Long, Location] with DomainService[Location] {
   // define the DB table name
   override def fieldOrder = List(device, date, latitude, longitude)
 
-  def expose = ("device", ToLong) ::("date", ToDate) ::
-    ("latitude", Identity) ::("longitude", Identity) :: Nil
+  def expose = Seq((device, ToLong), (date, ToDate),
+    (latitude, Identity), (longitude, Identity))
 }
 
 /**

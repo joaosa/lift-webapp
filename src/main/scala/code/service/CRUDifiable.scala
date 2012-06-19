@@ -9,20 +9,21 @@ import code.helper.{Transformable, ForeignKeyField}
 trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   self: KeyedMetaMapper[_, CRUDType] =>
 
-  def expose: List[(String, Transformable[_])]
+  def expose: Seq[(BaseField, Transformable[_])]
 
   // TODO finish method
   def FKSetup(f: ForeignKeyField[_, _], data: Any) {
 
   }
 
-  def transformValues[T: Extractable](t: T): List[(String, Box[Any])] = {
-    expose.map(_._1) zip (expose map {
-      case (field, transform) => transform(Extractor.extractField(t, field))
-    })
+  def transformValues[T: Extractable](t: T): Seq[(String, Box[Any])] = {
+    expose map {
+      case (field, transform) => (field.name,
+        transform(Extractor.extractField(t, field.name)))
+    }
   }
 
-  def setup(b: Box[CRUDType], kv: List[(String, Box[Any])]): Box[Mapper[_]] = {
+  def setup(b: Box[CRUDType], kv: Seq[(String, Box[Any])]): Box[Mapper[_]] = {
     for {
       item <- b
     } yield {

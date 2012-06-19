@@ -15,9 +15,8 @@ with CRUDify[Long, Message] with DomainService[Message] {
   // define the DB table name
   override def fieldOrder = List(kind, date, source, destination, content)
 
-  def expose = ("kind", Identity) ::("date", Now) ::("source", ByEmail) ::
-    ("destination", ByEmail) ::("content", Identity) ::
-    ("delivered", ToBoolean) :: Nil
+  def expose = Seq((kind, Identity), (date, Now), (source, ByEmail),
+    (destination, ByEmail), (content, Identity), (delivered, ToBoolean))
 }
 
 /**

@@ -19,8 +19,8 @@ with CRUDify[Long, Data] with DomainService[Data] {
   // define the DB table name
   override def fieldOrder = List(kind, user, date)
 
-  def expose = ("kind", Identity) ::("user", ByEmail) ::
-    ("date", Identity) :: Nil
+  def expose = Seq((kind, Identity), (user, ByEmail),
+    (date, Identity))
 
   // TODO cannot filter with ranges if there is no restriction on data
   def pointsInRange(dataId: Box[String], range: Box[(String, String)]) = {
