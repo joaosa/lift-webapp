@@ -208,9 +208,9 @@ with Plotifiable[Long, ServiceType] {
 
       // create list
       case "list" :: Nil XmlPut xml -> _ =>
-        toXmlResp(toListView(createList(xml, modelName)))
+        toXmlResp(toListView(createList(xml)))
       case "list" :: Nil JsonPut json -> _ =>
-        toJsonResp(toListView(createList(json, modelName)))
+        toJsonResp(toListView(createList(json)))
     }
   }
 

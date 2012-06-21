@@ -58,8 +58,8 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
     validate(setup(Full(create), transformValues(t)))
   }
 
-  def createList[T: Extractable](t: T, modelName: String): List[Either[List[FieldError], BaseMapper with IdPK]] = {
-    Extractor.extractModel(t, modelName).map(create(_))
+  def createList[T: Extractable](t: T): List[Either[List[FieldError], BaseMapper with IdPK]] = {
+    Extractor.extractModel(t, dbName.toLowerCase).map(create(_))
   }
 
   def read(id: String): Box[BaseMapper with IdPK] =
