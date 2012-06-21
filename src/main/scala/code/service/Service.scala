@@ -190,9 +190,7 @@ with CRUDifiable[ServiceType]
 with Plotifiable[Long, ServiceType] {
   self: KeyedMetaMapper[_, ServiceType] =>
 
-  private def modelName = dbTableName
-
-  def path = modelName :: Nil
+  def path = dbTableName :: Nil
 
   import Extractor._
   import Converter._
