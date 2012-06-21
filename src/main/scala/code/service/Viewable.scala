@@ -63,7 +63,7 @@ object Viewer {
   implicit object FieldView extends Viewable[(BaseMapper, BaseField)] {
     def toView(t: (BaseMapper, BaseField)) =
       View(t._1.dbName.toLowerCase,
-      (t._2.name, t._2.get.toString) :: Nil)
+      (t._2.name, t._2.asHtml.toString()) :: Nil)
   }
 
 }

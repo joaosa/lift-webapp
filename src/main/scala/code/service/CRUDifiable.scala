@@ -70,8 +70,7 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   def readField(id: String, fieldName: String): Box[(BaseMapper, BaseField)] =
     for {
       item <- find(id)
-      fields <- Box !! allFields.map(f => (f.name, f)).toMap
-      field <- fields.get(fieldName)
+      field <- item.fieldByName[Any](fieldName)
     } yield (item, field)
 
   def readAll: Box[List[BaseMapper with IdPK]] = Full(findAll().map(_.asInstanceOf[BaseMapper with IdPK]))
