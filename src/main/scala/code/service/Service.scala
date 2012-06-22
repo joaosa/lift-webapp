@@ -77,8 +77,8 @@ object Login extends Service {
   import Viewer._
 
   def doLogin[T: Extractable](t: T): Message = {
-    val userID = extractField(t, "userID")
-    val deviceID = extractField(t, "deviceID")
+    val userID = extractField(t, "userLogin")
+    val deviceID = extractField(t, "deviceLogin")
 
     val authenticated = (userID, deviceID,
       extractField(t, "password")) match {
@@ -89,7 +89,9 @@ object Login extends Service {
     (authenticated, Device.findByID(deviceID openOr ""),
       User.findByEmail(userID openOr "")) match {
       case (true, Full(d), Full(u)) =>
-        Reply(("id", d.id.toString()) ::("role", u.role.is) :: Nil)
+        Reply(("userID", u.id.is.toString) ::
+          ("deviceID", d.id.is.toString) ::
+          ("role", u.role.is) :: Nil)
       case _ => Reply(("error", "Invalid Login.") :: Nil)
     }
 
