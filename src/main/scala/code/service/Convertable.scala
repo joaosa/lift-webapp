@@ -15,12 +15,8 @@ trait Convertable[T] extends RestHelper {
   def toXmlResp(t: T) = XmlResponse(toXml(t))
 
   def toJson(t: T): JsExp = Xml.toJson(toXml(t)) transform {
-    case JObject(List(JField("list", JObject(List(JField(n, o)))))) =>
-      o match {
-        case JObject(_) =>
+    case JObject(List(JField("list", JObject(List(JField(n, o @ JObject(_))))))) =>
           JObject(List(JField("list", JObject(List(JField(n, JArray(List(o))))))))
-        case _ => JObject(List(JField("list", JObject(List(JField(n, o))))))
-      }
   }
 
   def toJsonResp(t: T) = JsonResponse(toJson(t))
