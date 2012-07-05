@@ -78,8 +78,8 @@ trait CRUDifiable[CRUDType <: KeyedMapper[_, CRUDType]] {
   def readAllWithField[T](fieldName: String, value: T): Box[List[BaseMapper with IdPK]] =
     for {
       field <- fieldByName[T](fieldName)
-      items <- Box !! findAll(By(field, value))
-    } yield items.map(_.asInstanceOf[BaseMapper with IdPK])
+      items <- Box !! findAll(By(field, value)).map(_.asInstanceOf[BaseMapper with IdPK])
+    } yield items
 
   def update[T: Extractable](id: String, t: T): Either[List[FieldError], BaseMapper with IdPK] = {
     validate(setup(find(id), transformValues(t)))
