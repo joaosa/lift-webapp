@@ -7,13 +7,21 @@ import net.liftweb.http.{JsonResponse, XmlResponse, InMemoryResponse}
 import net.liftweb.http.js.JsExp
 import xml._
 import org.jfree.chart.{JFreeChart, ChartUtilities}
+import net.liftweb.json.JsonAST.{JArray, JObject, JField}
 
 trait Convertable[T] extends RestHelper {
   def toXml(t: T): Node
 
   def toXmlResp(t: T) = XmlResponse(toXml(t))
 
-  def toJson(t: T): JsExp = Xml.toJson(toXml(t))
+  def toJson(t: T): JsExp = Xml.toJson(toXml(t)) transform {
+    case JObject(List(JField("list", JObject(List(JField(n, o)))))) =>
+      o match {
+        case JObject(_) =>
+          JObject(List(JField("list", JObject(List(JField(n, JArray(List(o))))))))
+        case _ => JObject(List(JField("list", JObject(List(JField(n, o))))))
+      }
+  }
 
   def toJsonResp(t: T) = JsonResponse(toJson(t))
 }
