@@ -10,7 +10,7 @@ import code.helper.{DateField, ForeignKeyField}
  */
 object Location extends Location with LongKeyedMetaMapper[Location]
 with CRUDify[Long, Location] with DomainService[Location] {
-  override def dbTableName = "Locations"
+  override def dbTableName = "locations"
 
   // define the DB table name
   override def fieldOrder = List(device, date, latitude, longitude)
