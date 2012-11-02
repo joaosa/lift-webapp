@@ -49,6 +49,8 @@ class Data extends LongKeyedMapper[Data] with IdPK {
 
   object date extends DateField(this)
 
+  def raws = Raw.findAll(By(Raw.data, id.is))
+
   def points = Point.findAll(By(Point.data, id.is))
 
   def pointsInRange(min: Date, max: Date): List[Point] =
