@@ -239,7 +239,7 @@ with Plotifiable[Long, ServiceType] {
         for (f <- readField(id, field)) yield toJsonResp(toView(f))
 
       // read all with field
-      // TODO make the method accept only strings
+      // TODO modify the method to accept only strings
       case "list" :: field :: value :: Nil XmlGet _ =>
         for (items <- readAllWithField[Long](field, value.toLong)) yield toXmlResp(toListView(items))
       case "list" :: field :: value :: Nil JsonGet _ =>
