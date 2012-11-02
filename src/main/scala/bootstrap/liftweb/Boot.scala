@@ -40,7 +40,7 @@ class Boot extends Loggable {
     // any ORM you want
     Schemifier.schemify(true, Schemifier.infoF _,
       Location, User, UserRelation, Subscription, Device, Message,
-      Data, Point)
+      Data, Raw, Point)
 
     // where to search snippet
     LiftRules.addToPackages("code")
