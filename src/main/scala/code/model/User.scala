@@ -51,7 +51,7 @@ class User extends LongKeyedMapper[User] with IdPK with ManyToMany {
 
   object email extends MappedEmail(this, 48) {
     override def validations =
-      valUnique(S.??("unique.email.address")) _ :: super.validations
+      valUnique(S.?("unique.email.address")) _ :: super.validations
   }
 
   object password extends MappedPassword(this)

@@ -33,7 +33,7 @@ trait Chartable[T] {
 
   implicit def toJsSerie(entry: Series): FlotSerie = {
     new FlotSerie {
-      override val data = entry.data.filter(!_.isEmpty).map(_.open_!).toList
+      override val data = entry.data.filter(!_.isEmpty).map(_.openOrThrowException("no data")).toList
       override val label = entry.label
     }
   }
