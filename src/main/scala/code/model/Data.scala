@@ -43,7 +43,7 @@ class Data extends LongKeyedMapper[Data] with IdPK {
 
   def show: String = "%s of %s on %s" format(kind, user, date)
 
-  object kind extends ValueListField(this, List("UC", "FHR"))
+  object kind extends ValueListField(this, List("UC", "FHR", "RAW"))
 
   object user extends ForeignKeyField(this, User)
 
