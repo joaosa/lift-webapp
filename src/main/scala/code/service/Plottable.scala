@@ -10,7 +10,7 @@ import org.jfree.chart.{JFreeChart, ChartFactory}
 import org.jfree.data.time.{TimeSeriesCollection, TimeSeries, Millisecond}
 import net.liftweb.http.js.JE.{Num, JsObj}
 import net.liftweb.http.js.JsCmd
-import net.liftweb.widgets.flot.{
+import net.liftmodules.widgets.flot.{
 Flot,
 FlotSerie,
 FlotPointsOptions,

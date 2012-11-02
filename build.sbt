@@ -1,8 +1,8 @@
 name := "HMSP"
 
-version := "0.75"
+version := "0.80"
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.9.2"
 
 scalacOptions += "-deprecation"
 
@@ -19,12 +19,12 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val liftVersion = "2.5-SNAPSHOT"
+  val liftVersion = "2.5-M2"
   Seq(
   "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default",
   "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default",
   "net.liftweb" %% "lift-wizard" % liftVersion % "compile->default",
-  "net.liftweb" %% "lift-widgets" % liftVersion % "compile->default"
+  "net.liftmodules" %% "widgets" % "2.5-M1-1.1" % "compile->default"
   )
 }
 

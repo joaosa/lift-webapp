@@ -8,7 +8,7 @@ import http._
 import sitemap._
 import mapper._
 import code.model._
-import net.liftweb.widgets.flot._
+import net.liftmodules.widgets.flot._
 import reactive.web.Reactions
 import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
