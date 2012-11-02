@@ -85,15 +85,15 @@ class Boot extends Loggable {
     LiftRules.dispatch.append(Plotter)
 
     Seq(Location, User, UserRelation, Subscription,
-      Device, Message, Data, Point).map {
+      Device, Message, Data, Raw, Point).map {
       s => LiftRules.dispatch.append(withAuthentication guard s)
     }
 
     // stateless -- no session created
     //LiftRules.statelessDispatch.append(User)
 
-    // Use jQuery 1.4
-    LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQuery14Artifacts
+    // Use jQuery
+    LiftRules.jsArtifacts = net.liftweb.http.js.jquery.JQueryArtifacts
 
     //Show the spinny image when an Ajax call starts
     LiftRules.ajaxStart =
