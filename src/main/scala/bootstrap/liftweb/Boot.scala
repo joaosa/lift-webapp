@@ -58,7 +58,7 @@ class Boot extends Loggable {
           UserRelation.menus ::: Subscription.menus ::: Device.menus),
         Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
         Menu(S ? "Data") / "data" / "admin" submenus (
-          Data.menus ::: Point.menus)))
+          Data.menus ::: Raw.menus ::: Point.menus)))
 
     //def sitemapMutators = User.sitemapMutator
     // set the sitemap.  Note if you don't want access control for
