@@ -2,8 +2,8 @@ package code.model
 
 import code.service.DomainService
 import net.liftweb.mapper._
-import code.helper.Transformer.{ToLong, Identity}
-import code.helper.ForeignKeyField
+import code.helper.Transformer.{ToDate, ToLong, Identity}
+import code.helper.{DateField, ForeignKeyField}
 
 /**
  * The singleton that has methods for accessing the database
@@ -15,7 +15,7 @@ with CRUDify[Long, Raw] with DomainService[Raw] {
   // define the DB table name
   override def fieldOrder = List(data)
 
-  def expose = Seq((data, ToLong), (value, Identity))
+  def expose = Seq((data, ToLong), (date, ToDate), (value, Identity))
 }
 
 /**
@@ -26,6 +26,8 @@ class Raw extends LongKeyedMapper[Raw] with IdPK {
   def getSingleton = Raw
 
   object data extends ForeignKeyField(this, Data)
+
+  object date extends DateField(this)
 
   object value extends MappedText(this)
 
