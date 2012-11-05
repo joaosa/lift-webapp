@@ -10,6 +10,8 @@ scalacOptions += "-unchecked"
 
 seq(webSettings: _*)
 
+seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
+
 ssl in container.Configuration := Some(8443, "keystore", "hmsportugal", "hmsportugal")
 
 resolvers ++= Seq(
