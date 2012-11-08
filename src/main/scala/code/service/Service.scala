@@ -5,7 +5,7 @@ import akka.dispatch.Promise
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
 import net.liftweb.common.Full
 import net.liftweb.http.auth.{userRoles, AuthRole}
-import net.liftweb.http.{SessionVar, Req, PlainTextResponse}
+import net.liftweb.http.{LiftRules, SessionVar, Req, PlainTextResponse}
 import code.model._
 import net.liftweb.mapper.{By, KeyedMapper, KeyedMetaMapper}
 
@@ -193,12 +193,20 @@ object Filer extends Service {
 
   import Converter._
   import Viewer._
+  import scalax.io._
+  import scalax.io.JavaConverters._
 
   def toFile(dataID: String): Boolean = {
     for {
       data <- Data.find(dataID.toLong)
+      dir <- LiftRules.getResource("/toserve/someFile")
     } yield {
-      println(data.rawConcat())
+      println(dir.getPath)
+      Data.raws.map { r =>
+        println("in")
+        val bytes = new sun.misc.BASE64Decoder().decodeBuffer(r.value.is)
+        new java.io.File(dir.getPath).asOutput.write(bytes)
+      }
       true
     }
     false
@@ -224,8 +232,8 @@ object Filer extends Service {
         RestContinuation.async {
           satisfyRequest => {
             satisfyRequest(toJsonResp(toView(doToFile(id))))
+          }
         }
-      }
     }
   }
 
