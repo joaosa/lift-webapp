@@ -189,7 +189,7 @@ object Plotter extends Service {
 
 object Filer extends Service {
 
-  protected def path = null
+  protected def path = Nil
 
   import Converter._
   import Viewer._
