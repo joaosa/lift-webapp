@@ -30,13 +30,15 @@ libraryDependencies ++= {
 
 libraryDependencies ++= Seq(
   "cc.co.scala-reactive" %% "reactive-web" % "0.2-SNAPSHOT" % "compile->default",
+  "com.github.scala-incubator.io" %% "scala-io-core" % "0.4.1-seq",
+  "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.1-seq",
   "org.scalaz" %% "scalaz-core" % "6.0.4",
   "com.typesafe.akka" % "akka-actor" % "2.0",
   "com.typesafe.akka" % "akka-remote" % "2.0",
   "jfree" % "jfreechart" % "latest.integration" % "compile->default", // plotting
   "org.eclipse.jetty" % "jetty-webapp" % "8.1.0.v20120127" % "container", // For Jetty, add scope test to make jetty avl. for tests
   "junit" % "junit" % "4.8" % "test->default", // For JUnit 4 testing
-  "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9" % "test", // For specs.org tests
+  "org.specs2" %% "specs2" % "1.12.2" % "test", // For specs.org tests
   "javax.servlet" % "servlet-api" % "2.5" % "provided->default",
   "com.h2database" % "h2" % "1.2.147", // In-process database, useful for development systems
   "ch.qos.logback" % "logback-classic" % "0.9.26" % "compile->default" // Logging
