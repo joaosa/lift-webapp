@@ -1,8 +1,7 @@
 package code.snippet
 
 import reactive.Observing
-import net.liftweb.util
-import util.Helpers.strToCssBindPromoter
+import net.liftweb.util.Helpers.strToCssBindPromoter
 import reactive.web.html.TextInput
 import reactive.web.html.Button
 import net.liftweb.http.S
