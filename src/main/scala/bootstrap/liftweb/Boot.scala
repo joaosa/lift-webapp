@@ -54,6 +54,7 @@ class Boot extends Loggable {
         Menu(S ? "Locations") / "locations" / "admin" submenus (
           Location.menus),
         Menu(S ? "Notify") / "notify",
+        Menu(S ? "File export") / "fileExport",
         Menu(S ? "Users") / "users" / "admin" submenus (User.menus :::
           UserRelation.menus ::: Subscription.menus ::: Device.menus),
         Menu(S ? "Messages") / "messages" / "admin" submenus (Message.menus),
