@@ -31,7 +31,7 @@ trait Service extends RestHelper {
 
 object Login extends Service {
 
-  def path = Nil
+  protected def path = Nil
 
   object LoggedIn extends SessionVar(false)
 
@@ -126,7 +126,7 @@ object Login extends Service {
 
 object Notifier extends Service {
 
-  def path = Nil
+  protected def path = Nil
 
   import Converter._
   import Viewer._
@@ -157,7 +157,7 @@ object Notifier extends Service {
 
 object Plotter extends Service {
 
-  def path = Nil
+  protected def path = Nil
 
   import Converter._
   import Extractor._
@@ -184,6 +184,40 @@ object Plotter extends Service {
         }
     }
   }
+
+}
+
+object Filer extends Service {
+
+  protected def path = null
+
+  def toFile(dataID: String): Boolean = {
+    for {
+      data <- Data.find(dataID.toLong)
+    } yield {
+      println(data.rawConcat())
+      true
+    }
+    false
+  }
+
+
+  /*serve {
+    servicePath prefix {
+      case "file" :: model :: id :: Nil XmlPost xml -> _ =>
+        RestContinuation.async {
+          satisfyRequest => {
+            satisfyRequest()
+          }
+        }
+      case "file" :: model :: id :: Nil JsonPost json -> _ =>
+        RestContinuation.async {
+          satisfyRequest => {
+            satisfyRequest()
+        }
+      }
+    }
+  }*/
 
 }
 
