@@ -14,7 +14,7 @@ import net.liftweb.http.ResourceServer
 import net.liftweb.http.auth.HttpBasicAuthentication
 import net.liftweb.http.auth.AuthRole
 import akka.actor.ActorSystem
-import code.service.{Notifier, Plotter, Login}
+import code.service.{Filer, Notifier, Plotter, Login}
 import code.service.Login.withAuthentication
 
 /**
@@ -84,6 +84,7 @@ class Boot extends Loggable {
     LiftRules.dispatch.append(Login)
     LiftRules.dispatch.append(Notifier)
     LiftRules.dispatch.append(Plotter)
+    LiftRules.dispatch.append(Filer)
 
     Seq(Location, User, UserRelation, Subscription,
       Device, Message, Data, Raw, Point).map {

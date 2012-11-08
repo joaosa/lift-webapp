@@ -191,6 +191,9 @@ object Filer extends Service {
 
   protected def path = null
 
+  import Converter._
+  import Viewer._
+
   def toFile(dataID: String): Boolean = {
     for {
       data <- Data.find(dataID.toLong)
@@ -201,23 +204,30 @@ object Filer extends Service {
     false
   }
 
+  def doToFile(dataID: String): Message = {
+    if (toFile(dataID)) {
+      Reply(("answer:", "success") :: Nil)
+    } else {
+      Reply(("answer:", "success") :: Nil)
+    }
+  }
 
-  /*serve {
+  serve {
     servicePath prefix {
       case "file" :: model :: id :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest()
+            satisfyRequest(toXmlResp(toView(doToFile(id))))
           }
         }
       case "file" :: model :: id :: Nil JsonPost json -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest()
+            satisfyRequest(toJsonResp(toView(doToFile(id))))
         }
       }
     }
-  }*/
+  }
 
 }
 
