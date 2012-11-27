@@ -51,7 +51,7 @@ class Data extends LongKeyedMapper[Data] with IdPK {
 
   def raws = Raw.findAll(By(Raw.data, id.is))
 
-  def rawConcat() = raws.map(_.value.is).reduceLeft(_ + _)
+  def rawValues() = raws.map(_.value.is)
 
   def points = Point.findAll(By(Point.data, id.is))
 
