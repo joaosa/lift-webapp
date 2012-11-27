@@ -3,7 +3,7 @@ package code.service
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
-import net.liftweb.common.Full
+import net.liftweb.common.{Empty, Full}
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{LiftRules, SessionVar, Req, PlainTextResponse}
 import code.model._
@@ -168,7 +168,6 @@ object Plotter extends Service {
       extractField(t, "end") openOr "")
 
   serve {
-
     servicePath prefix {
       case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil XmlPost xml -> _ =>
         RestContinuation.async {
@@ -193,47 +192,61 @@ object Filer extends Service {
 
   import Converter._
   import Viewer._
+  import scalax.io._
   import scalax.io.JavaConverters._
 
-  def toFile(dataID: String): Boolean = {
+  def fromFile(): String = {
+    val data = Data.create.kind("RAW")
     for {
-      data <- Data.find(dataID.toLong)
-      dir <- LiftRules.getResource("/toserve/someFile")
+      dir <- LiftRules.getResource("/toserve/RECORD-DATA.BIN")
     } yield {
-      println(dir.getPath)
-      Data.raws.map { r =>
-        println("in")
-        val bytes = new sun.misc.BASE64Decoder().decodeBuffer(r.value.is)
-        new java.io.File(dir.getPath).asOutput.write(bytes)
+      val blocks = new java.io.File(dir.getPath).asInput.bytes.grouped(1024)
+
+      blocks foreach {
+        case value =>
+          val codedValue = new sun.misc.BASE64Encoder().encodeBuffer(value.toArray)
+          Raw.create.value(codedValue).data(data.id.is).save()
       }
-      true
+      data.save()
     }
-    false
+    data.id.is.toString
   }
 
-  def doToFile(dataID: String): Message = {
-    if (toFile(dataID)) {
-      Reply(("answer:", "success") :: Nil)
-    } else {
-      Reply(("answer:", "success") :: Nil)
+  def toFile(dataID: String): String = {
+    (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
+      case (Full(d), Full(dir)) =>
+        var position: Long = 0
+
+        d.rawValues().map {
+          println("starting a round")
+          v =>
+            val b = new sun.misc.BASE64Decoder().decodeBuffer(v)
+            new java.io.File(dir.getPath).asSeekable.insert(position, b)
+            position += b.size
+            println("POS: " + position)
+        }
+        "Data dumped."
+      case (Empty, _) => "Invalid dataID."
+      case (_, Empty) => "Invalid fileName."
+      case _ => "Unknown failure."
+    }
+  }
+
+  def doToFile(dataID: String): Message = Reply(("answer:", this.toFile(dataID)) :: Nil)
+
+  def doFromFile(fileID: String): Message = Reply(("answer:", this.fromFile()) :: Nil)
+
+  serve {
+    servicePath prefix {
+      case "tofile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doToFile(id)))
+      case "tofile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doToFile(id)))
     }
   }
 
   serve {
     servicePath prefix {
-      case "file" :: model :: id :: Nil XmlPost xml -> _ =>
-        RestContinuation.async {
-          satisfyRequest => {
-            satisfyRequest(toXmlResp(toView(doToFile(id))))
-          }
-        }
-      case "file" :: model :: id :: Nil JsonPost json -> _ =>
-        RestContinuation.async {
-          satisfyRequest => {
-            satisfyRequest(toJsonResp(toView(doToFile(id))))
-          }
-        }
+      case "fromfile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(id)))
+      case "fromfile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(id)))
     }
   }
-
 }
