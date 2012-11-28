@@ -194,20 +194,24 @@ object Filer extends Service {
   import Viewer._
   import scalax.io._
   import scalax.io.JavaConverters._
+  import sun.misc.{BASE64Encoder, BASE64Decoder}
+  import java.io.File
 
   def fromFile(): String = {
-    val data = Data.create.kind("RAW")
+    val data = Data.create.kind("RAW").saveMe()
     for {
       dir <- LiftRules.getResource("/toserve/RECORD-DATA.BIN")
     } yield {
-      val blocks = new java.io.File(dir.getPath).asInput.bytes.grouped(1024)
+      val blockSize = 2048 * 1024
+      val blocks = new File(dir.getPath).asInput.bytes.grouped(blockSize)
+      val zeroBlock = new Array[Byte](blockSize).toSeq
 
       blocks foreach {
-        case value =>
-          val codedValue = new sun.misc.BASE64Encoder().encodeBuffer(value.toArray)
+        case block if block != zeroBlock =>
+          val codedValue = new BASE64Encoder().encodeBuffer(block.toArray)
           Raw.create.value(codedValue).data(data.id.is).save()
+        case _ => ()
       }
-      data.save()
     }
     data.id.is.toString
   }
@@ -216,12 +220,12 @@ object Filer extends Service {
     (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
       case (Full(d), Full(dir)) =>
         var position: Long = 0
+        val f = new File(dir.getPath)
 
         d.rawValues().map {
-          println("starting a round")
           v =>
-            val b = new sun.misc.BASE64Decoder().decodeBuffer(v)
-            new java.io.File(dir.getPath).asSeekable.insert(position, b)
+            val b = new BASE64Decoder().decodeBuffer(v)
+            f.asSeekable.insert(position, b)
             position += b.size
             println("POS: " + position)
         }
