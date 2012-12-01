@@ -219,15 +219,19 @@ object Filer extends Service {
   def toFile(dataID: String): String = {
     (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
       case (Full(d), Full(dir)) =>
-        var position: Long = 0
-        val f = new File(dir.getPath)
+        val output: Output = Resource.fromFile(dir.getPath)
 
-        d.rawValues().map {
-          v =>
-            val b = new BASE64Decoder().decodeBuffer(v)
-            f.asSeekable.insert(position, b)
-            position += b.size
-            println("POS: " + position)
+        for {
+          processor <- output.outputProcessor
+          out = processor.asOutput
+        } {
+          d.rawValues().map {
+            v =>
+              println("Writing: " + v)
+              val b = new BASE64Decoder().decodeBuffer(v)
+              println("Writing: " + b)
+              out.write[Array[Byte]](b)
+          }
         }
         "Data dumped."
       case (Empty, _) => "Invalid dataID."
