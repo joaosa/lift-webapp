@@ -178,7 +178,7 @@ object Plotter extends Service {
       case "plot" :: model :: id :: plotKind :: ind :: dep :: Nil JsonPost json -> _ =>
         RestContinuation.async {
           satisfyRequest => {
-            satisfyRequest(toXmlResp(plotToChart(Point, Full(id), Full(plotKind), Full(ind), Full(dep), range(json))))
+            satisfyRequest(toJsonResp(plotToChart(Point, Full(id), Full(plotKind), Full(ind), Full(dep), range(json))))
           }
         }
     }
@@ -220,7 +220,6 @@ object Filer extends Service {
     (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
       case (Full(d), Full(dir)) =>
         val output: Output = Resource.fromFile(dir.getPath)
-
         for {
           processor <- output.outputProcessor
           out = processor.asOutput
@@ -229,20 +228,34 @@ object Filer extends Service {
             v =>
               println("Writing: " + v)
               val b = new BASE64Decoder().decodeBuffer(v)
-              println("Writing: " + b)
-              out.write[Array[Byte]](b)
+              out.write(b)
           }
         }
         "Data dumped."
       case (Empty, _) => "Invalid dataID."
-      case (_, Empty) => "Invalid fileName."
+      case (_, Empty) => "Invalid fileID."
       case _ => "Unknown failure."
     }
   }
 
-  def doToFile(dataID: String): Message = Reply(("answer:", this.toFile(dataID)) :: Nil)
+  def processFile(): String = {
+    import scala.sys.process._
+    val recordNumber = 1
+    LiftRules.getResource("/toserve/RECORD.BIN") match {
+      case Full(dir) =>
+        ("./hmsp " + dir + " " + recordNumber + "").! match {
+          case 0 => "File processed."
+          case _ => "Unknown failure."
+        }
+      case _ => "Invalid fileID."
+    }
+  }
 
-  def doFromFile(fileID: String): Message = Reply(("answer:", this.fromFile()) :: Nil)
+  def doToFile(dataID: String): Message = Reply(("answer:", toFile(dataID)) :: Nil)
+
+  def doFromFile(fileID: String): Message = Reply(("answer:", fromFile()) :: Nil)
+
+  def doProcessFile(fileID: String): Message = Reply(("answer:", processFile()) :: Nil)
 
   serve {
     servicePath prefix {
@@ -255,6 +268,13 @@ object Filer extends Service {
     servicePath prefix {
       case "fromfile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(id)))
       case "fromfile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(id)))
+    }
+  }
+
+  serve {
+    servicePath prefix {
+      case "processfile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doProcessFile(id)))
+      case "processfile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doProcessFile(id)))
     }
   }
 }
