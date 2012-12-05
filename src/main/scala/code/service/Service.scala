@@ -188,7 +188,7 @@ object Plotter extends Service {
 
 object Filer extends Service {
 
-  protected def path = Nil
+  protected def path = "file" :: Nil
 
   import Converter._
   import Viewer._
@@ -200,10 +200,10 @@ object Filer extends Service {
   def fromFile(): String = {
     val data = Data.create.kind("RAW").saveMe()
     for {
-      dir <- LiftRules.getResource("/toserve/RECORD-DATA.BIN")
+      f <- LiftRules.getResource("/toserve/RECORD-DATA.BIN")
     } yield {
       val blockSize = 2048 * 1024
-      val blocks = new File(dir.getPath).asInput.bytes.grouped(blockSize)
+      val blocks = new File(f.getPath).asInput.bytes.grouped(blockSize)
       val zeroBlock = new Array[Byte](blockSize).toSeq
 
       blocks foreach {
@@ -218,15 +218,14 @@ object Filer extends Service {
 
   def toFile(dataID: String): String = {
     (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
-      case (Full(d), Full(dir)) =>
-        val output: Output = Resource.fromFile(dir.getPath)
+      case (Full(d), Full(f)) =>
+        val output: Output = Resource.fromFile(f.getPath)
         for {
           processor <- output.outputProcessor
           out = processor.asOutput
         } {
           d.rawValues().map {
             v =>
-              println("Writing: " + v)
               val b = new BASE64Decoder().decodeBuffer(v)
               out.write(b)
           }
@@ -242,11 +241,18 @@ object Filer extends Service {
     import scala.sys.process._
     val recordNumber = 1
     LiftRules.getResource("/toserve/RECORD.BIN") match {
-      case Full(dir) =>
-        ("./hmsp " + dir + " " + recordNumber + "").! match {
+      case Full(f) =>
+        ("./hmsp " + f + " " + recordNumber + "").! match {
           case 0 => "File processed."
           case _ => "Unknown failure."
         }
+      case _ => "Invalid fileID."
+    }
+  }
+
+  def loadFile(fileID: String): String = {
+    LiftRules.getResource("/toserve/" + fileID) match {
+      case Full(f) => Resource.fromFile(f.getPath).string
       case _ => "Invalid fileID."
     }
   }
@@ -257,24 +263,33 @@ object Filer extends Service {
 
   def doProcessFile(fileID: String): Message = Reply(("answer:", processFile()) :: Nil)
 
+  def doGetFile(fileID: String): Message = Reply(("answer:", loadFile("f.hr")) :: Nil)
+
   serve {
     servicePath prefix {
-      case "tofile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doToFile(id)))
-      case "tofile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doToFile(id)))
+      case "to" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doToFile(id)))
+      case "to" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doToFile(id)))
     }
   }
 
   serve {
     servicePath prefix {
-      case "fromfile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(id)))
-      case "fromfile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(id)))
+      case "from" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(id)))
+      case "from" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(id)))
     }
   }
 
   serve {
     servicePath prefix {
-      case "processfile" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doProcessFile(id)))
-      case "processfile" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doProcessFile(id)))
+      case "process" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doProcessFile(id)))
+      case "process" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doProcessFile(id)))
+    }
+  }
+
+  serve {
+    servicePath prefix {
+      case "get" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doGetFile(id)))
+      case "get" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doGetFile(id)))
     }
   }
 }
