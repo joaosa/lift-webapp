@@ -3,7 +3,7 @@ package code.service
 import akka.actor.{Props, ActorSystem}
 import akka.dispatch.Promise
 import net.liftweb.http.rest.{RestContinuation, RestHelper}
-import net.liftweb.common.{Empty, Full}
+import net.liftweb.common.{Box, Empty, Full}
 import net.liftweb.http.auth.{userRoles, AuthRole}
 import net.liftweb.http.{LiftRules, SessionVar, Req, PlainTextResponse}
 import code.model._
@@ -196,36 +196,45 @@ object Filer extends Service {
   import scalax.io.JavaConverters._
   import sun.misc.{BASE64Encoder, BASE64Decoder}
   import java.io.File
+  import scala.sys.process._
 
-  def fromFile(): String = {
-    val data = Data.create.kind("RAW").saveMe()
-    for {
-      f <- LiftRules.getResource("/toserve/RECORD-DATA.BIN")
-    } yield {
-      val blockSize = 2048 * 1024
-      val blocks = new File(f.getPath).asInput.bytes.grouped(blockSize)
-      val zeroBlock = new Array[Byte](blockSize).toSeq
-
-      blocks foreach {
-        case block if block != zeroBlock =>
-          val codedValue = new BASE64Encoder().encodeBuffer(block.toArray)
-          Raw.create.value(codedValue).data(data.id.is).save()
-        case _ => ()
-      }
+  def getFilePath(fileID: String): Box[String] = {
+    LiftRules.getResource("/toserve/" + fileID) match {
+      case Full(f) => Full(f.getPath)
+      case _ => Empty
     }
-    data.id.is.toString
   }
 
-  def toFile(dataID: String): String = {
-    (Data.find(dataID.toLong), LiftRules.getResource("/toserve/RECORD.BIN")) match {
+  def fromFile(fileID: String): String = {
+    val data = Data.create.kind("RAW").saveMe()
+    getFilePath(fileID) match {
+      case Full(f) =>
+        val blockSize = 2048 * 1024
+        val blocks = new File(f).asInput.bytes.grouped(blockSize)
+        val zeroBlock = new Array[Byte](blockSize).toSeq
+
+        blocks foreach {
+          case block if block != zeroBlock =>
+            val codedValue = new BASE64Encoder().encodeBuffer(block.toArray)
+            Raw.create.value(codedValue).data(data.id.is).save()
+          case _ => ()
+        }
+        "File dumped to " + data.id.is
+      case _ => "Invalid fileID."
+    }
+  }
+
+  def toFile(dataID: String, fileID: String): String = {
+    (Data.find(dataID.toLong), getFilePath(fileID)) match {
       case (Full(d), Full(f)) =>
-        val output: Output = Resource.fromFile(f.getPath)
+        val output: Output = Resource.fromFile(f)
         for {
           processor <- output.outputProcessor
           out = processor.asOutput
         } {
           d.rawValues().map {
             v =>
+              println("Getting: " + v)
               val b = new BASE64Decoder().decodeBuffer(v)
               out.write(b)
           }
@@ -237,45 +246,47 @@ object Filer extends Service {
     }
   }
 
-  def processFile(): String = {
-    import scala.sys.process._
-    val recordNumber = 1
-    LiftRules.getResource("/toserve/RECORD.BIN") match {
-      case Full(f) =>
-        ("./hmsp " + f + " " + recordNumber + "").! match {
+  def processFile(processor: String, fileID: String, recordNum: Int): String = {
+    (getFilePath(processor), getFilePath(fileID)) match {
+      case (Full(p), Full(f)) =>
+        println("p " + p)
+        println("f " + f)
+        (p + " " + f + " " + recordNum).! match {
           case 0 => "File processed."
-          case _ => "Unknown failure."
+          case _ => "Processing failure."
         }
-      case _ => "Invalid fileID."
+      case (Empty, _) => "Invalid processor."
+      case (_, Empty) => "Invalid fileID."
+      case _ => "Unknown failure."
     }
   }
 
-  def loadFile(fileID: String): String = {
-    LiftRules.getResource("/toserve/" + fileID) match {
-      case Full(f) => Resource.fromFile(f.getPath).string
+  def doFromFile(fileID: String): Message =
+    Reply(("answer:", fromFile("RECORD-DATA.BIN")) :: Nil)
+
+  def doToFile(dataID: String, fileID: String): Message =
+    Reply(("answer:", toFile(dataID, "RECORD.BIN")) :: Nil)
+
+  def doProcessFile(fileID: String): Message =
+    Reply(("answer:", processFile("hmsp", "RECORD.BIN", 0)) :: Nil)
+
+  def doGetFile(fileID: String): Message =
+    Reply(("answer:", getFilePath("f.hr") match {
+      case Full(f) => Resource.fromFile(f).string
       case _ => "Invalid fileID."
-    }
-  }
-
-  def doToFile(dataID: String): Message = Reply(("answer:", toFile(dataID)) :: Nil)
-
-  def doFromFile(fileID: String): Message = Reply(("answer:", fromFile()) :: Nil)
-
-  def doProcessFile(fileID: String): Message = Reply(("answer:", processFile()) :: Nil)
-
-  def doGetFile(fileID: String): Message = Reply(("answer:", loadFile("f.hr")) :: Nil)
+    }) :: Nil)
 
   serve {
     servicePath prefix {
-      case "to" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doToFile(id)))
-      case "to" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doToFile(id)))
+      case "from" :: fileID :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(fileID)))
+      case "from" :: fileID :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(fileID)))
     }
   }
 
   serve {
     servicePath prefix {
-      case "from" :: model :: id :: Nil XmlPost xml -> _ => toXmlResp(toView(doFromFile(id)))
-      case "from" :: model :: id :: Nil JsonPost json -> _ => toJsonResp(toView(doFromFile(id)))
+      case "to" :: dataID :: fileID :: Nil XmlPost xml -> _ => toXmlResp(toView(doToFile(dataID, fileID)))
+      case "to" :: dataID :: fileID :: Nil JsonPost json -> _ => toJsonResp(toView(doToFile(dataID, fileID)))
     }
   }
 

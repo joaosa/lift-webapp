@@ -10,7 +10,7 @@ import code.service.{Filer => FileService}
 class RawExporter extends Observing {
 
   val trigger = Button("Export") {
-    S.notice(FileService.toFile(dataID.value.value))
+    S.notice(FileService.toFile(dataID.value.value, "RECORD.BIN"))
   }
 
   val dataID = TextInput()
