@@ -40,6 +40,6 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.8" % "test->default", // For JUnit 4 testing
   "org.specs2" %% "specs2" % "1.12.2" % "test", // For specs.org tests
   "javax.servlet" % "servlet-api" % "2.5" % "provided->default",
-  "com.h2database" % "h2" % "1.2.147", // In-process database, useful for development systems
+  "com.h2database" % "h2" % "latest.integration", // In-process database, useful for development systems
   "ch.qos.logback" % "logback-classic" % "0.9.26" % "compile->default" // Logging
 )
