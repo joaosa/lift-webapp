@@ -8,9 +8,7 @@ scalacOptions += "-deprecation"
 
 scalacOptions += "-unchecked"
 
-seq(webSettings: _*)
-
-ssl in container.Configuration := Some(8443, "keystore", "hmsportugal", "hmsportugal")
+jetty()
 
 resolvers ++= Seq(
   "Sonatype Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
