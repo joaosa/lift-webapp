@@ -17,7 +17,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val liftVersion = "2.5-M2"
+  val liftVersion = "2.5"
   Seq(
   "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default",
   "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default",
